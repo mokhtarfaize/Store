@@ -1,0 +1,138 @@
+﻿@model IEnumerable<NoovinData.Models.Domin.Product>
+@using NoovinData.Models.Repository
+@{
+    Rep_Profile reps = new Rep_Profile();
+    ViewBag.Title = "جستجو";
+    Layout = "~/Views/Shared/_MainHome.cshtml";
+}
+<section id='category_part1'>
+    <div class='container'>
+        <div class='inner clearfix'>
+            <div class='bgmain'>
+                <div class='sidebar_style1'>
+                             
+                    <br><br>
+                </div><!--sidebar_style1-->
+                @if (Model!= null)
+                {
+                    <main>
+                        <h1 class='separator page_title'>
+                            @{
+                                var all=Model.Where(a => a.Product_GroupID != ViewBag.Groupid).FirstOrDefault();
+                            if (all!=null)
+                            {
+                            
+                            <span class='text'> محصولات یافت شده برای" @ViewBag.Key" در دسته ی : همه گروهها </span>
+                            <span class='subtitle'>تعداد فایل ها : <b class='no advanced_search_no'>@Model.Count()</b></span>
+                            }
+                            else
+                            {
+                                var qpro = Model.Where(a => a.Product_GroupID == ViewBag.Groupid).FirstOrDefault().Group.Group_Name;
+                            <span class='text'> محصولات یافت شده برای" @ViewBag.Key" در دسته ی : @qpro </span>
+                            <span class='subtitle'>تعداد فایل ها : <b class='no advanced_search_no'>@Model.Count()</b></span>
+                            }
+                            }
+                        </h1>
+                        <ul class='cat_files pro_container'>
+
+                            @{
+                    foreach (var item in Model)
+                    {
+                        <li>
+                            <div class='store_main_section'>
+                                <div class='store_main_section_pic' style='background-image:url(/Content/_images/product/@item.Product_PicIndex)'>
+                                    <div class='pic_hover'></div>
+                                    <div class='pic_hover_box dv-box'>
+
+
+                                        @{
+
+                        var qsum = reps.Get_Bill().Where(a => a.Bill_ProductID == item.Product_ID && a.Bill_Status == true).Sum(a => a.Bill_Count);
+
+                        if (qsum == null)
+                        {
+                            if (item.Product_IsDownload == true)
+                            {
+                                <div class="dv">
+                                  0  <i class='fa fa-download'></i>
+                                </div>                                
+                            }
+                            else
+                            {
+                               <div class="dv">
+                                 0 <i class='fa fa-truck'></i>
+                               </div> 
+                            }
+                            
+
+                        }
+                        else
+                        {
+                            if (item.Product_IsDownload==false)
+                            {
+                               <div class="dv">
+                                @qsum  <i class='fa fa-truck'></i>
+                            </div> 
+                            }
+                            else
+                            {
+                                <div class="dv">
+                                @qsum  <i class='fa fa-download'></i>
+                            </div>
+                            }                           
+
+                        }
+                           
+                                        }
+
+                                        <div class='dv'>@item.Product_Visit<i class='fa fa-eye'></i></div>
+                                    </div>
+                                    <div class='pic_hover_box'><a href='/Home/ShowProduct?id=@item.Product_ID' title='@item.Product_Name' class='read_more'>بیشتر بخوانید<i class='i-caret-left'></i></a></div>
+                                </div>
+                                <h1 class='store_main_title ellipsis'><a href='/Home/ShowProduct?id=@item.Product_ID' title='@item.Product_Name'>@item.Product_Name</a></h1>
+                                <p class='store_caption ellipsis'></p>
+                            </div>
+                        </li>
+                    }
+                            }
+
+                        </ul>
+
+                        <div class='pagination'>
+
+                        </div>
+
+                    </main>
+
+                }
+                else
+                {
+                    <main>
+                        <h1 class='separator page_title'><span class='text'>محصولات یافت شده برای" @ViewBag.Key" </span> 
+                        <span class='subtitle'>تعداد فایل ها : <b class='no advanced_search_no'>0</b></span></h1>
+                        <ul class='cat_files pro_container'>
+
+                            <li>
+                                <span>موردی یافت نشد</span>
+                            </li>
+
+
+                        </ul>
+                    </main>
+                }
+
+            </div>
+        </div><!-- end inner -->
+    </div><!-- end container -->
+</section><!-- end home_part1 -->
+<style>
+    .eye {
+        color: #32BFB6;
+        font-size: 1.2rem;
+        float: left;
+        margin-right: 3px;
+        position: relative;
+        bottom: -2px;
+        font-family: at1;
+    }
+</style>

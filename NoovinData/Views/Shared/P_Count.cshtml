@@ -1,0 +1,18 @@
+﻿@using NoovinData.Models.Repository
+@{
+    Rep_Profile repcount = new Rep_Profile();
+
+    string user = Session["User"].ToString();
+
+    var qid = repcount.Get_User().Where(a => a.User_UserName == user).SingleOrDefault();
+
+
+    var qcount = repcount.Get_Product().Where(a => a.Product_UserID == qid.User_ID).Count();
+
+}
+
+
+
+<span class="no">
+    @qcount
+</span>

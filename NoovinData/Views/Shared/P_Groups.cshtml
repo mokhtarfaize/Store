@@ -1,0 +1,100 @@
+﻿@using NoovinData.Models.Repository
+
+@{
+    Rep_Home repg = new Rep_Home();
+
+    <section class='home_part3'>
+        <div class='container'>
+            <div class='inner clearfix'>
+                <div class='cat_style1'>
+                    <ul class='step1'>
+
+                        @foreach (var item in repg.Get_Group())
+                        {
+                            <li class='item'>
+                                <div class='pic' style='background-image:url(/Content/_images/Group/@item.Group_Pic);'></div>
+                                <h1 class='title'>@item.Group_Name</h1>
+                                <div class='content'>  
+                                    <div class='row'>
+                                        <span class='name'>تعداد فایل های دانلودی</span>
+                                        @{
+                         if (item.Group_ID==4)
+                            {
+                                var all = repg.Get_Product().Where(a=>a.Product_Active==true && a.User.User_Active==true && a.Product_IsDownload==true ).OrderBy(a => a.Product_Name).ToList();
+                                if (all.Count()>0)
+                                {
+                                    <span class="val">@all.Count()</span>
+                                }
+                                else
+                                {
+                                    <span class="val">0</span>
+                                }
+                            }
+                         else
+                         {
+                              var qcount = repg.Get_Product().Where(a => a.Product_GroupID == item.Group_ID && a.Product_IsDownload == true && a.User.User_Active==true && a.Product_Active==true ).ToList();
+
+                            if (qcount.Count() > 0)
+                                  {
+                                    <span class='val'>@qcount.Count()</span>
+                                  }
+                                  else
+                                   {
+                                     <span class='val'>0</span>
+                                   }
+                         }  
+                                                                         
+                           
+                                }
+                                    </div>
+
+                                    <div class='row'>
+                                        <span class='name'> تعداد محصولات پستی</span>
+                                        @{
+                                            
+                                            if (item.Group_ID==4)
+                            {
+                                var all = repg.Get_Product().Where(a=>a.Product_Active==true && a.User.User_Active==true && a.Product_IsDownload==false ).OrderBy(a => a.Product_Name).ToList();
+                                if (all.Count()>0)
+                                {
+                                    <span class="val">@all.Count()</span>
+                                }
+                                else
+                                {
+                                    <span class="val">0</span>
+                                }
+                            }
+                            else
+                            {
+                                var qcount1 = repg.Get_Product().Where(a => a.Product_GroupID == item.Group_ID && a.Product_IsDownload == false && a.User.User_Active==true && a.Product_Active==true).ToList();
+
+                                if (qcount1.Count() > 0)
+                                  {
+                                    <span class='val'>@qcount1.Count()</span>
+                                  }
+                                  else
+                                   {
+                                    <span class='val'>0</span>
+                                   }
+                                
+                            }  
+                                            
+                            
+                            }
+                                    </div>
+
+                                    <a href='/Home/ShowGroup?id=@item.Group_ID' title='@item.Group_Name' class='link'><i class='i-angle-right'></i> مشاهده گروه <i class='i-angle-left'></i></a>
+                                </div>
+                            </li>
+                        }
+
+
+
+
+                    </ul>
+                </div><!--cat_style1-->
+            </div><!--inner-->
+        </div><!--container-->
+    </section>
+
+}

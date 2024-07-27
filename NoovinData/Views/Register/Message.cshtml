@@ -1,0 +1,74 @@
+﻿
+
+@{
+    ViewBag.Title = "پیام";
+    Layout = "~/Views/Shared/_MainHome.cshtml";
+}
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+<section id="register">
+    <div class="container">
+        <div class="inner">
+            <div class='services_part' style="height:500px;">
+                <h1 class='separator page_title'>پیام سیستمی </h1>
+
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger">
+                        <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                        @ViewBag.Error
+                    </div>
+                }
+
+                <div class="buttons" style="font-size: large;padding-right: 500px">
+                    <a class="list-header" href="~/Home/Index" >بازگشت به صحفه اصلی</a>
+                </div>
+       
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .alert-success {
+        color: #3C763D;
+        background-color: #DFF0D8;
+        border-color: #D6E9C6;
+    }
+
+    .alert-dismissable, .alert-dismissible {
+        padding-right: 35px;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        text-align: center;
+        width: 70%;
+        margin-right: 150px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .alert-info {
+        color: #31708F;
+        background-color: #D9EDF7;
+        border-color: #BCE8F1;
+    }
+
+    .alert-warning {
+        color: #8A6D3B;
+        background-color: #FCF8E3;
+        border-color: #FAEBCC;
+    }
+
+    .alert-danger {
+        color: #A94442;
+        background-color: #F2DEDE;
+        border-color: #EBCCD1;
+    }
+</style>

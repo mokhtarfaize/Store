@@ -1,0 +1,191 @@
+﻿@model IEnumerable<NoovinData.Models.Domin.Product>
+@using NoovinData.Models.Plugin
+@using NoovinData.Models.Repository
+@{
+    ViewBag.Title = "لیست لینک ها";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+
+
+<script>
+
+    $(function () {
+        $("[data-hide]").on("click", function () {
+            $("." + $(this).attr("data-hide")).hide();
+            // -or-, see below
+            // $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+</script>
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">لیست محصولات قابل دانلود</h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+
+
+
+        @if (Model.Count() > 0)
+        {
+            <div class="table_style1">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_Name)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_Price)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_PicIndex)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_Date)
+                            </th>
+                            <th>
+                                نام فایل دانلود
+                            </th>
+
+                            <th>انتخاب فایل</th>
+                            @*<th></th>*@
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td colspan="1">
+                                    @Html.DisplayFor(modelItem => item.Product_Name)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Product_Price)
+                                </td>
+
+                                <td>
+                                    <img src="~/Content/_images/product/@item.Product_PicIndex" width="40" height="40" alt="@item.Product_Name" />
+                                </td>
+
+                                <td>
+                                    @PersianDateExtensionMethods.ToPeString(item.Product_Date, "dddd, dd MMMM,yyyy")
+                                </td>
+
+                                <td>
+                                    @{
+                            Rep_Profile rep_download = new Rep_Profile();
+
+                            var link = rep_download.Get_Download().ToList();
+
+                            if (link.Count() > 0)
+                               {
+
+                                foreach (var links in link)
+                                {
+                                    if (item.Product_ID == links.Download_ProductID)
+                                    {
+                                        @item.Downloads.Where(a => a.Download_ProductID == links.Download_ProductID).SingleOrDefault().Download_Url
+                                    }
+                                    else
+                                    {
+                                        <span></span>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <span>
+                                    ثبت نشده
+                                </span>
+                            }
+                                    }
+                                </td>
+
+                                @{
+
+                            var qs = item.Downloads.Where(a => a.Download_ProductID == item.Product_ID).SingleOrDefault();
+                            if (qs == null)
+                            {
+                                <td>
+                                    @Html.ActionLink(" ", "AddLink", new { id = item.Product_ID }, new { @class = "fa fa-link", style = "color:green; font-size:19px;" })
+                                </td>
+                            }
+                            else
+                            {
+                                if (qs.Download_Url == "")
+                                {
+                                    <td>
+                                        @Html.ActionLink(" ", "AddLink", new { id = item.Product_ID }, new { @class = "fa fa-link", style = "color:green; font-size:19px;" })
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border:none;"> فایل انتخاب شده </td>
+                                }
+                            }
+
+                                }
+
+                            </tr>
+                        }
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+        }
+        else
+        {
+            <div class="table_style1">
+                <table>
+                    <thead>
+
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_Name)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_Price)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_PicIndex)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_Date)
+                            </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr><td colspan="9"><div class="noitem">محصول دانلودی برای نمایش موجود نیست.</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

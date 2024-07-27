@@ -1,0 +1,160 @@
+﻿@model IEnumerable< NoovinData.Models.Domin.User>
+
+@{
+    ViewBag.Title = "مدیریت کاربران";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+@using NoovinData.Models.Plugin
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">لیست کاربران</h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+
+
+        @if (Model.Count() > 0)
+        {
+            <div class="table_style1">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>
+                                نام کاربری
+                            </th>
+
+                            <th>
+                                نام و نام خانوادگی
+                            </th>
+
+                            <th>
+                                تاریخ ثبت نام
+                            </th>
+
+                            <th>
+                                وضعیت دسترسی
+                            </th>
+
+                            <th>
+                                نوع کاربری
+                            </th>
+                            <th>
+                                تایید/عدم تایید
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>
+                                    <a href="/Admin/ShowUserName?id=@item.User_ID"> @item.User_UserName </a>
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User_NameFamily)
+                                </td>
+
+                                <td>
+                                    @PersianDateExtensionMethods.ToPeString(item.User_Date, " yyyy/MM/dd")
+                                </td>
+
+                                <td>
+                                    @if (item.User_Active == false)
+                                    {
+                                        <i class="fa fa-close" style="color:red; font-size:20px;"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-check" style="color:green; font-size:20px;"></i>
+                                    }
+                                </td>
+                                <td>
+                                    @item.Role.Role_Title
+                                </td>
+                                <td>
+
+                                    @Html.ActionLink(" ", "ConfirmUser", new { id = item.User_ID }, new { @class = "fa fa-filter", style = "color:blue; font-size:19px;" })
+
+                                </td>
+
+                            </tr>
+
+
+                        }
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+        }
+        else
+        {
+            <div class="table_style1">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                نام کاربری
+                            </th>
+
+                            <th>
+                                نام و نام خانوادگی
+                            </th>
+
+                            <th>
+                                تاریخ ثبت نام
+                            </th>
+
+                            <th>
+                                وضعیت دسترسی
+                            </th>
+
+                            <th>
+                                نوع کاربری
+                            </th>
+                            <th>
+                                تایید/عدم تایید
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">کاربری برای نمایش موجود نیست.</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+
+
+    </div>
+
+
+    <script>
+
+        $(function () {
+            $("[data-hide]").on("click", function () {
+                $("." + $(this).attr("data-hide")).hide();
+                // -or-, see below
+                // $(this).closest("." + $(this).attr("data-hide")).hide();
+            });
+        });
+    </script>
+    <link href="~/Content/_css/alert.css" rel="stylesheet" />
+</div>

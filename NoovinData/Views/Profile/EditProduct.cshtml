@@ -1,0 +1,289 @@
+﻿@model NoovinData.Models.Domin.Product
+
+@using NoovinData.Models.Repository
+@{
+    ViewBag.Title = "ویرایش محصول";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+
+    Rep_Profile reppro = new Rep_Profile();
+}
+
+@section CkEditor{
+
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+
+}
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
+<div class="part_left">
+
+    <div class="userpanel_bright_section">
+        <h1 class="separator">ویرایش محصول </h1>
+
+
+
+        @if (ViewBag.Result != null)
+        {
+            <div class="alert alert-success" id="alert-message">
+
+                @ViewBag.Result
+            </div>
+        }
+
+
+        <div class="form_style1 form_wrapper clearfix ">
+            <div class="overlay"></div>
+
+
+            <form id="frm_add_product" method="post" enctype="multipart/form-data" action="/Profile/EditProduct">
+
+                <input type="hidden" name="Productid" value="@Model.Product_ID" />
+
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
+
+                <ul class="list">
+                    <li class="item">
+                        <label> دسته بندی اصلی سایت : <i class="i-asterisk"></i></label>
+                        <select name="cat1_id">
+
+                            @{
+
+
+
+                                foreach (var group in reppro.Get_Group())
+                                {
+                                    string select = "";
+                                    if (group.Group_ID == Model.Product_GroupID)
+                                    {
+                                        select = "selected";
+                                    }
+
+                                    <option value="@group.Group_ID" @select> @group.Group_Name</option>
+                                }
+
+                            }
+
+                        </select>
+                    </li>
+
+
+
+                    <li class="item full">
+                        <label>عنوان : <i class="fa fa-star" style=" top:0 !important ; right:20px !important;"></i></label>
+
+                        @Html.TextBoxFor(model => model.Product_Name, new { @class = "widthinput", @placeholder = "عنوان محصول ", name = "Product_Name" })
+                        @Html.ValidationMessageFor(model => model.Product_Name, "", new { @class = "text-danger" })
+                    </li>
+
+
+                    <li class="item full">
+                        <label>توضیحات محصول<i class="fa fa-star" style=" top:0 !important ; right:20px !important;"></i></label>
+
+                        @Html.TextAreaFor(model => model.Product_Text, new { @class = "ckeditor", name = "Product_Text" })
+                        @Html.ValidationMessageFor(model => model.Product_Text, "", new { @class = "text-danger" })
+
+                    </li>
+                    <li class="item full">
+                        <label>موجودی محصول<i class="fa fa-star" style=" top:0 !important ; right:20px !important;"></i></label>
+
+
+                        @Html.TextBoxFor(model => model.Product_ExitCount, new { @class = "widthinput", @placeholder = "کوجودی محصول ", name = "Product_ExitCount" })
+                        @Html.ValidationMessageFor(model => model.Product_ExitCount, "", new { @class = "text-danger" })
+
+                    </li>
+
+                    <li class="item full">
+                        <label>وزن محصول<i class="fa fa-star" style=" top:0 !important ; right:20px !important;"></i></label>
+
+
+                        @Html.TextBoxFor(model => model.Product_Weight, new { @class = "widthinput", @placeholder = "وزن محصول ", name = "Product_Weight" })
+                        @Html.ValidationMessageFor(model => model.Product_Weight, "", new { @class = "text-danger" })
+
+                    </li>
+
+
+
+                    <li class="item full add_pic_product">
+                        <label>تصویر مرتبط با محصول : </label>
+                        <div class="product_pic" id="show_pic"><img src="~/Content/_images/product/@Model.Product_PicIndex" alt="@Model.Product_Name" /></div>
+                        <div class="file_style1 half">
+                            <input name="imageindex" type="file">
+                            <input placeholder="تصویر مورد نظر . . ." type="text">
+                            <span class="file_btn">انتخاب تصویر</span>
+                            <span class="guide">سایز مناسب برای تصویر : <i class="ltr en_words">450px * 375px</i></span>
+                        </div>
+                    </li>
+                    <li class="item full">
+                        <label>در صد تخفیف :<i class="fa fa-star" style=" top:0 !important ; right:20px !important;"></i></label>
+
+                        @Html.TextBoxFor(model => model.Product_Off, new { @class = "widthinput", @placeholder = "درصد تخفیف محصول ", name = "Product_Off" })
+                        @Html.ValidationMessageFor(model => model.Product_Off, "", new { @class = "text-danger" })
+                        <br />
+                        <span class="comment full"><i class="fa fa-check"></i>در صورتی که نمی خواهید تخفیف داشته باشد مقدار 0 وارد نمایید </span>
+                    </li>
+
+
+
+                    <li class="item full">
+                        <label>قیمت - تومان :<i class="fa fa-star" style=" top:0 !important ; right:20px !important;"></i></label>
+
+                        @Html.TextBoxFor(model => model.Product_Price, new { @class = "widthinput", @placeholder = "قیمت محصول ", name = "Product_Price" })
+                        @Html.ValidationMessageFor(model => model.Product_Price, "", new { @class = "text-danger" })
+
+                    </li>
+                @*این قسمت برای ادغام کردن کلمات کلیدی است که استفاده کردیم*@
+                    @{
+                        var q = reppro.Get_Tag().Where(a => a.Tag_ProductID == Model.Product_ID).Select(a => a.Tag_Name).ToList();
+
+
+
+                        if (q.Any())
+                        {
+                            var t = Enumerable.Aggregate(q, "", (a, b) => a + '-' + b).Remove(0, 1).Trim();
+
+                            <li class="item full">
+                                <label>کلمات کلیدی :<i class="fa fa-star" style=" top:0 !important ; right:20px !important;"></i></label>
+
+                                <input type="text" name="TagProduct" value="@t" required="required" title="مقدار کلمات کلیدی وارد شود" class="widthinput" />
+                                <br />
+                                <span class="comment full"><i class="fa fa-check"></i>برای محصول خود بین 3 تا 7 کلمه کلیدی بنویسید و مابین هر کلمه را با علامت (-) جداسازی کنید </span>
+
+                            </li>
+                        }
+                    }
+
+                    <li class="item full">
+                        <div id="PicDelet">
+                            <ul class="list">
+                                @{
+
+                                    foreach (var item in reppro.Get_Gallery().Where(a => a.Pic_ProductID == Model.Product_ID))
+                                    {
+                                        <li class="item full">
+                                            <span><img src="~/Content/_images/product/Gallery/@item.Pic_Name" width="80" height="80" alt="" /></span>
+
+                                            <span style="color: red; font-size: 20px;margin-right: 10px;">@Ajax.ActionLink("X", "DelPic", "Profile", new { @ids = item.Pic_ID, @ProductIDs = Model.Product_ID }, new AjaxOptions { Confirm = "آیا مطمئا به حذف هستید؟", HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "PicDelet" })</span>
+
+
+                                        </li>
+                                    }
+                                }
+
+                            </ul>
+                        </div>
+                    </li>
+
+
+                    <li class="item full">
+
+                        <label>گالری تصاویر مرتبط با محصول : </label>
+                        <div class="file_style1 half" id="GaleryProduct">
+
+                            <input name="picgallery" id="fileupload" multiple type="file">
+
+
+                            <span class="file_btn" style=" width:45% !important; margin-right:5px;">انتخاب تصویر</span>
+
+
+                            <div class="alert alert-danger" id="validation" style="display:none;margin-right: 50% !important;height: 35px !important;padding: 5px !important;"> حداکثر انتخاب تعداد تصویر 3 می باشد </div>
+                        </div>
+
+
+                    </li>
+               
+
+                
+
+                    @{
+                        string sl = "";
+                        if (Model.Product_AllOff == true)
+                        {
+                            sl = "checked";
+                        }
+
+
+                        <li class="item">
+                            <label class="choice">آیا محصول شامل تخفیفات مناسبتی سایت باشد ؟ </label>
+                            @Html.CheckBoxFor(model => model.Product_AllOff, new { id = "fixed_post", name = "selected", sl })
+
+                            <br />
+                            <span class="comment full"><i class="fa fa-check"></i> این محصول اگر میخواهید در تخفیفاتی که سایت ارائه میدهد باشد این گزینه انتخاب شود. </span>
+                        </li>
+
+                    }
+
+
+
+                    @{
+                        string sel = "";
+                        if (Model.Product_IsDownload == true)
+                        {
+                            sel = "checked";
+                        }
+
+
+                        <li class="item">
+                            <label class="choice">آیا محصول دانلودی است ؟ :</label>
+                            @Html.CheckBoxFor(model => model.Product_IsDownload, new { name = "selected", id = "fixed_post", sel })
+
+                            <br />
+                            <span class="comment full"><i class="fa fa-check"></i> این محصول اگر به صورت فروش دانلودی است این مورد انتخاب شود و اگر پستی است نیازی نیست. </span>
+                        </li>
+                    }
+
+
+                    <li class="item full margin_top60">
+                        <div class="progress_style1" style="display:none;">
+                            <div class="bar"></div>
+                            <div class="percent">0%</div>
+                        </div><!--progress_style1-->
+                        <input name="go_add_product" value="ارسال" class="threed_button" data-enable="" type="submit">
+                    </li>
+                </ul><!--list-->
+            </form>
+        </div><!--form_style1-->
+    </div><!-- end cat_management -->
+
+</div>
+
+<style>
+    .widthinput {
+        width: 70% !important;
+    }
+</style>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    $('#fileupload').change(function () {
+        var file = document.getElementById('fileupload');
+        if(file.files.length>3)
+        {
+            $('validation').css('display','block')
+        }
+        else
+        {
+            $('validation').css('display','none')
+        }
+    }
+        )
+</script>
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+@*<script>
+        var counter = 0;
+        function AddPic() {
+            if (counter < 2)
+
+                $('#GaleryProduct').append("  <div><input name='picgallery' type='file'> <span class='file_btn'  style='margin-right:5px;'>انتخاب تصویر</span></div>")
+
+            counter++
+        }
+
+    </script>*@

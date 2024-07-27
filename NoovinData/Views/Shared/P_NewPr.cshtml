@@ -1,0 +1,33 @@
+﻿@using NoovinData.Models.Plugin
+@using NoovinData.Models.Repository
+
+@{
+    Rep_Home repnew = new Rep_Home();
+
+    //string username = Session["User"].ToString();
+    //var id = repnew.Get_User().Where(a => a.User_UserName == username).FirstOrDefault().User_ID;
+    var qvisit = repnew.Get_Product().Where(a=>a.Product_Active==true).OrderByDescending(a => a.Product_Visit).Take(3);
+}
+
+
+<li class='item news'>
+    <div class='title_style4'>پربازدیدترین ها</div>
+    <ul class='step2 clearfix'>
+
+        @foreach (var item in qvisit)
+        {
+            <li class='item2'>
+                <a href='/Home/ShowProduct?id=@item.Product_ID' title='@item.Product_Name' class='pic' style='background-image:url("/Content/_images/product/@item.Product_PicIndex");'></a>
+                <div class='content'>
+                    <a href='/Home/ShowProduct?id=@item.Product_ID' title='@item.Product_Name' class='name ellipsis'>@item.Product_Name</a>
+                    <span class='date'>
+                        @PersianDateExtensionMethods.ToPeString(item.Product_Date, "yyyy/MM/dd")
+                    </span>
+                </div>
+            </li>
+        }
+
+
+
+    </ul>
+</li>

@@ -1,0 +1,37 @@
+﻿@using NoovinData.Models.Plugin
+
+@using NoovinData.Models.Repository
+
+
+@{
+    Rep_Home reppro = new Rep_Home();
+    var qnew = reppro.Get_Product().Where(a=>a.Product_Active==true).OrderByDescending(a=>a.Product_Date).Take(4);
+}
+<li class='item file'>
+    <div class='title_style4'>جدیدترین محصولات</div>
+
+    <ul class='step2 clearfix'>
+
+        @foreach (var item in qnew)
+        {
+           var q = reppro.Get_Group().Where(a => a.Group_ID == item.Product_GroupID).FirstOrDefault();
+            
+            <li class='item2'>
+                <a href='/Home/ShowGroup?id=@q.Group_ID' title='@q.Group_Name' class='pic' style='background-image:url(/Content/_images/Group/@q.Group_Pic);'></a>
+                <div class='content'>
+                    <a href='/Home/ShowProduct?id=@item.Product_ID' title='@item.Product_Name' class='name ellipsis'>@item.Product_Name</a>
+                    <div class='info'>
+                        <span class='date'>
+                            @PersianDateExtensionMethods.ToPeString(item.Product_Date, "dddd, dd MMMM,yyyy")
+                        </span>
+                        <span class='cat'><i class='fa fa-folder-open-o'></i> @q.Group_Name</span>
+                    </div>
+                </div>
+            </li>
+        }
+
+     
+
+
+    </ul>
+</li><!--جدیدترین محصولات-->

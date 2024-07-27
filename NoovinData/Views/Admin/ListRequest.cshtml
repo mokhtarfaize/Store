@@ -1,0 +1,97 @@
+﻿@model IEnumerable<NoovinData.Models.Domin.Withdrawal>
+
+@{
+    ViewBag.Title = "لیست درخواست تسویه";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+
+
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">لیست درخواست تسویه حساب</h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+
+
+
+        @if (Model.Count() > 0)
+        {
+
+            <table class="table_style1">
+                <thead>
+                    <tr>
+                        <th>
+                            نام درخواست دهنده
+                        </th>
+                        <th>
+                            مبلغ درخواست
+                        </th>
+
+                        <th>مشاهده ی درخواست</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.User.User_NameFamily
+                            </td>
+                            <td>
+                                @item.Withdrawal_AmountRequested تومان
+                            </td>
+                            <td>
+                                @Html.ActionLink(" ", "ShowRequest", new { id = item.Withdrawal_ID }, new { @class = "fa fa-eye", style = "color:green; font-size:19px;" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="table_style1">
+                <table>
+                    <thead>
+
+                        <tr>
+
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">درخواست تسویه حسابی برای پرداخت وجود ندارد</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        $("[data-hide]").on("click", function () {
+            $("." + $(this).attr("data-hide")).hide();
+            // -or-, see below
+            // $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+</script>
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+
+

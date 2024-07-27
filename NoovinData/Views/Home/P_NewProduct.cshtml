@@ -1,0 +1,75 @@
+﻿@using NoovinData.Models.Repository
+@{
+    Rep_Home reppro = new Rep_Home();
+}
+
+<!--محصولات جدید-->
+<section class='home_part6'>
+    <div class='container'>
+        <div class='inner clearfix'>
+            <div class='store_style2'>
+                <div class='title_style2'>جدیدترین محصولات</div>
+                <p class='title_text'>در این قسمت به صورت تصادفی برخی از فایل های سایت نمایش داده می شوند.
+                 <br> انتخاب فایل مستقل از میزان فعالیت فایل ها می باشد.
+                </p>
+                @if (reppro.Get_NewProduct().Count() > 0)
+                {
+                    <ul class='list'>
+                        @{
+
+
+                    foreach (var item in reppro.Get_NewProduct())
+                    {
+                        <li class='item'>
+                            <a href='/Home/ShowProduct?id=@item.Product_ID' title='@item.Product_Name' class='pic' style='background-image:url(/Content/_images/product/@item.Product_PicIndex);'>
+                                <img src="/Content/_images/product/@item.Product_PicIndex" alt="@item.Product_Name" class='pic' />
+                                <p class='title ellipsis'>@item.Product_Name </p>
+                            </a>
+                            <div class='content'>
+                                <div class='file item2'>
+
+                                    @if (item.Product_IsDownload == true)
+                                    { <i class='fa fa-download' style="display:block !important ;color:#00A9E0; font-size:16px;"></i>
+                                        <span class='val' style="color:red">خرید دانلودی</span>
+                                    }
+                                    else
+                                    {<i class='fa fa-truck' style="display:block !important ;color:#00A9E0; font-size:16px;"></i>
+                                        <span class='val' style="color:green">خرید پستی</span>
+                                    }
+
+                                 </div>
+                                
+                                <div class='info half item2'>
+                                    <div class='file item2'><i class='fa fa-folder-open-o' style="display:block !important ;color:#00A9E0; font-size:16px;"></i>
+                                    <span class='val'>تعداد @item.Product_ExitCount</span>
+                                    </div>
+                                    <a href="/Home/ProductUser?id=@item.User.User_ID"> <div class='name'> فروشنده : </div><div class='val'>@item.User.User_NameFamily</div></a>
+                                </div>
+                                <div class='visit item2'><i class='fa fa-eye' style="display:block !important ;color:#00A9E0; font-size:16px;"></i>
+                                <span class='val'>@item.Product_Visit بازدید</span>
+                                </div>
+                            </div>
+                        </li>
+                    }
+
+
+                        }
+
+                    </ul><!--list-->
+                }
+                else
+                {
+                    <ul class='list'>
+                        <li class='item' style="text-align: center; margin-right: 403px; background-color: #FFE6E6; font-size: 25px;">
+
+                            تاکنون هیچ محصولی ثبت نشده !!!
+
+                        </li>
+                    </ul><!--list-->
+                }
+
+
+            </div><!--store_style-->
+        </div><!--inner-->
+    </div><!--container-->
+</section><!--home_part6-->

@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="NoovinDataModelStoreContainer" CdmEntityContainer="DB">
+    <EntitySetMapping Name="BankNames">
+      <EntityTypeMapping TypeName="NoovinDataModel.BankName">
+        <MappingFragment StoreEntitySet="BankName">
+          <ScalarProperty Name="Bank_ID" ColumnName="Bank_ID" />
+          <ScalarProperty Name="Bank_Name" ColumnName="Bank_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Bills">
+      <EntityTypeMapping TypeName="NoovinDataModel.Bill">
+        <MappingFragment StoreEntitySet="Bill">
+          <ScalarProperty Name="Bill_ID" ColumnName="Bill_ID" />
+          <ScalarProperty Name="Bill_Date" ColumnName="Bill_Date" />
+          <ScalarProperty Name="Bill_ProductID" ColumnName="Bill_ProductID" />
+          <ScalarProperty Name="Bill_Seller" ColumnName="Bill_Seller" />
+          <ScalarProperty Name="Bill_Buyer" ColumnName="Bill_Buyer" />
+          <ScalarProperty Name="Bill_PayPrice" ColumnName="Bill_PayPrice" />
+          <ScalarProperty Name="Bill_Postage" ColumnName="Bill_Postage" />
+          <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+          <ScalarProperty Name="Bill_TransNo" ColumnName="Bill_TransNo" />
+          <ScalarProperty Name="Bill_RefNo" ColumnName="Bill_RefNo" />
+          <ScalarProperty Name="Bill_Status" ColumnName="Bill_Status" />
+          <ScalarProperty Name="Bill_TracingCode" ColumnName="Bill_TracingCode" />
+          <ScalarProperty Name="Bill_PostStatsID" ColumnName="Bill_PostStatsID" />
+          <ScalarProperty Name="Bill_Price" ColumnName="Bill_Price" />
+          <ScalarProperty Name="Bill_ExpDate" ColumnName="Bill_ExpDate" />
+          <ScalarProperty Name="Bill_Count" ColumnName="Bill_Count" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ConfirmEmails">
+      <EntityTypeMapping TypeName="NoovinDataModel.ConfirmEmail">
+        <MappingFragment StoreEntitySet="ConfirmEmail">
+          <ScalarProperty Name="ConfirmEmail_ID" ColumnName="ConfirmEmail_ID" />
+          <ScalarProperty Name="ConfirmEmail_Date" ColumnName="ConfirmEmail_Date" />
+          <ScalarProperty Name="ConfirmEmail_UserID" ColumnName="ConfirmEmail_UserID" />
+          <ScalarProperty Name="ConfirmEmail_Status" ColumnName="ConfirmEmail_Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Downloads">
+      <EntityTypeMapping TypeName="NoovinDataModel.Download">
+        <MappingFragment StoreEntitySet="Download">
+          <ScalarProperty Name="Download_ID" ColumnName="Download_ID" />
+          <ScalarProperty Name="Download_Url" ColumnName="Download_Url" />
+          <ScalarProperty Name="Download_Date" ColumnName="Download_Date" />
+          <ScalarProperty Name="Download_Lenght" ColumnName="Download_Lenght" />
+          <ScalarProperty Name="Download_Allow" ColumnName="Download_Allow" />
+          <ScalarProperty Name="Download_UserID" ColumnName="Download_UserID" />
+          <ScalarProperty Name="Download_ProductID" ColumnName="Download_ProductID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Groups">
+      <EntityTypeMapping TypeName="NoovinDataModel.Group">
+        <MappingFragment StoreEntitySet="Group">
+          <ScalarProperty Name="Group_ID" ColumnName="Group_ID" />
+          <ScalarProperty Name="Group_Name" ColumnName="Group_Name" />
+          <ScalarProperty Name="Group_Pic" ColumnName="Group_Pic" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Identities">
+      <EntityTypeMapping TypeName="NoovinDataModel.Identity">
+        <MappingFragment StoreEntitySet="Identity">
+          <ScalarProperty Name="Identity_ID" ColumnName="Identity_ID" />
+          <ScalarProperty Name="Identity_Pic" ColumnName="Identity_Pic" />
+          <ScalarProperty Name="Identity_FathersName" ColumnName="Identity_FathersName" />
+          <ScalarProperty Name="Identity_Birth" ColumnName="Identity_Birth" />
+          <ScalarProperty Name="Identity_Confirm" ColumnName="Identity_Confirm" />
+          <ScalarProperty Name="Identity_UserID" ColumnName="Identity_UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InterimBills">
+      <EntityTypeMapping TypeName="NoovinDataModel.InterimBill">
+        <MappingFragment StoreEntitySet="InterimBill">
+          <ScalarProperty Name="InterimBill_ID" ColumnName="InterimBill_ID" />
+          <ScalarProperty Name="InterimBill_Date" ColumnName="InterimBill_Date" />
+          <ScalarProperty Name="InterimBill_ProductID" ColumnName="InterimBill_ProductID" />
+          <ScalarProperty Name="InterimBill_Seller" ColumnName="InterimBill_Seller" />
+          <ScalarProperty Name="InterimBill_PayPrice" ColumnName="InterimBill_PayPrice" />
+          <ScalarProperty Name="InterimBill_Postage" ColumnName="InterimBill_Postage" />
+          <ScalarProperty Name="InterimBill_Buyer" ColumnName="InterimBill_Buyer" />
+          <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+          <ScalarProperty Name="InterimBill_ExpDate" ColumnName="InterimBill_ExpDate" />
+          <ScalarProperty Name="InterimBill_Count" ColumnName="InterimBill_Count" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Massages">
+      <EntityTypeMapping TypeName="NoovinDataModel.Massage">
+        <MappingFragment StoreEntitySet="Massage">
+          <ScalarProperty Name="Massage_ID" ColumnName="Massage_ID" />
+          <ScalarProperty Name="Massage_UserGet" ColumnName="Massage_UserGet" />
+          <ScalarProperty Name="Massage_UserSend" ColumnName="Massage_UserSend" />
+          <ScalarProperty Name="Massage_Date" ColumnName="Massage_Date" />
+          <ScalarProperty Name="Massage_Read" ColumnName="Massage_Read" />
+          <ScalarProperty Name="Massage_Title" ColumnName="Massage_Title" />
+          <ScalarProperty Name="Massage_Body" ColumnName="Massage_Body" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NoBanks">
+      <EntityTypeMapping TypeName="NoovinDataModel.NoBank">
+        <MappingFragment StoreEntitySet="NoBank">
+          <ScalarProperty Name="Banks_ID" ColumnName="Banks_ID" />
+          <ScalarProperty Name="Banks_NoCart" ColumnName="Banks_NoCart" />
+          <ScalarProperty Name="Banks_NoIR" ColumnName="Banks_NoIR" />
+          <ScalarProperty Name="Banks_NoBank" ColumnName="Banks_NoBank" />
+          <ScalarProperty Name="Banks_NameID" ColumnName="Banks_NameID" />
+          <ScalarProperty Name="Banks_UserID" ColumnName="Banks_UserID" />
+          <ScalarProperty Name="Banks_NameUser" ColumnName="Banks_NameUser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pics">
+      <EntityTypeMapping TypeName="NoovinDataModel.Pic">
+        <MappingFragment StoreEntitySet="Pic">
+          <ScalarProperty Name="Pic_ID" ColumnName="Pic_ID" />
+          <ScalarProperty Name="Pic_Name" ColumnName="Pic_Name" />
+          <ScalarProperty Name="Pic_ProductID" ColumnName="Pic_ProductID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PostStatus">
+      <EntityTypeMapping TypeName="NoovinDataModel.PostStatu">
+        <MappingFragment StoreEntitySet="PostStatus">
+          <ScalarProperty Name="St_ID" ColumnName="St_ID" />
+          <ScalarProperty Name="St_Name" ColumnName="St_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Products">
+      <EntityTypeMapping TypeName="NoovinDataModel.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+          <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+          <ScalarProperty Name="Product_Text" ColumnName="Product_Text" />
+          <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
+          <ScalarProperty Name="Product_Off" ColumnName="Product_Off" />
+          <ScalarProperty Name="Product_PicIndex" ColumnName="Product_PicIndex" />
+          <ScalarProperty Name="Product_IsDownload" ColumnName="Product_IsDownload" />
+          <ScalarProperty Name="Product_Date" ColumnName="Product_Date" />
+          <ScalarProperty Name="Product_GroupID" ColumnName="Product_GroupID" />
+          <ScalarProperty Name="Product_AllOff" ColumnName="Product_AllOff" />
+          <ScalarProperty Name="Product_Visit" ColumnName="Product_Visit" />
+          <ScalarProperty Name="Product_ExitCount" ColumnName="Product_ExitCount" />
+          <ScalarProperty Name="Product_Weight" ColumnName="Product_Weight" />
+          <ScalarProperty Name="Product_UserID" ColumnName="Product_UserID" />
+          <ScalarProperty Name="Product_Active" ColumnName="Product_Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="NoovinDataModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+          <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+          <ScalarProperty Name="Role_Title" ColumnName="Role_Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Settings">
+      <EntityTypeMapping TypeName="NoovinDataModel.Setting">
+        <MappingFragment StoreEntitySet="Setting">
+          <ScalarProperty Name="Setting_ID" ColumnName="Setting_ID" />
+          <ScalarProperty Name="Smtp" ColumnName="Smtp" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+          <ScalarProperty Name="Keyword" ColumnName="Keyword" />
+          <ScalarProperty Name="Descrption" ColumnName="Descrption" />
+          <ScalarProperty Name="DescSite" ColumnName="DescSite" />
+          <ScalarProperty Name="TitleSite" ColumnName="TitleSite" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="PageCount" ColumnName="PageCount" />
+          <ScalarProperty Name="DateDeleteBill" ColumnName="DateDeleteBill" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sliders">
+      <EntityTypeMapping TypeName="NoovinDataModel.Slider">
+        <MappingFragment StoreEntitySet="Slider">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Sort" ColumnName="Sort" />
+          <ScalarProperty Name="Url" ColumnName="Url" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="Enable" ColumnName="Enable" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="States">
+      <EntityTypeMapping TypeName="NoovinDataModel.State">
+        <MappingFragment StoreEntitySet="State">
+          <ScalarProperty Name="State_ID" ColumnName="State_ID" />
+          <ScalarProperty Name="State_Name" ColumnName="State_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tags">
+      <EntityTypeMapping TypeName="NoovinDataModel.Tag">
+        <MappingFragment StoreEntitySet="Tags">
+          <ScalarProperty Name="Tag_ID" ColumnName="Tag_ID" />
+          <ScalarProperty Name="Tag_Name" ColumnName="Tag_Name" />
+          <ScalarProperty Name="Tag_ProductID" ColumnName="Tag_ProductID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TempDLs">
+      <EntityTypeMapping TypeName="NoovinDataModel.TempDL">
+        <MappingFragment StoreEntitySet="TempDL">
+          <ScalarProperty Name="TempDL_ID" ColumnName="TempDL_ID" />
+          <ScalarProperty Name="TempDL_Date" ColumnName="TempDL_Date" />
+          <ScalarProperty Name="TempDL_ExpDate" ColumnName="TempDL_ExpDate" />
+          <ScalarProperty Name="TempDL_UnigNo" ColumnName="TempDL_UnigNo" />
+          <ScalarProperty Name="TempDL_BillNo" ColumnName="TempDL_BillNo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="NoovinDataModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+          <ScalarProperty Name="User_NameFamily" ColumnName="User_NameFamily" />
+          <ScalarProperty Name="User_UserName" ColumnName="User_UserName" />
+          <ScalarProperty Name="User_Email" ColumnName="User_Email" />
+          <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+          <ScalarProperty Name="User_Address" ColumnName="User_Address" />
+          <ScalarProperty Name="User_City" ColumnName="User_City" />
+          <ScalarProperty Name="User_PostelCode" ColumnName="User_PostelCode" />
+          <ScalarProperty Name="User_Tel" ColumnName="User_Tel" />
+          <ScalarProperty Name="User_Mobile" ColumnName="User_Mobile" />
+          <ScalarProperty Name="User_Date" ColumnName="User_Date" />
+          <ScalarProperty Name="User_Active" ColumnName="User_Active" />
+          <ScalarProperty Name="User_Rating" ColumnName="User_Rating" />
+          <ScalarProperty Name="User_RoleID" ColumnName="User_RoleID" />
+          <ScalarProperty Name="User_NationalCode" ColumnName="User_NationalCode" />
+          <ScalarProperty Name="User_StateID" ColumnName="User_StateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Visits">
+      <EntityTypeMapping TypeName="NoovinDataModel.Visit">
+        <MappingFragment StoreEntitySet="Visit">
+          <ScalarProperty Name="Visit_ID" ColumnName="Visit_ID" />
+          <ScalarProperty Name="Visit_Date" ColumnName="Visit_Date" />
+          <ScalarProperty Name="Visit_IP" ColumnName="Visit_IP" />
+          <ScalarProperty Name="Visit_UserName" ColumnName="Visit_UserName" />
+          <ScalarProperty Name="Visit_Browser" ColumnName="Visit_Browser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Weights">
+      <EntityTypeMapping TypeName="NoovinDataModel.Weight">
+        <MappingFragment StoreEntitySet="Weight">
+          <ScalarProperty Name="Weight_ID" ColumnName="Weight_ID" />
+          <ScalarProperty Name="Weight_Max" ColumnName="Weight_Max" />
+          <ScalarProperty Name="Weight_Min" ColumnName="Weight_Min" />
+          <ScalarProperty Name="Weight_Price" ColumnName="Weight_Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Withdrawals">
+      <EntityTypeMapping TypeName="NoovinDataModel.Withdrawal">
+        <MappingFragment StoreEntitySet="Withdrawal">
+          <ScalarProperty Name="Withdrawal_ID" ColumnName="Withdrawal_ID" />
+          <ScalarProperty Name="Withdrawal_TimeLastReceived" ColumnName="Withdrawal_TimeLastReceived" />
+          <ScalarProperty Name="Withdrawal_Stock" ColumnName="Withdrawal_Stock" />
+          <ScalarProperty Name="Withdrawal_LastReceivd" ColumnName="Withdrawal_LastReceivd" />
+          <ScalarProperty Name="Withdrawal_Request" ColumnName="Withdrawal_Request" />
+          <ScalarProperty Name="Withdrawal_AmountRequested" ColumnName="Withdrawal_AmountRequested" />
+          <ScalarProperty Name="Withdrawal_UserID" ColumnName="Withdrawal_UserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,256 @@
+﻿@model NoovinData.Models.Domin.User
+@using NoovinData.Models.Repository
+@{
+    ViewBag.Title = @Model.User_UserName;
+    Layout = "~/Views/Shared/_Profile.cshtml";
+    Rep_Profile repname = new Rep_Profile();
+}
+
+<script>
+
+    $(function () {
+        $("[data-hide]").on("click", function () {
+            $("." + $(this).attr("data-hide")).hide();
+            // -or-, see below
+            // $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+</script>
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">@Model.User_NameFamily </h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+        <div class="bs-example" data-example-id="list-group-disabled">
+            <div class="list-group">
+                <a href="" class="list-group-item active">
+                    <h4 class="list-group-item-heading"> نام نام خانوادگی :</h4>
+                    <p class="list-group-item-text">@Html.DisplayFor(model => model.User_NameFamily)</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">   نام کاربری :</h4>
+                    <p class="list-group-item-text"> @Html.DisplayFor(model => model.User_UserName)</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">   دسترسی کاربری :</h4>
+                    <p class="list-group-item-text"> @Model.Role.Role_Title</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">    پست الکترونیک  :</h4>
+                    <p class="list-group-item-text"> @Html.DisplayFor(model => model.User_Email)</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">   آدرس منزل :</h4>
+                    <p class="list-group-item-text"> @Html.DisplayFor(model => model.User_Address)</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">    شهر محل سکونت :</h4>
+                    <p class="list-group-item-text"> @Html.DisplayFor(model => model.User_City)</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">   کد پستی :</h4>
+                    <p class="list-group-item-text">
+                        @if (Model.User_PostelCode == null)
+                        {
+                            <span>ثبت نشده</span>
+                        }
+
+                        @Html.DisplayFor(model => model.User_PostelCode)
+                    </p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">   شماره ثابت :</h4>
+                    <p class="list-group-item-text">
+                        @if (Model.User_Tel == null)
+                        {
+                            <span>ثبت نشده</span>
+                        }
+                        @Html.DisplayFor(model => model.User_Tel)
+                    </p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">   شماره همراه :</h4>
+                    <p class="list-group-item-text"> @Html.DisplayFor(model => model.User_Mobile)</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">  امتیاز کاربری :</h4>
+                    <p class="list-group-item-text"> @Html.DisplayFor(model => model.User_Rating)</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">    کد ملی  :</h4>
+                    <p class="list-group-item-text"> @Html.DisplayFor(model => model.User_NationalCode)</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">  استان :</h4>
+                    <p class="list-group-item-text"> @Html.DisplayFor(model => model.State.State_Name)</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">   شماره حساب :</h4>
+                    <p class="list-group-item-text">
+                        @{
+                            var qno = Model.NoBanks.Where(a => a.Banks_UserID == Model.User_ID).FirstOrDefault();
+                            if (qno == null)
+                            {
+                                <span>ثبت نشده</span>
+                            }
+                            else
+                            {
+                                <span>@qno.Banks_NoBank</span>
+                            }
+                            
+                        }
+                    </p>
+
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">   نام بانک :</h4>
+                    <p class="list-group-item-text">
+                        @{
+                          
+                           
+                            if (qno == null)
+                            {
+                                <span>ثبت نشده</span>
+                            }
+                            else
+                            {
+                                var qname = repname.Get_NameBank().Where(a => a.Bank_ID == qno.Banks_NameID).FirstOrDefault();
+                                <span>@qname.Bank_Name</span>
+                            }
+                            
+                        }
+                    </p>
+
+                </a>
+            </div>
+        </div>
+
+
+        <div class="form_style1 form_wrapper clearfix ">
+            <div class="overlay"></div>
+            @using (Html.BeginForm("UpRole", "Admin", FormMethod.Post, new { @id = "frm_add_product" }))
+            {
+                <input type="hidden" name="iduser" value="@Model.User_ID" />
+                <select name="roleid">
+
+                    @{
+                foreach (var item in repname.Get_Role())
+                {
+                    string select = "";
+                    if (item.Role_ID == Model.Role.Role_ID)
+                    {
+                        select = "selected";
+                    }
+                    <option value="@item.Role_ID" @select>@item.Role_Title</option>
+                }
+                    }
+
+
+                </select>
+
+                <br />
+
+                <input type="submit" style="margin-top: 25px; width: 21% !important;" value="تغییر" />
+            }
+        </div>
+
+
+    </div>
+</div>
+
+
+
+<style>
+    .bs-example {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+
+    .bs-example {
+        position: relative;
+        padding: 2px 15px 15px;
+        margin: 0px 15px 15px;
+    }
+
+        .bs-example > .alert:last-child, .bs-example > .form-control:last-child, .bs-example > .jumbotron:last-child, .bs-example > .list-group:last-child, .bs-example > .navbar:last-child, .bs-example > .panel:last-child, .bs-example > .progress:last-child, .bs-example > .table-responsive:last-child > .table, .bs-example > .table:last-child, .bs-example > .well:last-child, .bs-example > blockquote:last-child, .bs-example > ol:last-child, .bs-example > p:last-child, .bs-example > ul:last-child {
+            margin-bottom: 0px;
+        }
+
+        .bs-example > .list-group {
+            max-width: 60%;
+        }
+
+    .list-group {
+        padding-left: 0px;
+        margin-bottom: 20px;
+        margin-right: 195px;
+    }
+
+    .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+        z-index: 2;
+        color: #FFF;
+        background-color: #337AB7;
+        border-color: #337AB7;
+    }
+
+    .list-group-item:first-child {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+
+    a.list-group-item, button.list-group-item {
+        color: #555;
+    }
+
+    .list-group-item {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: -1px;
+        background-color: #FFF;
+        border: 1px solid #DDD;
+    }
+
+        .list-group-item.active .list-group-item-heading, .list-group-item.active .list-group-item-heading > .small, .list-group-item.active .list-group-item-heading > small, .list-group-item.active:focus .list-group-item-heading, .list-group-item.active:focus .list-group-item-heading > .small, .list-group-item.active:focus .list-group-item-heading > small, .list-group-item.active:hover .list-group-item-heading, .list-group-item.active:hover .list-group-item-heading > .small, .list-group-item.active:hover .list-group-item-heading > small {
+            color: inherit;
+        }
+
+    a.list-group-item .list-group-item-heading, button.list-group-item .list-group-item-heading {
+        color: #333;
+    }
+
+    .list-group-item-heading {
+        margin-top: 0px;
+        margin-bottom: 5px;
+    }
+
+    .h4, h4 {
+        font-size: 18px;
+    }
+
+    .list-group-item.active .list-group-item-text, .list-group-item.active:focus .list-group-item-text, .list-group-item.active:hover .list-group-item-text {
+        color: #C7DDEF;
+    }
+
+    .list-group-item-text {
+        margin-bottom: -1px;
+        line-height: 1.3;
+        text-align: right;
+        margin-top: -30px;
+        margin-right: 200px;
+    }
+
+    p {
+        margin: 0px 0px 10px;
+    }
+</style>

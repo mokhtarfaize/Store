@@ -1,0 +1,30 @@
+﻿
+@using NoovinData.Models.Repository
+
+
+@{
+
+    Rep_Home repvisit = new Rep_Home();
+
+    DateTime W = DateTime.Today.AddDays(-7);
+    DateTime M = DateTime.Today.AddDays(-30);
+    DateTime dt = DateTime.Today;
+     
+    var qt = repvisit.Get_Visit().Where(a => a.Visit_Date >= dt).Count();
+    var qw = repvisit.Get_Visit().Where(a => a.Visit_Date <= dt && a.Visit_Date >= W).Count();
+    var qm = repvisit.Get_Visit().Where(a => a.Visit_Date <= dt && a.Visit_Date >= M).Count();
+    var qall = repvisit.Get_Visit().Count();
+
+}
+
+<div class="store_aside_section">
+    <h3 class="store_aside_title">آمار بازدید</h3>
+    <div class="store_aside_content">
+
+        <p><i class="i-arrow-left-2"></i>امروز: @qt</p>
+        <p><i class="i-arrow-left-2"></i>هفته گذشته: @qw</p>
+        <p><i class="i-arrow-left-2"></i>ماه گذشته: @qm</p>
+        <p><i class="i-arrow-left-2"></i>کل: @qall</p>
+
+    </div>
+</div>

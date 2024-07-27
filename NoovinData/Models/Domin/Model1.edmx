@@ -1,0 +1,1556 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NoovinDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BankName">
+          <Key>
+            <PropertyRef Name="Bank_ID" />
+          </Key>
+          <Property Name="Bank_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Bank_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="Bill_ID" />
+          </Key>
+          <Property Name="Bill_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Bill_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Bill_ProductID" Type="int" Nullable="false" />
+          <Property Name="Bill_Seller" Type="int" Nullable="false" />
+          <Property Name="Bill_Buyer" Type="int" Nullable="false" />
+          <Property Name="Bill_PayPrice" Type="int" Nullable="false" />
+          <Property Name="Bill_Postage" Type="int" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Bill_TransNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Bill_RefNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Bill_Status" Type="bit" />
+          <Property Name="Bill_TracingCode" Type="varchar" MaxLength="50" />
+          <Property Name="Bill_PostStatsID" Type="int" />
+          <Property Name="Bill_Price" Type="int" Nullable="false" />
+          <Property Name="Bill_ExpDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Bill_Count" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ConfirmEmail">
+          <Key>
+            <PropertyRef Name="ConfirmEmail_ID" />
+          </Key>
+          <Property Name="ConfirmEmail_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConfirmEmail_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="ConfirmEmail_UserID" Type="int" Nullable="false" />
+          <Property Name="ConfirmEmail_Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Download">
+          <Key>
+            <PropertyRef Name="Download_ID" />
+          </Key>
+          <Property Name="Download_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Download_Url" Type="nvarchar" MaxLength="200" />
+          <Property Name="Download_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Download_Lenght" Type="int" Nullable="false" />
+          <Property Name="Download_Allow" Type="bit" Nullable="false" />
+          <Property Name="Download_UserID" Type="int" Nullable="false" />
+          <Property Name="Download_ProductID" Type="int" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="Group_ID" />
+          </Key>
+          <Property Name="Group_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Group_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Group_Pic" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Identity">
+          <Key>
+            <PropertyRef Name="Identity_ID" />
+          </Key>
+          <Property Name="Identity_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Identity_Pic" Type="nvarchar" MaxLength="100" />
+          <Property Name="Identity_FathersName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Identity_Birth" Type="nvarchar" MaxLength="100" />
+          <Property Name="Identity_Confirm" Type="bit" Nullable="false" />
+          <Property Name="Identity_UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="InterimBill">
+          <Key>
+            <PropertyRef Name="InterimBill_ID" />
+          </Key>
+          <Property Name="InterimBill_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InterimBill_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="InterimBill_ProductID" Type="int" Nullable="false" />
+          <Property Name="InterimBill_Seller" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="InterimBill_PayPrice" Type="int" Nullable="false" />
+          <Property Name="InterimBill_Postage" Type="int" />
+          <Property Name="InterimBill_Buyer" Type="int" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="InterimBill_ExpDate" Type="datetime2" Precision="7" />
+          <Property Name="InterimBill_Count" Type="int" />
+        </EntityType>
+        <EntityType Name="Massage">
+          <Key>
+            <PropertyRef Name="Massage_ID" />
+          </Key>
+          <Property Name="Massage_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Massage_UserGet" Type="int" Nullable="false" />
+          <Property Name="Massage_UserSend" Type="int" />
+          <Property Name="Massage_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Massage_Read" Type="bit" Nullable="false" />
+          <Property Name="Massage_Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Massage_Body" Type="nvarchar" MaxLength="350" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NoBank">
+          <Key>
+            <PropertyRef Name="Banks_ID" />
+          </Key>
+          <Property Name="Banks_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Banks_NoCart" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Banks_NoIR" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Banks_NoBank" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Banks_NameID" Type="int" Nullable="false" />
+          <Property Name="Banks_UserID" Type="int" Nullable="false" />
+          <Property Name="Banks_NameUser" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pic">
+          <Key>
+            <PropertyRef Name="Pic_ID" />
+          </Key>
+          <Property Name="Pic_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pic_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pic_ProductID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PostStatus">
+          <Key>
+            <PropertyRef Name="St_ID" />
+          </Key>
+          <Property Name="St_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="St_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+          </Key>
+          <Property Name="Product_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Product_Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Product_Price" Type="int" Nullable="false" />
+          <Property Name="Product_Off" Type="int" />
+          <Property Name="Product_PicIndex" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Product_IsDownload" Type="bit" Nullable="false" />
+          <Property Name="Product_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Product_GroupID" Type="int" />
+          <Property Name="Product_AllOff" Type="bit" Nullable="false" />
+          <Property Name="Product_Visit" Type="int" Nullable="false" />
+          <Property Name="Product_ExitCount" Type="int" />
+          <Property Name="Product_Weight" Type="int" />
+          <Property Name="Product_UserID" Type="int" Nullable="false" />
+          <Property Name="Product_Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Role_ID" />
+          </Key>
+          <Property Name="Role_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Role_Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="Setting_ID" />
+          </Key>
+          <Property Name="Setting_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Smtp" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Discount" Type="int" />
+          <Property Name="Keyword" Type="nvarchar" MaxLength="100" />
+          <Property Name="Descrption" Type="nvarchar" MaxLength="150" />
+          <Property Name="DescSite" Type="nvarchar" MaxLength="500" />
+          <Property Name="TitleSite" Type="nvarchar" MaxLength="100" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="PageCount" Type="int" />
+          <Property Name="DateDeleteBill" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sort" Type="int" Nullable="false" />
+          <Property Name="Url" Type="nvarchar" MaxLength="100" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Image" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Enable" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="State_ID" />
+          </Key>
+          <Property Name="State_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="State_Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="Tag_ID" />
+          </Key>
+          <Property Name="Tag_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tag_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tag_ProductID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TempDL">
+          <Key>
+            <PropertyRef Name="TempDL_ID" />
+          </Key>
+          <Property Name="TempDL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TempDL_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="TempDL_ExpDate" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="TempDL_UnigNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TempDL_BillNo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_NameFamily" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="User_UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="User_Email" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="User_Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="User_Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="User_City" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="User_PostelCode" Type="nvarchar" MaxLength="15" />
+          <Property Name="User_Tel" Type="nvarchar" MaxLength="15" />
+          <Property Name="User_Mobile" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="User_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="User_Active" Type="bit" Nullable="false" />
+          <Property Name="User_Rating" Type="int" Nullable="false" />
+          <Property Name="User_RoleID" Type="int" Nullable="false" />
+          <Property Name="User_NationalCode" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="User_StateID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="Visit_ID" />
+          </Key>
+          <Property Name="Visit_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Visit_Date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Visit_IP" Type="nvarchar" MaxLength="100" />
+          <Property Name="Visit_UserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Visit_Browser" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Weight">
+          <Key>
+            <PropertyRef Name="Weight_ID" />
+          </Key>
+          <Property Name="Weight_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Weight_Max" Type="int" />
+          <Property Name="Weight_Min" Type="int" />
+          <Property Name="Weight_Price" Type="int" />
+        </EntityType>
+        <EntityType Name="Withdrawal">
+          <Key>
+            <PropertyRef Name="Withdrawal_ID" />
+          </Key>
+          <Property Name="Withdrawal_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Withdrawal_TimeLastReceived" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Withdrawal_Stock" Type="int" Nullable="false" />
+          <Property Name="Withdrawal_LastReceivd" Type="int" Nullable="false" />
+          <Property Name="Withdrawal_Request" Type="bit" Nullable="false" />
+          <Property Name="Withdrawal_AmountRequested" Type="int" Nullable="false" />
+          <Property Name="Withdrawal_UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Banks_BankName">
+          <End Role="BankName" Type="Self.BankName" Multiplicity="1" />
+          <End Role="NoBank" Type="Self.NoBank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankName">
+              <PropertyRef Name="Bank_ID" />
+            </Principal>
+            <Dependent Role="NoBank">
+              <PropertyRef Name="Banks_NameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_PostStatus">
+          <End Role="PostStatus" Type="Self.PostStatus" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostStatus">
+              <PropertyRef Name="St_ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Bill_PostStatsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Bill_ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Bill_Buyer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfirmEmail_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ConfirmEmail" Type="Self.ConfirmEmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="ConfirmEmail">
+              <PropertyRef Name="ConfirmEmail_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Download_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Download" Type="Self.Download" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="Download">
+              <PropertyRef Name="Download_ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Download_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Download" Type="Self.Download" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Download">
+              <PropertyRef Name="Download_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Identity_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Identity" Type="Self.Identity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Identity">
+              <PropertyRef Name="Identity_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InterimBill_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="InterimBill" Type="Self.InterimBill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="InterimBill">
+              <PropertyRef Name="InterimBill_ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InterimBill_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="InterimBill" Type="Self.InterimBill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="InterimBill">
+              <PropertyRef Name="InterimBill_Buyer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Massage_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Massage" Type="Self.Massage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Massage">
+              <PropertyRef Name="Massage_UserGet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NoBank_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="NoBank" Type="Self.NoBank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="NoBank">
+              <PropertyRef Name="Banks_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pic_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Pic" Type="Self.Pic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="Pic">
+              <PropertyRef Name="Pic_ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Group_ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Product_GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Product_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tags_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Tags" Type="Self.Tags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="Tags">
+              <PropertyRef Name="Tag_ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TempDL_Bill">
+          <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
+          <End Role="TempDL" Type="Self.TempDL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bill">
+              <PropertyRef Name="Bill_ID" />
+            </Principal>
+            <Dependent Role="TempDL">
+              <PropertyRef Name="TempDL_BillNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Role_ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="User_RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_State">
+          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="State_ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="User_StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Withdrawal_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Withdrawal" Type="Self.Withdrawal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Withdrawal">
+              <PropertyRef Name="Withdrawal_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NoovinDataModelStoreContainer">
+          <EntitySet Name="BankName" EntityType="Self.BankName" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ConfirmEmail" EntityType="Self.ConfirmEmail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Download" EntityType="Self.Download" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Identity" EntityType="Self.Identity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InterimBill" EntityType="Self.InterimBill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Massage" EntityType="Self.Massage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NoBank" EntityType="Self.NoBank" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pic" EntityType="Self.Pic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PostStatus" EntityType="Self.PostStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Setting" EntityType="Self.Setting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Slider" EntityType="Self.Slider" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TempDL" EntityType="Self.TempDL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visit" EntityType="Self.Visit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Weight" EntityType="Self.Weight" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Withdrawal" EntityType="Self.Withdrawal" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Banks_BankName" Association="Self.FK_Banks_BankName">
+            <End Role="BankName" EntitySet="BankName" />
+            <End Role="NoBank" EntitySet="NoBank" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_PostStatus" Association="Self.FK_Bill_PostStatus">
+            <End Role="PostStatus" EntitySet="PostStatus" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Product" Association="Self.FK_Bill_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_User" Association="Self.FK_Bill_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfirmEmail_User" Association="Self.FK_ConfirmEmail_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="ConfirmEmail" EntitySet="ConfirmEmail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Download_Product" Association="Self.FK_Download_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Download" EntitySet="Download" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Download_User" Association="Self.FK_Download_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Download" EntitySet="Download" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Identity_User" Association="Self.FK_Identity_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Identity" EntitySet="Identity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InterimBill_Product" Association="Self.FK_InterimBill_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="InterimBill" EntitySet="InterimBill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InterimBill_User" Association="Self.FK_InterimBill_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="InterimBill" EntitySet="InterimBill" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Massage_User" Association="Self.FK_Massage_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Massage" EntitySet="Massage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NoBank_User" Association="Self.FK_NoBank_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="NoBank" EntitySet="NoBank" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pic_Product" Association="Self.FK_Pic_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Pic" EntitySet="Pic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Group" Association="Self.FK_Product_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_User" Association="Self.FK_Product_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tags_Product" Association="Self.FK_Tags_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Tags" EntitySet="Tags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TempDL_Bill" Association="Self.FK_TempDL_Bill">
+            <End Role="Bill" EntitySet="Bill" />
+            <End Role="TempDL" EntitySet="TempDL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_State" Association="Self.FK_User_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Withdrawal_User" Association="Self.FK_Withdrawal_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Withdrawal" EntitySet="Withdrawal" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NoovinDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BankName">
+          <Key>
+            <PropertyRef Name="Bank_ID" />
+          </Key>
+          <Property Name="Bank_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Bank_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="NoBanks" Relationship="Self.FK_Banks_BankName" FromRole="BankName" ToRole="NoBank" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="Bill_ID" />
+          </Key>
+          <Property Name="Bill_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Bill_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Bill_ProductID" Type="Int32" Nullable="false" />
+          <Property Name="Bill_Seller" Type="Int32" Nullable="false" />
+          <Property Name="Bill_Buyer" Type="Int32" Nullable="false" />
+          <Property Name="Bill_PayPrice" Type="Int32" Nullable="false" />
+          <Property Name="Bill_Postage" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Bill_TransNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Bill_RefNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Bill_Status" Type="Boolean" />
+          <Property Name="Bill_TracingCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Bill_PostStatsID" Type="Int32" />
+          <Property Name="Bill_Price" Type="Int32" Nullable="false" />
+          <Property Name="Bill_ExpDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Bill_Count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PostStatu" Relationship="Self.FK_Bill_PostStatus" FromRole="Bill" ToRole="PostStatus" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Bill_Product" FromRole="Bill" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Bill_User" FromRole="Bill" ToRole="User" />
+          <NavigationProperty Name="TempDLs" Relationship="Self.FK_TempDL_Bill" FromRole="Bill" ToRole="TempDL" />
+        </EntityType>
+        <EntityType Name="ConfirmEmail">
+          <Key>
+            <PropertyRef Name="ConfirmEmail_ID" />
+          </Key>
+          <Property Name="ConfirmEmail_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConfirmEmail_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="ConfirmEmail_UserID" Type="Int32" Nullable="false" />
+          <Property Name="ConfirmEmail_Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_ConfirmEmail_User" FromRole="ConfirmEmail" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Download">
+          <Key>
+            <PropertyRef Name="Download_ID" />
+          </Key>
+          <Property Name="Download_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Download_Url" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Download_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Download_Lenght" Type="Int32" Nullable="false" />
+          <Property Name="Download_Allow" Type="Boolean" Nullable="false" />
+          <Property Name="Download_UserID" Type="Int32" Nullable="false" />
+          <Property Name="Download_ProductID" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Download_Product" FromRole="Download" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Download_User" FromRole="Download" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="Group_ID" />
+          </Key>
+          <Property Name="Group_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Group_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Group_Pic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_Group" FromRole="Group" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Identity">
+          <Key>
+            <PropertyRef Name="Identity_ID" />
+          </Key>
+          <Property Name="Identity_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Identity_Pic" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Identity_FathersName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Identity_Birth" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Identity_Confirm" Type="Boolean" Nullable="false" />
+          <Property Name="Identity_UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Identity_User" FromRole="Identity" ToRole="User" />
+        </EntityType>
+        <EntityType Name="InterimBill">
+          <Key>
+            <PropertyRef Name="InterimBill_ID" />
+          </Key>
+          <Property Name="InterimBill_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InterimBill_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="InterimBill_ProductID" Type="Int32" Nullable="false" />
+          <Property Name="InterimBill_Seller" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InterimBill_PayPrice" Type="Int32" Nullable="false" />
+          <Property Name="InterimBill_Postage" Type="Int32" />
+          <Property Name="InterimBill_Buyer" Type="Int32" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InterimBill_ExpDate" Type="DateTime" Precision="7" />
+          <Property Name="InterimBill_Count" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_InterimBill_Product" FromRole="InterimBill" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="Self.FK_InterimBill_User" FromRole="InterimBill" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Massage">
+          <Key>
+            <PropertyRef Name="Massage_ID" />
+          </Key>
+          <Property Name="Massage_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Massage_UserGet" Type="Int32" Nullable="false" />
+          <Property Name="Massage_UserSend" Type="Int32" />
+          <Property Name="Massage_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Massage_Read" Type="Boolean" Nullable="false" />
+          <Property Name="Massage_Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Massage_Body" Type="String" MaxLength="350" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Massage_User" FromRole="Massage" ToRole="User" />
+        </EntityType>
+        <EntityType Name="NoBank">
+          <Key>
+            <PropertyRef Name="Banks_ID" />
+          </Key>
+          <Property Name="Banks_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Banks_NoCart" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Banks_NoIR" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Banks_NoBank" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Banks_NameID" Type="Int32" Nullable="false" />
+          <Property Name="Banks_UserID" Type="Int32" Nullable="false" />
+          <Property Name="Banks_NameUser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="BankName" Relationship="Self.FK_Banks_BankName" FromRole="NoBank" ToRole="BankName" />
+          <NavigationProperty Name="User" Relationship="Self.FK_NoBank_User" FromRole="NoBank" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Pic">
+          <Key>
+            <PropertyRef Name="Pic_ID" />
+          </Key>
+          <Property Name="Pic_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pic_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Pic_ProductID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Pic_Product" FromRole="Pic" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="PostStatu">
+          <Key>
+            <PropertyRef Name="St_ID" />
+          </Key>
+          <Property Name="St_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="St_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_PostStatus" FromRole="PostStatus" ToRole="Bill" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+          </Key>
+          <Property Name="Product_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Product_Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Product_Price" Type="Int32" Nullable="false" />
+          <Property Name="Product_Off" Type="Int32" />
+          <Property Name="Product_PicIndex" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Product_IsDownload" Type="Boolean" Nullable="false" />
+          <Property Name="Product_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Product_GroupID" Type="Int32" />
+          <Property Name="Product_AllOff" Type="Boolean" Nullable="false" />
+          <Property Name="Product_Visit" Type="Int32" Nullable="false" />
+          <Property Name="Product_ExitCount" Type="Int32" />
+          <Property Name="Product_Weight" Type="Int32" />
+          <Property Name="Product_UserID" Type="Int32" Nullable="false" />
+          <Property Name="Product_Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Product" FromRole="Product" ToRole="Bill" />
+          <NavigationProperty Name="Downloads" Relationship="Self.FK_Download_Product" FromRole="Product" ToRole="Download" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_Product_Group" FromRole="Product" ToRole="Group" />
+          <NavigationProperty Name="InterimBills" Relationship="Self.FK_InterimBill_Product" FromRole="Product" ToRole="InterimBill" />
+          <NavigationProperty Name="Pics" Relationship="Self.FK_Pic_Product" FromRole="Product" ToRole="Pic" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Product_User" FromRole="Product" ToRole="User" />
+          <NavigationProperty Name="Tags" Relationship="Self.FK_Tags_Product" FromRole="Product" ToRole="Tags" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Role_ID" />
+          </Key>
+          <Property Name="Role_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role_Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="NoovinDataModel.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="Setting_ID" />
+          </Key>
+          <Property Name="Setting_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Smtp" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Discount" Type="Int32" />
+          <Property Name="Keyword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Descrption" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="DescSite" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TitleSite" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PageCount" Type="Int32" />
+          <Property Name="DateDeleteBill" Type="DateTime" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="Slider">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sort" Type="Int32" Nullable="false" />
+          <Property Name="Url" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Enable" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="State_ID" />
+          </Key>
+          <Property Name="State_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="State_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_State" FromRole="State" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="Tag_ID" />
+          </Key>
+          <Property Name="Tag_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tag_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tag_ProductID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Tags_Product" FromRole="Tags" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="TempDL">
+          <Key>
+            <PropertyRef Name="TempDL_ID" />
+          </Key>
+          <Property Name="TempDL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TempDL_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="TempDL_ExpDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="TempDL_UnigNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TempDL_BillNo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bill" Relationship="Self.FK_TempDL_Bill" FromRole="TempDL" ToRole="Bill" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_ID" />
+          </Key>
+          <Property Name="User_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_NameFamily" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_City" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_PostelCode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="User_Tel" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="User_Mobile" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="User_Active" Type="Boolean" Nullable="false" />
+          <Property Name="User_Rating" Type="Int32" Nullable="false" />
+          <Property Name="User_RoleID" Type="Int32" Nullable="false" />
+          <Property Name="User_NationalCode" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_StateID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_User" FromRole="User" ToRole="Bill" />
+          <NavigationProperty Name="ConfirmEmails" Relationship="Self.FK_ConfirmEmail_User" FromRole="User" ToRole="ConfirmEmail" />
+          <NavigationProperty Name="Downloads" Relationship="Self.FK_Download_User" FromRole="User" ToRole="Download" />
+          <NavigationProperty Name="Identities" Relationship="Self.FK_Identity_User" FromRole="User" ToRole="Identity" />
+          <NavigationProperty Name="InterimBills" Relationship="Self.FK_InterimBill_User" FromRole="User" ToRole="InterimBill" />
+          <NavigationProperty Name="Massages" Relationship="Self.FK_Massage_User" FromRole="User" ToRole="Massage" />
+          <NavigationProperty Name="NoBanks" Relationship="Self.FK_NoBank_User" FromRole="User" ToRole="NoBank" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_User" FromRole="User" ToRole="Product" />
+          <NavigationProperty Name="State" Relationship="Self.FK_User_State" FromRole="User" ToRole="State" />
+          <NavigationProperty Name="Withdrawals" Relationship="Self.FK_Withdrawal_User" FromRole="User" ToRole="Withdrawal" />
+          <NavigationProperty Name="Role" Relationship="NoovinDataModel.FK_User_Role" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="Visit_ID" />
+          </Key>
+          <Property Name="Visit_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Visit_Date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Visit_IP" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Visit_UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Visit_Browser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Weight">
+          <Key>
+            <PropertyRef Name="Weight_ID" />
+          </Key>
+          <Property Name="Weight_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Weight_Max" Type="Int32" />
+          <Property Name="Weight_Min" Type="Int32" />
+          <Property Name="Weight_Price" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Withdrawal">
+          <Key>
+            <PropertyRef Name="Withdrawal_ID" />
+          </Key>
+          <Property Name="Withdrawal_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Withdrawal_TimeLastReceived" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Withdrawal_Stock" Type="Int32" Nullable="false" />
+          <Property Name="Withdrawal_LastReceivd" Type="Int32" Nullable="false" />
+          <Property Name="Withdrawal_Request" Type="Boolean" Nullable="false" />
+          <Property Name="Withdrawal_AmountRequested" Type="Int32" Nullable="false" />
+          <Property Name="Withdrawal_UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Withdrawal_User" FromRole="Withdrawal" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Banks_BankName">
+          <End Role="BankName" Type="Self.BankName" Multiplicity="1" />
+          <End Role="NoBank" Type="Self.NoBank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankName">
+              <PropertyRef Name="Bank_ID" />
+            </Principal>
+            <Dependent Role="NoBank">
+              <PropertyRef Name="Banks_NameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_PostStatus">
+          <End Role="PostStatus" Type="Self.PostStatu" Multiplicity="0..1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PostStatus">
+              <PropertyRef Name="St_ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Bill_PostStatsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Bill_ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bill_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="Bill_Buyer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TempDL_Bill">
+          <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
+          <End Role="TempDL" Type="Self.TempDL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bill">
+              <PropertyRef Name="Bill_ID" />
+            </Principal>
+            <Dependent Role="TempDL">
+              <PropertyRef Name="TempDL_BillNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ConfirmEmail_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ConfirmEmail" Type="Self.ConfirmEmail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="ConfirmEmail">
+              <PropertyRef Name="ConfirmEmail_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Download_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Download" Type="Self.Download" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="Download">
+              <PropertyRef Name="Download_ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Download_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Download" Type="Self.Download" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Download">
+              <PropertyRef Name="Download_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="Group_ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Product_GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Identity_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Identity" Type="Self.Identity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Identity">
+              <PropertyRef Name="Identity_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InterimBill_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="InterimBill" Type="Self.InterimBill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="InterimBill">
+              <PropertyRef Name="InterimBill_ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InterimBill_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="InterimBill" Type="Self.InterimBill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="InterimBill">
+              <PropertyRef Name="InterimBill_Buyer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Massage_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Massage" Type="Self.Massage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Massage">
+              <PropertyRef Name="Massage_UserGet" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NoBank_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="NoBank" Type="Self.NoBank" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="NoBank">
+              <PropertyRef Name="Banks_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pic_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Pic" Type="Self.Pic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="Pic">
+              <PropertyRef Name="Pic_ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="Product_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tags_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Tags" Type="Self.Tag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="Tags">
+              <PropertyRef Name="Tag_ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_State">
+          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="State_ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="User_StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Withdrawal_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Withdrawal" Type="Self.Withdrawal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="User_ID" />
+            </Principal>
+            <Dependent Role="Withdrawal">
+              <PropertyRef Name="Withdrawal_UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BankNames" EntityType="Self.BankName" />
+          <EntitySet Name="Bills" EntityType="Self.Bill" />
+          <EntitySet Name="ConfirmEmails" EntityType="Self.ConfirmEmail" />
+          <EntitySet Name="Downloads" EntityType="Self.Download" />
+          <EntitySet Name="Groups" EntityType="Self.Group" />
+          <EntitySet Name="Identities" EntityType="Self.Identity" />
+          <EntitySet Name="InterimBills" EntityType="Self.InterimBill" />
+          <EntitySet Name="Massages" EntityType="Self.Massage" />
+          <EntitySet Name="NoBanks" EntityType="Self.NoBank" />
+          <EntitySet Name="Pics" EntityType="Self.Pic" />
+          <EntitySet Name="PostStatus" EntityType="Self.PostStatu" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Settings" EntityType="Self.Setting" />
+          <EntitySet Name="Sliders" EntityType="Self.Slider" />
+          <EntitySet Name="States" EntityType="Self.State" />
+          <EntitySet Name="Tags" EntityType="Self.Tag" />
+          <EntitySet Name="TempDLs" EntityType="Self.TempDL" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Visits" EntityType="Self.Visit" />
+          <EntitySet Name="Weights" EntityType="Self.Weight" />
+          <EntitySet Name="Withdrawals" EntityType="Self.Withdrawal" />
+          <AssociationSet Name="FK_Banks_BankName" Association="Self.FK_Banks_BankName">
+            <End Role="BankName" EntitySet="BankNames" />
+            <End Role="NoBank" EntitySet="NoBanks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_PostStatus" Association="Self.FK_Bill_PostStatus">
+            <End Role="PostStatus" EntitySet="PostStatus" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Product" Association="Self.FK_Bill_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_User" Association="Self.FK_Bill_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TempDL_Bill" Association="Self.FK_TempDL_Bill">
+            <End Role="Bill" EntitySet="Bills" />
+            <End Role="TempDL" EntitySet="TempDLs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ConfirmEmail_User" Association="Self.FK_ConfirmEmail_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ConfirmEmail" EntitySet="ConfirmEmails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Download_Product" Association="Self.FK_Download_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Download" EntitySet="Downloads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Download_User" Association="Self.FK_Download_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Download" EntitySet="Downloads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Group" Association="Self.FK_Product_Group">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Identity_User" Association="Self.FK_Identity_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Identity" EntitySet="Identities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InterimBill_Product" Association="Self.FK_InterimBill_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="InterimBill" EntitySet="InterimBills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InterimBill_User" Association="Self.FK_InterimBill_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="InterimBill" EntitySet="InterimBills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Massage_User" Association="Self.FK_Massage_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Massage" EntitySet="Massages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NoBank_User" Association="Self.FK_NoBank_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="NoBank" EntitySet="NoBanks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pic_Product" Association="Self.FK_Pic_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Pic" EntitySet="Pics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_User" Association="Self.FK_Product_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tags_Product" Association="Self.FK_Tags_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Tags" EntitySet="Tags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_State" Association="Self.FK_User_State">
+            <End Role="State" EntitySet="States" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Withdrawal_User" Association="Self.FK_Withdrawal_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Withdrawal" EntitySet="Withdrawals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="NoovinDataModel.FK_User_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_User_Role">
+          <End Type="NoovinDataModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="NoovinDataModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Role_ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="User_RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NoovinDataModelStoreContainer" CdmEntityContainer="DB">
+          <EntitySetMapping Name="BankNames">
+            <EntityTypeMapping TypeName="NoovinDataModel.BankName">
+              <MappingFragment StoreEntitySet="BankName">
+                <ScalarProperty Name="Bank_ID" ColumnName="Bank_ID" />
+                <ScalarProperty Name="Bank_Name" ColumnName="Bank_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bills">
+            <EntityTypeMapping TypeName="NoovinDataModel.Bill">
+              <MappingFragment StoreEntitySet="Bill">
+                <ScalarProperty Name="Bill_ID" ColumnName="Bill_ID" />
+                <ScalarProperty Name="Bill_Date" ColumnName="Bill_Date" />
+                <ScalarProperty Name="Bill_ProductID" ColumnName="Bill_ProductID" />
+                <ScalarProperty Name="Bill_Seller" ColumnName="Bill_Seller" />
+                <ScalarProperty Name="Bill_Buyer" ColumnName="Bill_Buyer" />
+                <ScalarProperty Name="Bill_PayPrice" ColumnName="Bill_PayPrice" />
+                <ScalarProperty Name="Bill_Postage" ColumnName="Bill_Postage" />
+                <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+                <ScalarProperty Name="Bill_TransNo" ColumnName="Bill_TransNo" />
+                <ScalarProperty Name="Bill_RefNo" ColumnName="Bill_RefNo" />
+                <ScalarProperty Name="Bill_Status" ColumnName="Bill_Status" />
+                <ScalarProperty Name="Bill_TracingCode" ColumnName="Bill_TracingCode" />
+                <ScalarProperty Name="Bill_PostStatsID" ColumnName="Bill_PostStatsID" />
+                <ScalarProperty Name="Bill_Price" ColumnName="Bill_Price" />
+                <ScalarProperty Name="Bill_ExpDate" ColumnName="Bill_ExpDate" />
+                <ScalarProperty Name="Bill_Count" ColumnName="Bill_Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ConfirmEmails">
+            <EntityTypeMapping TypeName="NoovinDataModel.ConfirmEmail">
+              <MappingFragment StoreEntitySet="ConfirmEmail">
+                <ScalarProperty Name="ConfirmEmail_ID" ColumnName="ConfirmEmail_ID" />
+                <ScalarProperty Name="ConfirmEmail_Date" ColumnName="ConfirmEmail_Date" />
+                <ScalarProperty Name="ConfirmEmail_UserID" ColumnName="ConfirmEmail_UserID" />
+                <ScalarProperty Name="ConfirmEmail_Status" ColumnName="ConfirmEmail_Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Downloads">
+            <EntityTypeMapping TypeName="NoovinDataModel.Download">
+              <MappingFragment StoreEntitySet="Download">
+                <ScalarProperty Name="Download_ID" ColumnName="Download_ID" />
+                <ScalarProperty Name="Download_Url" ColumnName="Download_Url" />
+                <ScalarProperty Name="Download_Date" ColumnName="Download_Date" />
+                <ScalarProperty Name="Download_Lenght" ColumnName="Download_Lenght" />
+                <ScalarProperty Name="Download_Allow" ColumnName="Download_Allow" />
+                <ScalarProperty Name="Download_UserID" ColumnName="Download_UserID" />
+                <ScalarProperty Name="Download_ProductID" ColumnName="Download_ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="NoovinDataModel.Group">
+              <MappingFragment StoreEntitySet="Group">
+                <ScalarProperty Name="Group_ID" ColumnName="Group_ID" />
+                <ScalarProperty Name="Group_Name" ColumnName="Group_Name" />
+                <ScalarProperty Name="Group_Pic" ColumnName="Group_Pic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Identities">
+            <EntityTypeMapping TypeName="NoovinDataModel.Identity">
+              <MappingFragment StoreEntitySet="Identity">
+                <ScalarProperty Name="Identity_ID" ColumnName="Identity_ID" />
+                <ScalarProperty Name="Identity_Pic" ColumnName="Identity_Pic" />
+                <ScalarProperty Name="Identity_FathersName" ColumnName="Identity_FathersName" />
+                <ScalarProperty Name="Identity_Birth" ColumnName="Identity_Birth" />
+                <ScalarProperty Name="Identity_Confirm" ColumnName="Identity_Confirm" />
+                <ScalarProperty Name="Identity_UserID" ColumnName="Identity_UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InterimBills">
+            <EntityTypeMapping TypeName="NoovinDataModel.InterimBill">
+              <MappingFragment StoreEntitySet="InterimBill">
+                <ScalarProperty Name="InterimBill_ID" ColumnName="InterimBill_ID" />
+                <ScalarProperty Name="InterimBill_Date" ColumnName="InterimBill_Date" />
+                <ScalarProperty Name="InterimBill_ProductID" ColumnName="InterimBill_ProductID" />
+                <ScalarProperty Name="InterimBill_Seller" ColumnName="InterimBill_Seller" />
+                <ScalarProperty Name="InterimBill_PayPrice" ColumnName="InterimBill_PayPrice" />
+                <ScalarProperty Name="InterimBill_Postage" ColumnName="InterimBill_Postage" />
+                <ScalarProperty Name="InterimBill_Buyer" ColumnName="InterimBill_Buyer" />
+                <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+                <ScalarProperty Name="InterimBill_ExpDate" ColumnName="InterimBill_ExpDate" />
+                <ScalarProperty Name="InterimBill_Count" ColumnName="InterimBill_Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Massages">
+            <EntityTypeMapping TypeName="NoovinDataModel.Massage">
+              <MappingFragment StoreEntitySet="Massage">
+                <ScalarProperty Name="Massage_ID" ColumnName="Massage_ID" />
+                <ScalarProperty Name="Massage_UserGet" ColumnName="Massage_UserGet" />
+                <ScalarProperty Name="Massage_UserSend" ColumnName="Massage_UserSend" />
+                <ScalarProperty Name="Massage_Date" ColumnName="Massage_Date" />
+                <ScalarProperty Name="Massage_Read" ColumnName="Massage_Read" />
+                <ScalarProperty Name="Massage_Title" ColumnName="Massage_Title" />
+                <ScalarProperty Name="Massage_Body" ColumnName="Massage_Body" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NoBanks">
+            <EntityTypeMapping TypeName="NoovinDataModel.NoBank">
+              <MappingFragment StoreEntitySet="NoBank">
+                <ScalarProperty Name="Banks_ID" ColumnName="Banks_ID" />
+                <ScalarProperty Name="Banks_NoCart" ColumnName="Banks_NoCart" />
+                <ScalarProperty Name="Banks_NoIR" ColumnName="Banks_NoIR" />
+                <ScalarProperty Name="Banks_NoBank" ColumnName="Banks_NoBank" />
+                <ScalarProperty Name="Banks_NameID" ColumnName="Banks_NameID" />
+                <ScalarProperty Name="Banks_UserID" ColumnName="Banks_UserID" />
+                <ScalarProperty Name="Banks_NameUser" ColumnName="Banks_NameUser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pics">
+            <EntityTypeMapping TypeName="NoovinDataModel.Pic">
+              <MappingFragment StoreEntitySet="Pic">
+                <ScalarProperty Name="Pic_ID" ColumnName="Pic_ID" />
+                <ScalarProperty Name="Pic_Name" ColumnName="Pic_Name" />
+                <ScalarProperty Name="Pic_ProductID" ColumnName="Pic_ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostStatus">
+            <EntityTypeMapping TypeName="NoovinDataModel.PostStatu">
+              <MappingFragment StoreEntitySet="PostStatus">
+                <ScalarProperty Name="St_ID" ColumnName="St_ID" />
+                <ScalarProperty Name="St_Name" ColumnName="St_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="NoovinDataModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="Product_Name" ColumnName="Product_Name" />
+                <ScalarProperty Name="Product_Text" ColumnName="Product_Text" />
+                <ScalarProperty Name="Product_Price" ColumnName="Product_Price" />
+                <ScalarProperty Name="Product_Off" ColumnName="Product_Off" />
+                <ScalarProperty Name="Product_PicIndex" ColumnName="Product_PicIndex" />
+                <ScalarProperty Name="Product_IsDownload" ColumnName="Product_IsDownload" />
+                <ScalarProperty Name="Product_Date" ColumnName="Product_Date" />
+                <ScalarProperty Name="Product_GroupID" ColumnName="Product_GroupID" />
+                <ScalarProperty Name="Product_AllOff" ColumnName="Product_AllOff" />
+                <ScalarProperty Name="Product_Visit" ColumnName="Product_Visit" />
+                <ScalarProperty Name="Product_ExitCount" ColumnName="Product_ExitCount" />
+                <ScalarProperty Name="Product_Weight" ColumnName="Product_Weight" />
+                <ScalarProperty Name="Product_UserID" ColumnName="Product_UserID" />
+                <ScalarProperty Name="Product_Active" ColumnName="Product_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="NoovinDataModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+                <ScalarProperty Name="Role_Title" ColumnName="Role_Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="NoovinDataModel.Setting">
+              <MappingFragment StoreEntitySet="Setting">
+                <ScalarProperty Name="Setting_ID" ColumnName="Setting_ID" />
+                <ScalarProperty Name="Smtp" ColumnName="Smtp" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Keyword" ColumnName="Keyword" />
+                <ScalarProperty Name="Descrption" ColumnName="Descrption" />
+                <ScalarProperty Name="DescSite" ColumnName="DescSite" />
+                <ScalarProperty Name="TitleSite" ColumnName="TitleSite" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="PageCount" ColumnName="PageCount" />
+                <ScalarProperty Name="DateDeleteBill" ColumnName="DateDeleteBill" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sliders">
+            <EntityTypeMapping TypeName="NoovinDataModel.Slider">
+              <MappingFragment StoreEntitySet="Slider">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Enable" ColumnName="Enable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="NoovinDataModel.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="State_ID" ColumnName="State_ID" />
+                <ScalarProperty Name="State_Name" ColumnName="State_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="NoovinDataModel.Tag">
+              <MappingFragment StoreEntitySet="Tags">
+                <ScalarProperty Name="Tag_ID" ColumnName="Tag_ID" />
+                <ScalarProperty Name="Tag_Name" ColumnName="Tag_Name" />
+                <ScalarProperty Name="Tag_ProductID" ColumnName="Tag_ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TempDLs">
+            <EntityTypeMapping TypeName="NoovinDataModel.TempDL">
+              <MappingFragment StoreEntitySet="TempDL">
+                <ScalarProperty Name="TempDL_ID" ColumnName="TempDL_ID" />
+                <ScalarProperty Name="TempDL_Date" ColumnName="TempDL_Date" />
+                <ScalarProperty Name="TempDL_ExpDate" ColumnName="TempDL_ExpDate" />
+                <ScalarProperty Name="TempDL_UnigNo" ColumnName="TempDL_UnigNo" />
+                <ScalarProperty Name="TempDL_BillNo" ColumnName="TempDL_BillNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="NoovinDataModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="User_NameFamily" ColumnName="User_NameFamily" />
+                <ScalarProperty Name="User_UserName" ColumnName="User_UserName" />
+                <ScalarProperty Name="User_Email" ColumnName="User_Email" />
+                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+                <ScalarProperty Name="User_Address" ColumnName="User_Address" />
+                <ScalarProperty Name="User_City" ColumnName="User_City" />
+                <ScalarProperty Name="User_PostelCode" ColumnName="User_PostelCode" />
+                <ScalarProperty Name="User_Tel" ColumnName="User_Tel" />
+                <ScalarProperty Name="User_Mobile" ColumnName="User_Mobile" />
+                <ScalarProperty Name="User_Date" ColumnName="User_Date" />
+                <ScalarProperty Name="User_Active" ColumnName="User_Active" />
+                <ScalarProperty Name="User_Rating" ColumnName="User_Rating" />
+                <ScalarProperty Name="User_RoleID" ColumnName="User_RoleID" />
+                <ScalarProperty Name="User_NationalCode" ColumnName="User_NationalCode" />
+                <ScalarProperty Name="User_StateID" ColumnName="User_StateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visits">
+            <EntityTypeMapping TypeName="NoovinDataModel.Visit">
+              <MappingFragment StoreEntitySet="Visit">
+                <ScalarProperty Name="Visit_ID" ColumnName="Visit_ID" />
+                <ScalarProperty Name="Visit_Date" ColumnName="Visit_Date" />
+                <ScalarProperty Name="Visit_IP" ColumnName="Visit_IP" />
+                <ScalarProperty Name="Visit_UserName" ColumnName="Visit_UserName" />
+                <ScalarProperty Name="Visit_Browser" ColumnName="Visit_Browser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Weights">
+            <EntityTypeMapping TypeName="NoovinDataModel.Weight">
+              <MappingFragment StoreEntitySet="Weight">
+                <ScalarProperty Name="Weight_ID" ColumnName="Weight_ID" />
+                <ScalarProperty Name="Weight_Max" ColumnName="Weight_Max" />
+                <ScalarProperty Name="Weight_Min" ColumnName="Weight_Min" />
+                <ScalarProperty Name="Weight_Price" ColumnName="Weight_Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Withdrawals">
+            <EntityTypeMapping TypeName="NoovinDataModel.Withdrawal">
+              <MappingFragment StoreEntitySet="Withdrawal">
+                <ScalarProperty Name="Withdrawal_ID" ColumnName="Withdrawal_ID" />
+                <ScalarProperty Name="Withdrawal_TimeLastReceived" ColumnName="Withdrawal_TimeLastReceived" />
+                <ScalarProperty Name="Withdrawal_Stock" ColumnName="Withdrawal_Stock" />
+                <ScalarProperty Name="Withdrawal_LastReceivd" ColumnName="Withdrawal_LastReceivd" />
+                <ScalarProperty Name="Withdrawal_Request" ColumnName="Withdrawal_Request" />
+                <ScalarProperty Name="Withdrawal_AmountRequested" ColumnName="Withdrawal_AmountRequested" />
+                <ScalarProperty Name="Withdrawal_UserID" ColumnName="Withdrawal_UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

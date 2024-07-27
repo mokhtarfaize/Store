@@ -1,0 +1,175 @@
+﻿@model IEnumerable<NoovinData.Models.Domin.Slider>
+
+@{
+    ViewBag.Title = "مدیریت اسلایدر";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+@using NoovinData.Models.Plugin
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">لیست اسلایدر</h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+        @Html.ActionLink("اسلایدر جدید", "AddSlider", new { @style = "" }, new { @class = "button threed_button" })
+
+        @if (Model.Count() > 0)
+        {
+            <div class="table_style1">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>
+                                تصویر
+                            </th>
+
+                            <th>
+                                عنوان
+                            </th>
+
+                            <th>
+                                URL
+                            </th>
+
+                            <th>
+                               ترتیب نمایش
+                            </th>          
+                            
+                            <th>
+                                وضعیت نمایش
+                            </th>
+                            <th>ویرایش</th>
+                            <th>حذف</th>
+                            <th>
+                                فعال /غیر فعال
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>
+                                    <img src="~/Content/_images/file/@item.Image" alt="@item.Title" style="background-color: #13B1BC;" width="50" height="50" />
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Url)
+                                </td>
+                                
+                                <td> 
+                                    @Html.DisplayFor(modelItem => item.Sort)
+                                </td>
+                                      
+                                <td>
+                                    @if (item.Enable==true)
+                                    {
+                                        <i class="fa fa-check" style="color:green; font-size:20px;"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-close" style="color:red; font-size:20px;"></i>
+                                    }
+                                </td>
+                                <td>
+                                    @Html.ActionLink(" ", "EditSlider", new { id = item.ID }, new { @class = "fa fa-edit", style = "color:blue; font-size:19px;" })
+
+                                </td>
+                                <td>
+
+                                    @Html.ActionLink(" ", "RemoveSlider", new { id = item.ID }, new { @class = "fa fa-trash-o", style = "color:red; font-size:19px;", onclick = "return confirm('آیا از حذف این گروه مطمئا هستید؟');" })
+
+                                </td>
+                                                     
+                                <td>
+
+                                    @Html.ActionLink(" ", "ConfirmSlider", new { id = item.ID }, new { @class = "fa fa-filter", style = "color:blue; font-size:19px;" })
+
+                                </td>
+
+                            </tr>
+
+
+                        }
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+        }
+        else
+        {
+            <div class="table_style1">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                تصویر
+                            </th>
+
+                            <th>
+                               عنوان
+                            </th>
+
+                            <th>
+                                Url
+                            </th>
+
+                            <th>
+                               ترتیب نمایش
+                            </th>
+
+                            <th>
+                                وضعیت نمایش
+                            </th>
+                                                        
+                            <th>
+                                فعال/غیر فعال 
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">کاربری برای نمایش موجود نیست.</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+
+
+    </div>
+
+
+    <script>
+
+        $(function () {
+            $("[data-hide]").on("click", function () {
+                $("." + $(this).attr("data-hide")).hide();
+                // -or-, see below
+                // $(this).closest("." + $(this).attr("data-hide")).hide();
+            });
+        });
+    </script>
+    <link href="~/Content/_css/alert.css" rel="stylesheet" />
+</div>
+

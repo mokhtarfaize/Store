@@ -1,0 +1,121 @@
+﻿@model IEnumerable<NoovinData.Models.Domin.PostStatu>
+
+@{
+    ViewBag.Title = "مدیریت وضعیت ارسال";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">لیست وضعیت ارسال </h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+        @Html.ActionLink("وضعیت جدید", "AddPostStatus", new { @style = "" }, new { @class = "button threed_button" })
+
+        @if (Model.Count() > 0)
+        {
+            <div class="table_style1">
+
+                <table>
+
+                    <thead>
+                        <tr>
+
+
+                            <th>
+                                وضعیت
+                            </th>
+                            <th>
+
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+
+                                <td>
+                                    @item.St_Name
+
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink(" ", "EditPostStatus", new { id = item.St_ID }, new { @class = "fa fa-edit", style = "color:blue; font-size:19px;" })
+
+                                </td>
+                                <td>
+
+                                    @Html.ActionLink(" ", "RemovePostStatus", new { id = item.St_ID }, new { @class = "fa fa-trash-o", style = "color:red; font-size:19px;", onclick = "return confirm('آیا از حذف این گروه مطمئا هستید؟');" })
+
+                                </td>
+                            </tr>
+
+
+                        }
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+        }
+        else
+        {
+            <div class="table_style1">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                وضعیت
+                            </th>
+                            <th>
+                                ویرایش
+                            </th>
+                            <th>
+                                حذف
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">وضعیتی برای نمایش موجود نیست.</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+
+
+    </div>
+
+
+    <script>
+
+        $(function () {
+            $("[data-hide]").on("click", function () {
+                $("." + $(this).attr("data-hide")).hide();
+                // -or-, see below
+                // $(this).closest("." + $(this).attr("data-hide")).hide();
+            });
+        });
+    </script>
+    <link href="~/Content/_css/alert.css" rel="stylesheet" />
+</div>
+

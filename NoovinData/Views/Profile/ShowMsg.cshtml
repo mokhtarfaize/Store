@@ -1,0 +1,304 @@
+﻿@model NoovinData.Models.Domin.Massage
+@using NoovinData.Models.Plugin
+@using NoovinData.Models.Repository
+@{
+    ViewBag.Title = @Model.Massage_Title;
+    Layout = "~/Views/Shared/_Profile.cshtml";
+    Rep_Profile repuser = new Rep_Profile();
+}
+
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+<link href="~/Content/_css/master.css" rel="stylesheet" />
+
+<div id="content-wrapper">
+    <div>
+        <div class="row">
+            <div class="large-12 columns">
+                <div class="box">
+
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger">
+                            @ViewBag.Error
+                        </div>
+                    }
+
+                    <div class="box-header bg-transparent">
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            شماره پیگیری : @Model.Massage_ID
+                        </div>
+                        <div class="box-tools">
+                           
+                            <b> <span>عنوان : @Model.Massage_Title </span></b>
+                        </div>
+                    </div>
+
+
+                    <br>
+                    <div class="row">
+                        <div class="large-12 columns">
+                            <div class="inbox-nest">
+                                <ul>
+                                    <li>
+                                        <i class="fa fa-envelope-open" style="color:green; font-size:x-large;"></i>
+                                        <b>
+                                            @if (Model.Massage_UserSend == null)
+                                            {
+                                                <span> فرستنده : پیام سیستمی</span>
+                                            }
+                                            else
+                                            {
+                                                <span>فرستنده : @Model.User.User_UserName </span>
+                                            }
+
+                                        </b>
+                                        <small> @PersianDateExtensionMethods.ToPeString(@Model.Massage_Date, "dddd, dd MMMM,yyyy") </small>
+                                        <p class="bbcode">
+                                            @Html.Raw(Model.Massage_Body)
+                                        </p>
+                                    </li>
+
+                                    <a id="reply" type="hidden"></a>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- box -->
+                    @*@Html.ActionLink("بازگشت", "LsitMesage","" ,new { @class = "btn btn-info " })*@
+                 
+                        <a href="/Profile/LsitMesage"><input type="button" value="بازگشت" class="btn btn-default" /></a>
+                  
+                    
+                </div>
+                <!-- end .timeline -->
+
+            </div>
+
+        </div>
+        <!-- box -->
+        <!--</div>-->
+        <!-- End of Container Begin -->
+        <br />
+
+
+
+    </div>
+</div>
+
+
+@if (Model.Massage_UserSend != null)
+{
+    <div class="part_left">
+
+        <div class="userpanel_bright_section">
+            <h1 class="separator">پاسخ پیام</h1>
+            <div class="form_style1 form_wrapper clearfix ">
+                <div class="overlay"></div>
+
+
+
+
+                @using (Html.BeginForm("SendMsg", "Profile", FormMethod.Post, new { @id = "frm_add_product" }))
+                {
+
+
+                    var qname = repuser.Get_User().Where(a => a.User_ID == Model.Massage_UserSend).FirstOrDefault();
+
+                    <input name="_token" value="@Model.Massage_ID" type="hidden">
+                    <input type="hidden" id="hfCustomer" name="CustomerId" />
+                    <input type="hidden" name="UserGet" value="@qname.User_UserName" />
+                    <ul class="list">
+                        <li class="item full">
+                            <label>
+                                گیرنده
+                            </label>
+                            <input type="text" required disabled name="UserGet1" value="@qname.User_UserName" />
+
+
+
+                        </li>
+                        <li class="item full">
+
+                            <label>
+
+                                عنوان پیام
+
+                                <input type="text" required class="widthinput" name="TMesg" value="" />
+                            </label>
+                        </li>
+                        <li class="item full">
+                            <label>
+
+                                متن پیام
+
+                                <textarea class="form-control" required rows="10" name="BMesg" cols="50"></textarea>
+                            </label>
+                        </li>
+                    </ul>
+
+                    <input name="go_add_product" value="ارسال" class="threed_button" data-enable="" type="submit">
+
+                }
+
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    dl {
+        margin-bottom: 50px;
+    }
+
+        dl dt {
+            background: #5F9BE3 none repeat scroll 0% 0%;
+            color: #FFF;
+            float: right;
+            font-weight: bold;
+            margin-right: 25px;
+            padding: 5px;
+            width: 160px;
+            text-align: center;
+        }
+
+        dl dd {
+            margin: 2px 0;
+            padding: 5px 0;
+        }
+
+    .box {
+        position: relative;
+        top: 10px;
+        margin: 0px 0px 20px;
+        width: 100%;
+        border-radius: 4px;
+    }
+
+        .box .box-header > .box-tools {
+            padding: 12px;
+        }
+
+    .pull-right {
+        float: left;
+    }
+
+    .box .box-header .box-title {
+        display: inline-block;
+        padding: 10px 0px 2px;
+        margin: 0px 5px 0px 0px;
+        font-size: 14px;
+        float: right;
+        cursor: default;
+        font-weight: bold;
+        color: #777;
+    }
+
+        .box .box-header .box-title span {
+            top: 5px;
+            position: relative;
+            left: 5px;
+            color: #777;
+            font-family: "IRANSans-web",sans-serif;
+            font-size: 14px;
+            font-weight: lighter;
+        }
+
+    .box .box-header::after {
+        display: table;
+        content: " ";
+        clear: both;
+    }
+
+    button.small, .button.small {
+        font-size: 14px !important;
+        padding-bottom: 0.4rem;
+        padding-top: 0.5rem;
+    }
+
+    .box .box-header {
+        position: relative;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+        color: #444;
+        padding-bottom: 0px;
+        background: #FFF none repeat scroll 0% 0%;
+    }
+
+    .rwd-table {
+        margin: 1em 0px;
+        min-width: 250px;
+    }
+
+    .row .row {
+        margin: 0px -0.9375rem;
+        max-width: none;
+        width: auto;
+    }
+
+    .row {
+        display: block;
+        direction: rtl;
+    }
+
+    .row {
+        margin: 0px auto;
+        max-width: 62.5rem;
+        width: 100%;
+    }
+
+        .row .row::before, .row .row::after {
+            content: " ";
+            display: table;
+        }
+
+    .column, .columns {
+        position: relative;
+        padding-left: 0.9375rem;
+        padding-right: 0.9375rem;
+        float: right;
+    }
+
+    .inbox-nest {
+        padding: 0px;
+    }
+
+        .inbox-nest ul {
+            margin: 0px;
+            background: #FFF none repeat scroll 0% 0%;
+            padding: 10px 0px;
+            border-radius: 0px;
+        }
+
+            .inbox-nest ul li {
+                list-style: outside none none;
+                font-size: 13px;
+                border-bottom: 1px solid #D5DAE6;
+                margin: 0px 0px 15px;
+                padding: 0px 20px;
+            }
+
+                .inbox-nest ul li b {
+                    padding: 0px 10px;
+                    font-size: 14px;
+                    color: #454545;
+                    font-family: "Montserrat",sans-serif;
+                }
+
+                .inbox-nest ul li small {
+                    font-size: 11px;
+                    float: left;
+                    background: rgba(98, 113, 155, 0.63) none repeat scroll 0% 0%;
+                    color: #FFF;
+                    padding: 0px 5px;
+                    border-radius: 2px;
+                }
+
+                .inbox-nest ul li p {
+                    display: inline-block;
+                    padding: 0px 45px 0px 0px;
+                    width: 100%;
+                    font-size: 13px !important;
+                    margin: 0px 0px 15px;
+                    color: #8C92A3;
+                }
+</style>

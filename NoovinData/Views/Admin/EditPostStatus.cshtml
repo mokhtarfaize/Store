@@ -1,0 +1,65 @@
+﻿@model NoovinData.Models.Domin.PostStatu
+
+@{
+    ViewBag.Title = "ویرایش وضعیت";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator"> ویرایش وضعیت</h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+
+        <div class="form_style1 form_wrapper clearfix ">
+            <div class="overlay"></div>
+
+            @using (Html.BeginForm("EditPostStatus", "Admin", FormMethod.Post, new { id = "frm_add_product" }))
+            {
+                @Html.AntiForgeryToken()
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.St_ID)
+                <ul class="list">
+                    <li class="item full">
+                        @Html.Label("حالت وضعیت", htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @Html.EditorFor(model => model.St_Name, new { htmlAttributes = new { @class = "form-control", @required = "" } })
+                        @Html.ValidationMessageFor(model => model.St_Name, "", new { @class = "text-danger" })
+                    </li>
+
+
+                    <li class="item full">
+
+                        <input type="submit" value="ویرایش" />
+
+                    </li>
+                </ul>
+            }
+
+
+        </div>
+    </div>
+</div>
+<script>
+
+    $(function () {
+        $("[data-hide]").on("click", function () {
+            $("." + $(this).attr("data-hide")).hide();
+            // -or-, see below
+            // $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+</script>
+<link href="~/Content/_css/alert.css" rel="stylesheet" />

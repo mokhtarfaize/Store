@@ -1,0 +1,38 @@
+﻿@*@model  IEnumerable<NoovinData.Models.Domin.Product>
+    <table border="1">
+
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Product_Text)</td>
+                <td>@Html.DisplayFor(modelItem => item.Product_Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Product_ExitCount)</td>
+            </tr>
+
+        }
+
+    </table>*@
+@model IEnumerable<NoovinData.Models.Domin.Product>
+
+<table id="patientList">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model=>model.Product_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product_ExitCount)
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product_ExitCount)
+            </td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,335 @@
+﻿@model NoovinData.Models.Domin.Bill
+
+@{
+    ViewBag.Title = "جزئیات فروش";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+
+@using NoovinData.Models.Repository
+@using NoovinData.Models.Plugin
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+        @if (Model != null)
+        {
+            <h1 class="separator"> شماره فاکتور  : @Model.InvoiceNumber</h1>
+
+            if (Model.Product.Product_IsDownload == false)
+            {
+                <div class="table_style1" id="UpIBill">
+                    <table>
+                        <thead>
+
+                            <tr>
+                                <th colspan="4">
+                                    نام محصول
+                                </th>
+
+                                <th colspan="1">
+                                    تعداد
+                                </th>
+                                <th colspan="2">
+                                    قیمت
+                                </th>
+                                <th colspan="2">
+                                    وضعیت ارسال
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td colspan="4" style="color:#0D897D;">
+                                    @Model.Product.Product_Name
+                                </td>
+                                <td colspan="1" style="color:orange">
+                                    @Model.Bill_Count
+                                </td>
+
+                                <td colspan="2">
+                                    @Model.Bill_Price
+                                </td>
+
+                                <td colspan="2">
+                                    @Model.PostStatu.St_Name
+                                </td>
+
+                            </tr>
+
+
+
+                            <tr>
+                                <td colspan="5" style="color:#0D897D;">
+                                    شماره تراکنش : @Model.Bill_TransNo
+                                </td>
+                                <td colspan="1" style="color:#0D897D;">
+
+                                    شماره مرجع : @Model.Bill_RefNo
+                                </td>
+                                <td colspan="3" style="color:#0D897D;">
+                                    تاریخ پرداخت  : @PersianDateExtensionMethods.ToPeString(Model.Bill_Date, "yyyy/MM/dd")
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td colspan="5" style="color:brown;">
+
+                                    هزینه ارسال :@Model.Bill_Postage تومان
+                                </td>
+                                <td colspan="1" style="color:blue;">
+                                    مبلغ  پرداخت شده :@Model.Bill_PayPrice تومان
+                                </td>
+
+
+                                <td colspan="3" style="color:red;">
+                                    @if (Model.Bill_TracingCode == "")
+                                    {
+                                        <span>کد رهیگری : ثبت نشده</span>
+                                    }
+                                    else
+                                    {
+                                        <span> کد رهگیری پستی : @Model.Bill_TracingCode</span>
+                                    }
+
+
+                                </td>
+
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <div class="table_style1" id="UpIBill">
+                    <table>
+                        <thead>
+
+                            <tr>
+                                <th colspan="5">
+                                    نام محصول
+                                </th>
+
+                                <th colspan="1">
+                                    تعداد
+                                </th>
+                                <th colspan="3">
+                                    قیمت
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td colspan="5" style="color:#0D897D;">
+                                    @Model.Product.Product_Name
+                                </td>
+                                <td colspan="1" style="color:orange">
+                                    1
+                                </td>
+                                @if (Model.Bill_ExpDate > DateTime.Now)
+                                {
+                                    <td>
+                                        تاریخ انقضای دانلود :  @PersianDateExtensionMethods.ToPeString(Model.Bill_ExpDate, "yyyy/MM/dd")
+                                    </td>
+
+                                }
+                                else
+                                {
+                                    <td>
+                                        تاریخ انقضای دانلود : به پایان رسیده
+                                    </td>
+                                }
+
+                            </tr>
+
+
+
+                            <tr>
+                                <td colspan="5" style="color:#0D897D;">
+                                    شماره تراکنش : @Model.Bill_TransNo
+                                </td>
+                                <td colspan="1" style="color:#0D897D;">
+
+                                    شماره مرجع : @Model.Bill_RefNo
+                                </td>
+                                <td colspan="3" style="color:#0D897D;">
+                                    تاریخ پرداخت  : @PersianDateExtensionMethods.ToPeString(Model.Bill_Date, "yyyy/MM/dd")
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <td colspan="5" style="color:brown;">
+
+                                    هزینه ارسال :0 تومان
+                                </td>
+                                <td colspan="1" style="color:blue;">
+                                    مبلغ  پرداخت شده :@Model.Bill_PayPrice تومان
+                                </td>
+
+
+
+                                <td>
+                                    شماره سفارش :   @Model.InvoiceNumber
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            }
+
+
+
+        }
+        else
+        {
+
+            @* بخش مربوط به خطای پرداخت *@
+            <div class="table_style1">
+                <table>
+                    <thead>
+
+                        <tr>
+
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">فاکتوری موجود نمی باشد</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        <br />
+        @if (Model.Product.Product_IsDownload == false)
+        {
+            using (Html.BeginForm("Posts", "Pay", FormMethod.Post))
+            {
+                <input type="hidden" name="id" value="@Model.Bill_ID" />
+                <div class="table_style1">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="3">
+                                    وضعیت ارسال
+                                </th>
+                                <th colspan="3">
+                                    کد رهیگیری پستی
+                                </th>
+                                <th colspan="3">
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="3">
+                                    <select name="selectid" class="cssselect">
+
+                                        @{             
+                                             Rep_Profile reppost = new Rep_Profile();
+                                             foreach (var item in reppost.Get_Post())
+                                                   {
+                                                      <option value="@item.St_ID">@item.St_Name</option>
+                                                   }
+                                        }
+   
+
+                                    </select>
+                                </td>
+                                <td colspan="3">
+                                    <input type="text" class="csstxt" name="PostCode" value="" />
+                                </td>
+                                <td colspan="3">
+                                    <input type="submit" value="ذخیره" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            } 
+
+        }
+
+
+
+
+
+    </div>
+
+
+
+</div>
+<style>
+    input[type="submit"]:hover {
+        background-color: #40D537;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+
+    $(function () {
+        $("[data-hide]").on("click", function () {
+            $("." + $(this).attr("data-hide")).hide();
+            // -or-, see below
+            // $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+</script>
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+
+
+
+<style>
+    .csstxt {
+        color: #777;
+        background-color: #FFF;
+        border: 1px solid #DDD;
+        padding: 0px 10px;
+        line-height: 33px;
+        height: 35px;
+        width: 80%;
+        font-size: 1.3rem;
+    }
+
+    .cssselect {
+        color: #777;
+        background-color: #FFF;
+        border: 1px solid #DDD;
+        padding: 0px 10px;
+        line-height: 33px;
+        height: 35px;
+        width: 80%;
+        font-size: 1.3rem;
+    }
+</style>

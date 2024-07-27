@@ -1,0 +1,190 @@
+﻿@model IEnumerable<NoovinData.Models.Domin.Product>
+@using NoovinData.Models.Repository
+@using NoovinData.Models.Plugin
+
+@{
+    
+    Rep_Profile rep = new Rep_Profile();
+    ViewBag.Title = "لیست محصولات";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">لیست محصولات</h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+        @Html.ActionLink("محصول جدید", "AddProduct", new { @style = "" }, new { @class = "button threed_button" })
+
+
+        @if (Model.Count() > 0)
+        {
+            <div class="table_style1">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_Name)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_Price)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_PicIndex)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_Date)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_ExitCount)
+                            </th>
+                            <th>
+                               فروشنده
+                            </th>
+                        
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_Active)
+                            </th>
+
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            string bac = "";
+                            if (item.Product_ExitCount < 1)
+                            {
+                                bac = "background-color:yellow;";
+                            }
+
+                            <tr style="@bac">
+                                <td colspan="1">
+                                    <a href="/Home/ShowProduct?id=@item.Product_ID"> @Html.DisplayFor(modelItem => item.Product_Name)</a>
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Product_Price)
+                                </td>
+
+                                <td>
+                                    <img src="~/Content//_images/product/@item.Product_PicIndex" width="40" height="40" alt="@item.Product_Name" />
+                                </td>
+
+                                <td>
+                                    @PersianDateExtensionMethods.ToPeString(item.Product_Date, "dddd, dd MMMM,yyyy")
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Product_ExitCount)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.User.User_NameFamily)
+                                </td>
+                                <td>
+                                    @if (item.Product_Active == false)
+                                    {
+                                        <i class="fa fa-close" style="color:red; font-size:20px;"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-check" style="color:green; font-size:20px;"></i>
+                                    }
+                                </td>
+                                <td>
+                                    @Html.ActionLink(" ", "EditProduct", new { id = item.Product_ID }, new { @class = "fa fa-edit", style = "color:green; font-size:19px;" })
+
+                                </td>
+
+                            </tr>
+
+
+                        }
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+        }
+        else
+        {
+            <div class="table_style1">
+                <table>
+                    <thead>
+
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_Name)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_Price)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_PicIndex)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_IsDownload)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_Date)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.Product_ExitCount)
+                            </th>
+
+                            <th>
+                              
+                                فروشنده
+                            </th>
+
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">@ViewBag.Error</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+
+
+    </div>
+
+    <script>
+
+        $(function () {
+            $("[data-hide]").on("click", function () {
+                $("." + $(this).attr("data-hide")).hide();
+                // -or-, see below
+                // $(this).closest("." + $(this).attr("data-hide")).hide();
+            });
+        });
+    </script>
+    <link href="~/Content/_css/alert.css" rel="stylesheet" />
+</div>

@@ -1,0 +1,90 @@
+﻿@using NoovinData.Models.Repository
+@{
+    ViewBag.Title = "ارسال پیام جدید";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+    Rep_Profile rep =new Rep_Profile();
+}
+<script>
+
+    $(function () {
+        $("[data-hide]").on("click", function () {
+            $("." + $(this).attr("data-hide")).hide();
+            // -or-, see below
+            // $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+</script>
+<div class="part_left">
+
+    <div class="userpanel_bright_section">
+        <h1 class="separator">ارسال پیام</h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+        <div class="form_style1 form_wrapper clearfix ">
+            <div class="overlay"></div>
+
+
+
+
+            @using (Html.BeginForm("SendMsg", "Profile", FormMethod.Post, new { @id = "frm_add_product" }))
+            {
+                <input type="hidden" id="hfCustomer" name="CustomerId" />
+                <ul class="list">
+                    <li class="item full">
+                        <label>
+                            گیرنده
+                        </label>
+                        <select name="UserGet">
+                            @{
+                               foreach (var item in rep.Get_User())
+                                {
+                                  <option value="@item.User_UserName">@item.User_UserName</option>
+                                }
+                            }
+
+                        </select>
+
+
+
+                       @* <input type="text" required name="UserGet" value="" />*@
+
+
+
+                    </li>
+                    <li class="item full">
+
+                        <label>
+
+                            عنوان پیام
+
+                            <input type="text" required class="widthinput" name="TMesg" value="" />
+                        </label>
+                    </li>
+                    <li class="item full">
+                        <label>
+
+                            متن پیام
+
+                            <textarea class="form-control" required rows="10" name="BMesg" cols="50"></textarea>
+                        </label>
+                    </li>
+                </ul>
+
+                <input name="go_add_product" value="ارسال" class="threed_button" data-enable="" type="submit">
+
+            }
+
+        </div>
+    </div>
+</div>
+
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery-ui.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>

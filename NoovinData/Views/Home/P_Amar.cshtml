@@ -1,0 +1,52 @@
+﻿
+@using NoovinData.Models.Repository
+
+@{
+    Rep_Home amarproduct = new Rep_Home();
+
+    var download = amarproduct.Get_AmarProduct().Where(a => a.Product_Active == true && a.Product_IsDownload==true).Count();
+    var posti = amarproduct.Get_AmarProduct().Where(b => b.Product_Active == true && b.Product_IsDownload==false).Count();
+    var user = amarproduct.Get_User().Count();
+}
+
+
+<!--اطلاعات آماری-->
+<section class='home_part7'>
+    <div class='container'>
+        <div class='inner clearfix'>
+
+            <div class='site_info'>
+                <ul class='step1 list clearfix'>
+                    <li class='item sec_info'>
+                        <h1 class='title'>اطلاعات آماری <br> وب سایت  نوین داده</h1>
+                        <p class='text'>
+                             تعداد کاربران عضو شامل کسانی است که مورد تایید فروشگاه می باشند.
+                            تعداد محصولات قابل فروش دانلودی و پستی شامل محصولاتی است که مورد تایید فروشگاه می باشند
+                        </p>
+                    </li>
+
+                    <li class='item sec_store'>
+                        <div class='pic' style='background-image:url(/Content/_images/globe.png);'></div>
+                        <br>
+                        <div class='subtitle'>تعداد فایل های دانلودی</div>
+                        <div class='title'>@download</div>
+                    </li>
+
+                    <li class='item sec_file'>
+                        <div class='subtitle'>تعداد محصولات پستی</div>
+                        <div class='title'>@posti</div>
+                        <br>
+                        <div class='pic' style='background-image:url(/Content/_images/globe_files.png);'></div>
+                    </li>
+
+                    <li class='item sec_user'>
+                        <div class='pic' style='background-image:url(/Content/_images/globe_users.png);'></div>
+                        <br>
+                        <div class='subtitle'>تعداد کاربران</div>
+                        <div class='title'>@user</div>
+                    </li>
+                </ul>
+            </div><!--site_info-->
+        </div><!--inner-->
+    </div><!--container-->
+</section><!--home_part7-->

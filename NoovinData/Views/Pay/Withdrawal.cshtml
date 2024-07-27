@@ -1,0 +1,145 @@
+﻿@using NoovinData.Models.Plugin
+@model NoovinData.Models.Plugin.Plugin_Bill
+@using NoovinData.Models.Repository
+
+@{
+    ViewBag.Title = "صورحساب برداشت ها";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+@{
+
+    string username = Session["User"].ToString();
+    Rep_Profile reppay = new Rep_Profile();
+    Rep_Profile userid = new Rep_Profile();
+
+    DateTime d30 = DateTime.Today.AddDays(-30);
+
+    var quseid = userid.Get_User().Where(a => a.User_UserName.Equals(username)).SingleOrDefault().User_ID;
+    var qprice = reppay.Get_Sale().Where(a => a.Bill_Seller.Equals(quseid) && a.Bill_Status == true).ToList();
+
+    List<double> lstp = new List<double>();
+    foreach (var item in qprice)
+    {
+        double p = (item.Bill_PayPrice * 0.05);
+
+        double po = (Math.Ceiling((item.Bill_PayPrice - p) / 100) * 100);
+
+        lstp.Add(po);
+    }
+}
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">صورتحساب برداشت ها</h1>
+
+        @if (Model == null)
+        {
+            if (ViewBag.Error != null)
+            {
+                <div class="alert alert-info">
+                    <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                    @ViewBag.Error
+                </div>
+            }
+        }
+       
+        @if (Model!=null)
+        {
+            <div>
+                @using (Html.BeginForm("RequestPrice", "Pay", FormMethod.Post))
+                {
+                    var qamountss = userid.Get_Withdrawal().Where(a => a.Withdrawal_UserID == quseid).FirstOrDefault();
+
+                    if (qamountss != null)
+                    {
+                        <input type="text" name="txtprice" value="@( lstp.Sum() - qamountss.Withdrawal_Stock )" />
+                    }
+                    else
+                    {
+                        <input type="text" name="txtprice" value="@Model.RealStock" />
+                    }
+
+                    if (reppay.Get_NBank().Where(a => a.Banks_UserID == quseid).FirstOrDefault() != null)
+                    {
+                        <input type="submit" value="درخواست تسویه" style="width:150px;" />
+                    }
+                    else
+                    {
+                        <span class="name">
+                            برای ثبت درخواست ابتدا اطلاعات بانکی خود را تکمیل نمایید -
+                            <a href="/Profile/BankAccount" style="color:yellow;">صفحه ثبت اطلاعات</a>
+                        </span>
+                    }
+
+                }
+            </div>
+           <br />
+
+        <div class="table_style1">
+            <table>
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.Stock)</th>
+                        <th>@Html.DisplayNameFor(model => model.RealStock)</th>
+                        <th>@Html.DisplayNameFor(model => model.EndRecive)</th>
+                        <th>@Html.DisplayNameFor(model => model.AllRecive)</th>
+                        <th>@Html.DisplayNameFor(model => model.EndDateRecive)</th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Html.DisplayFor(model => model.Stock)</td>
+                        <td>
+                            @{
+                                var qamounts = userid.Get_Withdrawal().Where(a => a.Withdrawal_UserID == quseid).FirstOrDefault();
+
+                                if (qamounts != null)
+                                {
+                                    <p>@(lstp.Sum() - qamounts.Withdrawal_Stock)تومان</p>
+                                }
+                                else
+                                {
+                                    <p>@Model.RealStock تومان</p>
+
+                                }
+                            }
+                        </td>
+                        <td>@Html.DisplayFor(model=>model.EndRecive)</td>
+                        <td>@Html.DisplayFor(model=>model.AllRecive)</td>
+                        <td>
+                            @if (Model.EndRecive == 0)
+                            {
+                                <span> تا کنون پرداختی انجام نشده </span>
+                            }
+                            else
+                            {
+
+                                @Model.EndDateRecive
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+             //<a href="~/Profile/Profile" class="button"> بازگشت </a>
+             @Html.ActionLink("بازگشت", "Profile", "Profile","" ,new { @class="button"})
+        }
+
+           
+    </div>
+</div>
+<style>
+    .name {
+        background-color: rgb(17, 155, 180);
+        color: white;
+        width: 100%;
+        margin-right: 10px;
+        border: 2px solid #F0BDBD !important;
+        border-radius: 35px;
+        padding: 10px;
+    }
+</style>
+<link href="~/Content/_css/alert.css" rel="stylesheet" />

@@ -1,0 +1,304 @@
+﻿@model IEnumerable<NoovinData.Models.Domin.Product>
+
+@using NoovinData.Models.Repository
+@{
+    ViewBag.Title = ViewBag.Gropname;
+    Layout = "~/Views/Shared/_MainHome.cshtml";
+    Rep_Profile reps = new Rep_Profile();
+}
+
+
+
+<script>
+    function Submite() {
+        document.getElementById("Filter_Btn").click()
+    }
+
+
+    function Paging(PageNo) {
+        document.getElementById("Pageid").value = PageNo;
+        Submite();
+
+    }
+
+
+</script>
+
+<link href="~/Scripts/_plugins/ion-rangeSlider/ion.rangeSlider.skinHTML5.css" rel="stylesheet" />
+<link href="~/Scripts/_plugins/ion-rangeSlider/ion.rangeSlider.css" rel="stylesheet" />
+
+<script src="~/Scripts/_plugins/Ion/js/ion-rangeSlider/ion.rangeSlider.js"></script>
+
+<section id='category_part1'>
+    <div class='container'>
+        <div class='inner clearfix'>
+            <div class='bgmain'>
+                <div class='sidebar_style1'>
+                    <div id="advanced_search">
+                        <form id="advanced_search_form" action="/Home/ShowGroup" method="get">
+                            <div class="aside_title">
+                                <div class='title_style1'>جستجوی پیشرفته</div>
+                            </div>
+                            <div class="advanced_inner">
+                                <ul>
+                                    <li id="by_price" class='price_range row'>
+                                        <div class='advanced_title'>جستجو بر اساس قیمت :</div>
+                                        <div class='price_range_inner'>
+                                            <input type="hidden" name="page" value="1" id="Pageid" />
+                                            <input type="hidden" name="id" value="@ViewBag.Topic" />
+                                            از : <input type='text' name='min_price' class="csstxt" value='@ViewBag.Minprice'>
+                                            تا :  <input type='text' name='max_price' class="csstxt" value='@ViewBag.Maxprice'>
+
+                                            <input type="submit" id="Filter_Btn" class="subcss" value="بگرد" />
+
+                                        </div>
+                                    </li>
+                                    <li id="display_order">
+                                        <div class='advanced_title'>ترتیب نمایش : </div>
+                                        <select name='sort'>
+
+                                            @if (ViewBag.Sort == "DESC")
+                                            {
+                                              <option value='DESC'  onclick="Submite()" selected>بیشترین قیمت</option>
+                                              <option value='ASC'  onclick="Submite()">کمترین قیمت</option>
+                                            }
+                                            else
+                                            {                                                
+                                                <option value='DESC' onclick="Submite()">بیشترین قیمت</option>
+                                                <option value='ASC'  onclick="Submite()" selected>کمترین قیمت</option>
+                                            }
+                                            
+                                        </select>
+                                    </li>
+                                    @*<li>
+                                        <input type="submit" id="Filter_Btn" value="جستجو" class="threed_button">
+                                    </li>*@
+                                </ul>
+                            </div>
+                        </form>
+                    </div><!-- end advanced search -->
+
+
+                    <style>
+                        .irs-slider {
+                            top: 29px;
+                            width: 20px;
+                            height: 17px;
+                            border: 1px solid #ddd;
+                            border-radius: 2px;
+                            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+                            background: #fff;
+                        }
+
+                        .irs-from, .irs-to, .irs-single {
+                            font-size: 11px;
+                        }
+
+                        .irs-line {
+                            border-radius: 2px;
+                        }
+
+                        .irs-bar {
+                            border-top: 1px solid #119BB4;
+                            border-bottom: 1px solid #119BB4;
+                            background: transparent linear-gradient(to top, #119BB4 0%, #45C1CC 100%) repeat scroll 0% 0%;
+                        }
+
+                        .irs-from, .irs-to, .irs-single {
+                            background: #17939E none repeat scroll 0% 0%;
+                            border-radius: 2px;
+                        }
+
+                        .irs-from, .irs-to, .irs-single {
+                            top: auto;
+                            bottom: -17px;
+                        }
+
+                        .irs-from {
+                            left: 0 !important;
+                            right: auto !important;
+                        }
+
+                        .irs-to {
+                            right: 0 !important;
+                            left: auto !important;
+                        }
+
+                        .irs-min, .irs-max {
+                            display: none;
+                        }
+
+                        .csstxt {
+                            width: 80px;
+                            margin-left: 5px;
+                            margin-right: 10px;
+                            margin-top: 30px;
+                        }
+
+                        .subcss {
+                            width: 80% !important;
+                            margin-top: 8px !important;
+                            height: 38px !important;
+                            float: left !important;
+                            margin-left: 29px !important;
+                        }
+                    </style>
+
+                    <br><br><br>
+                  
+                    <br><br>
+                </div><!--sidebar_style1-->
+                @if (Model == null)
+                {
+                    <main>
+                    <h1 class='separator page_title'><span class='text'> @ViewBag.Gropname </span>
+                 <span class='subtitle'>تعداد فایل ها : <b class='no advanced_search_no'>0</b></span></h1>
+                    
+                        @if (ViewBag.Message != null)
+                        {
+                            
+                                <div class="alert alert-info">
+                                    <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                                    @ViewBag.Message
+                                </div>
+
+                            
+                        }
+                    
+                </main>
+                }
+                else
+                {
+                    <main>
+                        <h1 class='separator page_title'><span class='text'> @ViewBag.Gropname </span> 
+                        <span class='subtitle'>تعداد فایل ها : <b class='no advanced_search_no'>@ViewBag.CountProduct</b></span></h1>
+                        <ul class='cat_files pro_container'>
+
+
+
+                            @{
+
+                    foreach (var item in Model)
+                    {
+                        <li>
+                            <div class='store_main_section'>
+                                <div class='store_main_section_pic' style='background-image:url(/Content/_images/product/@item.Product_PicIndex)'>
+                                    <div class='pic_hover'></div>
+                                    <div class='pic_hover_box dv-box'>
+
+
+                                        @{
+
+
+                        var qsum = reps.Get_Bill().Where(a => a.Bill_ProductID == item.Product_ID && a.Bill_Status == true).Sum(a => a.Bill_Count);
+
+                        if (qsum == null)
+                        {
+                            if (item.Product_IsDownload == true)
+                            {
+                                <div class="dv">
+                                  0  <i class='fa fa-download'></i>
+                                </div>                                
+                            }
+                            else
+                            {
+                               <div class="dv">
+                                 0 <i class='fa fa-truck'></i>
+                               </div> 
+                            }
+                            
+
+                        }
+                        else
+                        {
+                            if (item.Product_IsDownload==false)
+                            {
+                               <div class="dv">
+                                @qsum  <i class='fa fa-truck'></i>
+                            </div> 
+                            }
+                            else
+                            {
+                                <div class="dv">
+                                @qsum  <i class='fa fa-download'></i>
+                            </div>
+                            }
+                            
+
+                        }
+                                        }
+
+
+
+                                        <div class='dv'>@item.Product_Visit<i class='fa fa-eye'></i></div>
+                                    </div>
+                                    <div class='pic_hover_box'><a href='/Home/ShowProduct?id=@item.Product_ID' title='@item.Product_Name' class='read_more'>بیشتر بخوانید<i class='i-caret-left'></i></a></div>
+                                </div>
+                                <h1 class='store_main_title ellipsis'><a href='/Home/ShowProduct?id=@item.Product_ID' title='@item.Product_Name'>@item.Product_Name</a></h1>
+                                                                
+                                <p class='stored_text'> <span class="text">@Html.DisplayNameFor(a => a.Product_Price)</span>@item.Product_Price</p>
+                                
+                            </div>
+                        </li>
+                    }
+
+
+
+                            }
+
+
+                        </ul> 
+
+                        @{
+                    decimal Take = ViewBag.Take;
+                    decimal Count = ViewBag.CountProduct;
+                    decimal Div = Math.Ceiling(Count / Take);
+                    <div class='pagination'>
+                        <div>
+
+                            @for (int i = 1; i <= Div; i++)
+                            {
+                                string activee = "";
+                                string cu = "pointer";
+                                string onclick = "onclick";
+                                if (ViewBag.page == i)
+                                {
+                                    activee = "active";
+                                    cu = "not-allowed";
+                                    onclick = "";
+                                }
+
+                                <a @onclick="Paging(@i.ToString())" class="@activee" style="cursor:@cu">@i.ToString()</a>
+
+                            }
+                        </div>
+                    </div>
+
+                        }
+
+                    </main>
+                }
+
+
+
+            </div>
+
+
+
+        </div><!-- end inner -->
+    </div><!-- end container -->
+</section><!-- end home_part1 -->
+<style>
+    .eye {
+        color: #32BFB6;
+        font-size: 1.2rem;
+        float: left;
+        margin-right: 3px;
+        position: relative;
+        bottom: -2px;
+        font-family: at1;
+    }
+</style>
+
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+

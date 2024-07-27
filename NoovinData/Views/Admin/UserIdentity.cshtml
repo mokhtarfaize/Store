@@ -1,0 +1,111 @@
+﻿@model IEnumerable<NoovinData.Models.Domin.Identity>
+@{
+    ViewBag.Title = "لیست انتظار تایید هویت";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">لیست کاربران تایید نشده</h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+
+        @if (Model.Count() > 0)
+        {
+            <div class="table_style1">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>
+                                تصویر کارت
+                            </th>
+                            <th>
+                                نام پدر
+                            </th>
+                            <th>
+                                تاریخ تولد
+                            </th>
+
+
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>
+                                    <img src="~/Content/_images/cart/@item.Identity_Pic" alt="" width="50" height="50" />
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Identity_FathersName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Identity_Birth)
+                                </td>
+
+                                <td>
+
+                                    @Html.ActionLink(" ", "DetailsIdentity", new { id = item.Identity_ID }, new { @class = "fa fa-eye", style = "color:green; font-size:19px;" })
+
+                                </td>
+                            </tr>
+
+
+                        }
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+        }
+        else
+        {
+            <div class="table_style1">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                تصویر کارت
+                            </th>
+                            <th>
+                                نام پدر
+                            </th>
+                            <th>
+                                تاریخ تولد
+                            </th>
+
+
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">کاربر تایید نشده برای نمایش موجود نیست.</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+
+    </div>
+</div>
+
+

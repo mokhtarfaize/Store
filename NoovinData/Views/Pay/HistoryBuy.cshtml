@@ -1,0 +1,161 @@
+﻿@model IEnumerable<NoovinData.Models.Domin.Bill>
+@using NoovinData.Models.Plugin
+@using NoovinData.Models.Repository
+
+
+@{
+    ViewBag.Title = "تاریخچه خرید";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+    Rep_Profile repuser = new Rep_Profile();
+}
+
+
+<link href="~/Scripts/_plugins/persian/js-persian-cal.css" rel="stylesheet" />
+<script src="~/Scripts/_plugins/persian/js-persian-cal.min.js"></script>
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">لیست خریدها</h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+        @if ( Model.Count() > 0)
+        {
+            <div class="table_style1">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>
+                                تصویر محصول
+                            </th>
+                            <th>
+                                نام محصول
+                            </th>
+
+                            <th>
+                                فروشنده
+                            </th>
+                            <th>
+                                تاریخ خرید
+                            </th>
+                            <th>
+                                مبلغ پرداختی
+                            </th>
+                            <th>
+                                شماره تراکنش
+                            </th>
+
+                            <th>نمایش جزئیات</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+
+                                <td>
+                                    <img src="~/Content/_images/product/@item.Product.Product_PicIndex" style="width:50px; height:50px;" alt="@item.Product.Product_Name" />
+
+                                </td>
+                                <td>
+                                    @item.Product.Product_Name
+                                </td>
+                                <td>
+                                    @{
+                                       var q = repuser.Get_User().Where(a => a.User_ID == item.Bill_Seller).SingleOrDefault().User_NameFamily;
+                                    }
+
+                                    @q
+                                </td>
+                                <td>
+                                    @PersianDateExtensionMethods.ToPeString(item.Bill_Date, "yyyy/MM/dd")
+                                </td>
+                                <td>
+                                    @item.Bill_PayPrice  تومان
+                                </td>
+                                <td>
+                                    @item.Bill_TransNo
+                                </td>
+                                <td>
+                                    @Html.ActionLink(" ", "ShowBuy", new { id = item.Bill_ID }, new { @class = "fa fa-eye", style = "color:green; font-size:19px;" })
+
+                                </td>
+                            </tr>
+
+
+                        }
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+        }
+        else
+        {
+            <div class="table_style1">
+                <table>
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                تصویر محصول
+                            </th>
+                            <th>
+                                نام محصول
+                            </th>
+
+                            <th>
+                                خریدار
+                            </th>
+                            <th>
+                                تاریخ خرید
+                            </th>
+                            <th>
+                                مبلغ پرداختی
+                            </th>
+                            <th>
+                                شماره تراکنش
+                            </th>
+
+                            <th>نمایش جزئیات</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">شما تاکنون محصولی را خرید نکرده اید! </div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+
+
+    </div>
+
+    <script>
+
+        $(function () {
+            $("[data-hide]").on("click", function () {
+                $("." + $(this).attr("data-hide")).hide();
+                // -or-, see below
+                // $(this).closest("." + $(this).attr("data-hide")).hide();
+            });
+        });
+    </script>
+    <link href="~/Content/_css/alert.css" rel="stylesheet" />
+</div>

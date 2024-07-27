@@ -1,0 +1,293 @@
+﻿@model NoovinData.Models.Domin.User
+@using NoovinData.Models.Repository
+@{
+    ViewBag.Title = "ارسال مدارک";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+
+
+<div class="part_left">
+    <div id="user_account_page" class="userpanel_bright_section">
+        <h1 class="separator ">مشخصات فردی</h1>
+        <div class="form_style1 form_wrapper clearfix">
+
+            <ul class="list">
+                <li class="item">
+                    <label>نام و نام خانوادگی : <i class="fa fa-star"></i></label>
+                    <input name="user_name" value="@Model.User_NameFamily" disabled="" type="text">
+                </li>
+                <li class="item">
+                    <label>ایمیل : <i class="fa fa-star"></i></label>
+                    <input name="email" value="@Model.User_Email" disabled="" type="text">
+                </li>
+
+                <li class="item">
+                    <label>کد ملی : <i class="fa fa-star"></i></label>
+                    <input name="email" value="@Model.User_NationalCode" disabled="" type="text">
+                </li>
+                <li class="item">
+                    <label>شماره تلفن همراه : <i class="fa fa-star"></i></label>
+                    <input name="email" value="@Model.User_Mobile" disabled="" type="text">
+                </li>
+            </ul>
+
+            @*@using (Html.BeginForm("ConfirmIdentity", "Profile", FormMethod.Post, new { @id = "frm_profile", enctype = "multipart/form-data" }))
+                {
+
+                }*@
+            <form id="frm_profile" method="post" enctype="multipart/form-data" action="/Profile/ConfirmIdentity">
+                <ul class="list">
+
+                    <li>
+                        <input type="hidden" name="iduser" value="@Model.User_ID" />
+                    </li>
+
+
+                    <li class="item">
+
+                        <label>نام پدر : <i class="fa fa-star"></i></label>
+                        <input value="" required name="fathername" type="text">
+
+
+
+                    </li>
+
+                    <li class="item">
+                        <label>تاریخ تولد : <i class="fa fa-star"></i></label>
+                        <select name="year">
+
+                            <option value="1398" selected="">1398</option>
+                            <option value="1397">1397</option>
+                            <option value="1396">1396</option>
+                            <option value="1395">1395</option>
+                            <option value="1394">1394</option>
+                            <option value="1393">1393</option>
+                            <option value="1392">1392</option>
+                            <option value="1391">1391</option>
+                            <option value="1390">1390</option>
+                            <option value="1389">1389</option>
+                            <option value="1388">1388</option>
+                            <option value="1387">1387</option>
+                            <option value="1386">1386</option>
+                            <option value="1385">1385</option>
+                            <option value="1384">1384</option>
+                            <option value="1383">1383</option>
+                            <option value="1382">1382</option>
+                            <option value="1381">1381</option>
+                            <option value="1380">1380</option>
+                            <option value="1379">1379</option>
+                            <option value="1378">1378</option>
+                            <option value="1377">1377</option>
+                            <option value="1376">1376</option>
+                            <option value="1375">1375</option>
+                            <option value="1374">1374</option>
+                            <option value="1373">1373</option>
+                            <option value="1372">1372</option>
+                            <option value="1371">1371</option>
+                            <option value="1370">1370</option>
+                            <option value="1369">1369</option>
+                            <option value="1368">1368</option>
+                            <option value="1367">1367</option>
+                            <option value="1366">1366</option>
+                            <option value="1365">1365</option>
+                            <option value="1364">1364</option>
+                            <option value="1363">1363</option>
+                            <option value="1362">1362</option>
+                            <option value="1361">1361</option>
+                            <option value="1360">1360</option>
+                            <option value="1359">1359</option>
+                            <option value="1358">1358</option>
+                            <option value="1357">1357</option>
+                            <option value="1356">1356</option>
+                            <option value="1355">1355</option>
+                            <option value="1354">1354</option>
+                            <option value="1353">1353</option>
+                            <option value="1352">1352</option>
+                            <option value="1351">1351</option>
+                            <option value="1350">1350</option>
+                            <option value="1349">1349</option>
+                            <option value="1348">1348</option>
+                            <option value="1347">1347</option>
+                            <option value="1346">1346</option>
+                            <option value="1345">1345</option>
+                            <option value="1344">1344</option>
+                            <option value="1343">1343</option>
+                            <option value="1342">1342</option>
+                            <option value="1341">1341</option>
+                            <option value="1340">1340</option>
+                        </select>
+
+                        <select id="month" name="month">
+
+                            <option value="1" selected="">فروردین</option>
+                            <option value="2">اردیبهشت</option>
+                            <option value="3">خرداد</option>
+                            <option value="4">تیر</option>
+                            <option value="5">مرداد</option>
+                            <option value="6">شهریور</option>
+                            <option value="7">مهر</option>
+                            <option value="8">آبان</option>
+                            <option value="9">آذر</option>
+                            <option value="10">دی</option>
+                            <option value="11">بهمن</option>
+                            <option value="12">اسفند</option>
+                        </select>
+
+                        <select id="day" name="day">
+
+                            <option value="1" selected="">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
+                    </li>
+
+                    <li class="item additem border_item add_pic_product full">
+                        <label>تصویر کارت ملی : <i class="fa fa-star"></i></label>
+                        @{
+                            Rep_Profile repusers = new Rep_Profile();
+
+                            var qidusers = repusers.Get_Confirm().Where(a => a.Identity_UserID == Model.User_ID).FirstOrDefault();
+
+
+
+                            if (qidusers != null)
+                            {
+                                <div class="product_pic" id="show_pic">
+                                    <img src="~/Content/_images/cart/@qidusers.Identity_Pic">
+                                </div>
+                                @*<label>@qidusers.Identity_FathersName</label>*@
+                            }
+                            else
+                            {
+                                <div class="file_style1 half">
+                                    <input name="imagecart" type="file">
+                                    <input placeholder="تصویر مورد نظر . . ." type="text">
+                                    <span class="file_btn">انتخاب تصویر</span>
+                                </div>
+                            }
+                        }
+
+
+
+                    </li>
+                    @{
+                        Rep_Profile rep_id = new Rep_Profile();
+
+                        var qiduserss = rep_id.Get_Confirm().Where(a => a.Identity_UserID == Model.User_ID).FirstOrDefault();
+
+
+
+                        if (qiduserss == null)
+                        {
+
+                            <li class="item submit_btn full  margin_top60">
+                                <input name="go_profile" value="ثبت مشخصات فردی" class="threed_button" type="submit">
+                            </li>
+                        }
+                    }
+
+                </ul><!--list-->
+            </form>
+        </div><!--form_style1-->
+    </div><!-- end user_account_page -->
+
+    <div class="clear"></div>
+
+
+    @{
+        Rep_Profile repuserss = new Rep_Profile();
+
+
+        var qidusersss = repuserss.Get_Confirm().Where(a => a.Identity_UserID == Model.User_ID).FirstOrDefault();
+
+
+        if (qidusersss == null)
+        {
+
+
+            <div class="result warn sign">
+                <p class="title icon">تائید حساب کاربری:</p>
+                <p>
+                    تائید هویت حساب کاربری شما تنها با ارسال اسکن کارت ملی و بررسی مشخصات فوق با مندرجات کارت ملی امکان پذیر است.
+                    <br>
+                    فایل اسکن کارت ملی باید با فرمت jpg , png , gif باشد.
+                    <br>
+                    اگر حساب کاربری شما تائید هویت نشده است امکان تنظیم فروشگاه و افزودن محصول را نخواهید داشت .
+                    <br>
+                    ویرایش اطلاعات کاربری نیز تا زمان تائید مجدد اطلاعاتتان، غیر فعال می سازد.
+                </p>
+            </div>
+        }
+        else
+        {
+           
+            <div class="result warn sign">
+                <p class="title icon">تائید حساب کاربری:</p>
+                @if(qidusersss.Identity_Confirm==true)
+                {
+                <p>
+                     کارت ملی شما تایید مدیریت می باشد
+                </p>
+                }
+                else
+                {
+                <p>
+                    شما قبلا کارت ملی خود را ارسال کرده اید و در انتظار تایید مدیریت می باشد
+                </p>
+                }
+                
+            </div>
+        }
+    }
+
+</div>
+
+<style>
+    .fa-star {
+        color: #EA3F4B;
+        font-size: 0.6rem;
+        font-style: normal;
+        font-weight: bold;
+        position: relative;
+        top: -5px;
+    }
+
+    .fa-phone {
+        color: #EA3F4B;
+        font-size: 0.6rem;
+        font-style: normal;
+        font-weight: bold;
+        position: relative;
+        top: -5px;
+    }
+</style>
+

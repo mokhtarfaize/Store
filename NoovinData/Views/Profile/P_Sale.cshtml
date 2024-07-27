@@ -1,0 +1,133 @@
+﻿@using NoovinData.Models.Repository
+@{
+    string username = Session["User"].ToString();
+    Rep_Profile reppay = new Rep_Profile();
+    
+    DateTime d30 = DateTime.Today.AddDays(-30);
+
+    var quseid = reppay.Get_User().Where(a => a.User_UserName.Equals(username)).SingleOrDefault().User_ID;
+
+
+    var qprice = reppay.Get_Sale().Where(a => a.Bill_Seller.Equals(quseid) && a.Bill_Status == true).ToList();
+    //کل فروش بدون برداشت سایت
+    var qremovable = qprice.Sum(a => a.Bill_PayPrice);
+    //کل فروش با برداشت 5 درصدی سایت
+    List<double> lstp = new List<double>();
+    foreach (var item in qprice)
+    {  
+        double p = (item.Bill_PayPrice * 0.05);
+
+        double po = (Math.Ceiling((item.Bill_PayPrice - p) / 100) * 100);
+
+        lstp.Add(po);
+    }   
+    //فروش 30 روز قبل    
+    var qprice30 = reppay.Get_Sale().Where(a => a.Bill_Seller.Equals(quseid) && a.Bill_Status == true && a.Bill_Date >= d30 && a.Bill_Date <= DateTime.Today).ToList();
+    //فروش امروز
+    var qprice1 = reppay.Get_Sale().Where(a => a.Bill_Seller.Equals(quseid) && a.Bill_Status == true && a.Bill_Date == DateTime.Today).ToList();
+
+
+    //مجموع فروش 30 روزه
+    var qremovable30 = qprice30.Sum(a => a.Bill_PayPrice);
+    //مجموع فروش یک روزه
+    var qremovable1 = qprice1.Sum(a => a.Bill_PayPrice);
+    
+    <div id="statistics">
+        <ul>
+            <li>
+                <div class='top_box '>
+                   
+                        <div class='top_icon m1'></div>
+                        <div class='top_info'>
+                            <p><a href="/Pay/Withdrawal">موجودی  قابل برداشت شما</a></p>
+                            
+                                    @if (lstp.Count() > 0)
+                                    {
+                                        var qamounts = reppay.Get_Withdrawal().Where(a => a.Withdrawal_UserID == quseid).FirstOrDefault();
+
+                                        if (qamounts != null)
+                                        {
+                                             <p>@(lstp.Sum() - qamounts.Withdrawal_Stock)تومان</p>
+                                        }
+                                        else
+                                        {
+                                            <p>@lstp.Sum() تومان</p>
+
+                                        }
+
+                                    }
+
+                                    else
+                                    {
+                                        <p>0 تومان</p>
+                                    }
+                            
+                    </div>
+              
+                </div>
+            </li>
+            <li>
+                <div class='top_box '>
+                    <div class='top_icon m2'></div>
+                    <div class='top_info'>
+                        <p>میزان فروش امروز</p>
+                        @if (qremovable1 == null)
+                        {
+                            <p>0 تومان</p>
+                        }
+                        else
+                        {
+                            <p>@qremovable1 تومان</p>
+                        }
+
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class='top_box '>
+                    <div class='top_icon m3'></div>
+                    <div class='top_info'>
+                        <p>میزان فروش 30 روزه گذشته</p>
+                        @if (qremovable30 == null)
+                        {
+                            <p>0 تومان</p>
+                        }
+                        else
+                        {
+                            <p>@qremovable30 تومان</p>
+                        }
+
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class='top_box '>
+                    <a href="/Pay/Withdrawal">
+                        <div class='top_icon m4'></div>
+                    </a>
+                    <div class='top_info'>
+                        <p><a href="/Pay/Withdrawal"> درخواست شده جهت برداشت</a></p>
+                        <p>
+                            <a href="/Pay/Withdrawal">
+                                @{
+
+                                    var qamount = reppay.Get_Withdrawal().Where(a => a.Withdrawal_UserID == quseid).FirstOrDefault();
+
+                                    if (qamount == null)
+                                    {
+                                        <span>0 تومان</span>
+                                    }
+                                    else
+                                    {
+                                        <span>  @qamount.Withdrawal_AmountRequested  تومان</span>
+                                    }
+                                }
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+}

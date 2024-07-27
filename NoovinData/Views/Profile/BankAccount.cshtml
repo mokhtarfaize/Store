@@ -1,0 +1,225 @@
+﻿@model NoovinData.Models.Domin.NoBank
+@using NoovinData.Models.Repository
+@{
+    ViewBag.Title = "مدیریت حساب بانکی";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+
+
+<style>
+    .alert-success {
+        color: #3C763D;
+        background-color: #DFF0D8;
+        border-color: #D6E9C6;
+    }
+
+    .alert-dismissable, .alert-dismissible {
+        padding-right: 35px;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        text-align: center;
+        width: 70%;
+        margin-right: 150px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .alert-info {
+        color: #31708F;
+        background-color: #D9EDF7;
+        border-color: #BCE8F1;
+    }
+
+    .alert-warning {
+        color: #8A6D3B;
+        background-color: #FCF8E3;
+        border-color: #FAEBCC;
+    }
+
+    .alert-danger {
+        color: #A94442;
+        background-color: #F2DEDE;
+        border-color: #EBCCD1;
+    }
+</style>
+<style>
+    .fa-star {
+        color: #EA3F4B;
+        font-size: 0.6rem;
+        font-style: normal;
+        font-weight: bold;
+        position: relative;
+        top: -5px;
+    }
+</style>
+<div class="part_left">
+    <div id="bank_account_management" class="userpanel_bright_section">
+        <h1 class="separator">مدیریت حساب بانکی </h1>
+        <div id="user_account_page" class="userpanel_bright_section">
+            <div class="form_style1 form_wrapper clearfix">
+
+                @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-info">
+                    <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                    @ViewBag.Error
+                </div>
+            }
+
+                @if (Model == null)
+                {
+
+           <form novalidate="novalidate" id="frm_bank_account" method="post" action="/Profile/AddBankAccount">
+      @*//using (Html.BeginForm("AddBankAccount", "Profile", FormMethod.Post, new { @id = "frm_bank_account" , @class="frm_bank_account"}))
+      //  {*@
+
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    
+            @Html.HiddenFor(model => model.Banks_ID)
+      
+
+        <ul class="list">
+            <li class="item">
+                
+                @Html.LabelFor(model => model.Banks_NameID, htmlAttributes: new { @class = "control-label col-md-2" })
+                 
+                <select class="full" name="bank_id">
+
+                    @{
+                         Rep_Profile repbank = new Rep_Profile();
+
+                         foreach (var item in repbank.Get_NameBank())
+                          {
+                             <option value="@item.Bank_ID">@item.Bank_Name</option>
+                              }
+
+                    }
+
+                </select>
+            </li>
+
+            <li class="item">
+                @Html.LabelFor(model => model.Banks_NameUser, htmlAttributes: new { @class = "control-label col-md-2" })
+                @*@Html.TextBoxFor(model => model.Banks_NameUser, new { @class = "widthinput", name = "NameUser" })*@
+                <input name="NameUser" required value="" type="text">
+                @Html.ValidationMessageFor(model => model.Banks_NameUser, "", new { @class = "text-danger" })
+
+            </li>
+            
+            <li class="item">
+                @Html.LabelFor(model => model.Banks_NoBank, htmlAttributes: new { @class = "control-label col-md-2" })
+                @*@Html.TextBoxFor(model => model.Banks_NoBank, new { @class = "widthinput", name = "AccountCode" })*@
+                <input name="AccountCode" required value="" type="text">    
+                @Html.ValidationMessageFor(model => model.Banks_NoBank, "", new { @class = "text-danger" })
+            </li>
+                       
+            <li class="item">
+                @Html.LabelFor(model => model.Banks_NoCart, htmlAttributes: new { @class = "control-label col-md-2" })                
+                @*@Html.TextBoxFor(model => model.Banks_NoCart, new { @class = "widthinput", name = "CartCode" })*@
+                <input name="CartCode" required value="" type="text">     
+                @Html.ValidationMessageFor(model => model.Banks_NoCart, "", new { @class = "text-danger" })
+            </li>
+
+            <li class="item full">
+                @Html.LabelFor(model => model.Banks_NoIR, htmlAttributes: new { @class = "control-label col-md-2" })              
+                @*@Html.TextBoxFor(model => model.Banks_NoIR, new { @class = "widthinput", name = "ShebaCode" })*@
+                <input name="ShebaCode" required="" value="" type="text"> 
+                @Html.ValidationMessageFor(model => model.Banks_NoIR, "", new { @class = "text-danger" })
+            </li>
+
+            @*<li class="item">
+                <label>نام صاحب حساب : <i class="fa fa-star"></i></label>
+                <input name="NameUser"  value="" type="text">              
+            </li>
+            <li class="item">
+                <label>شماره حساب : <i class="fa fa-star"></i></label>
+                <input name="AccountCode"  value="" type="text">             
+            </li>
+
+            <li class="item">
+                <label>شماره کارت : <i class="fa fa-star"></i></label>
+                <input name="CartCode"  value="" type="text">                
+            </li>
+
+            <li class="item full">
+                <label>شماره شبا : <i class="fa fa-star"></i></label>
+                <input name="ShebaCode" value="" type="text">                
+            </li>*@
+
+
+            <li class="submit_btn item full">
+                <input value="ثبت مشخصات حساب بانکی" name="go_bank_account" class="threed_button" type="submit">
+            </li>
+        </ul>
+        @*}*@
+    </form>
+
+                                    <div class="margin_top60 fl table_style1">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>نام بانک</th>
+                                    <th>متعلق به</th>
+                                    <th>شماره حساب</th>
+                                    <th>شماره کارت</th>
+                                    <th>شناسه شبا</th>
+                                    <th>عمليات</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td colspan="7"><div class="noitem">حسابی برای نمایش موجود نیست.</div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+}
+                else
+                {
+                    <div class="margin_top60 fl table_style1">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>نام بانک</th>
+                                    <th>متعلق به</th>
+                                    <th>شماره حساب</th>
+                                    <th>شماره کارت</th>
+                                    <th>شناسه شبا</th>
+                                    <th>عمليات</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Model.BankName.Bank_Name</td>
+                                    <td>@Model.Banks_NameUser</td>
+                                    <td>@Model.Banks_NoBank</td>
+                                    <td>@Model.Banks_NoCart</td>
+                                    <td>@Model.Banks_NoIR </td>
+                                    <td>@Html.ActionLink(" ", "EditBank", new { id = @Model.Banks_ID }, new { @class = "fa fa-edit", style = "color:green; font-size:19px;" })</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                }
+
+
+
+            </div><!--form_style1-->
+        </div><!--user_account_page-->
+
+
+    </div><!-- end bank_account_management -->
+</div>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+

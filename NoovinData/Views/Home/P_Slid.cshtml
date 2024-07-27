@@ -1,0 +1,54 @@
+﻿@using NoovinData.Models.Repository
+
+@{
+
+    Rep_Home slid = new Rep_Home();
+}
+
+<!--اسلایدر-->
+<section id='home_part1'>
+    <div class='container'>
+        <div class='inner clearfix'>
+            <div class="home_slideshow">
+                <div class="slideshow_pics">
+                    <ul class='list'>
+
+                        @foreach (var item in slid.Get_slid().Where(a=>a.Enable==true))
+                        {
+                       <li class='item' style='background-image:url(/Content/_images/file/@item.Image);'><a href='http://@item.Url' title="@item.Title" target='_blank'></a></li>
+                        }                       
+                    </ul>
+                </div><!--end slideshow-->
+                <div class="slideshow_bullets">
+                    <ul>
+                        @{
+                            var number = slid.Get_slid().ToList();
+                            int num = number.Count();
+                            double div =(100 / num);
+                        }
+
+                       @foreach (var item1 in slid.Get_slid())
+                       {
+                            <li style='width:@div%'><a href='' class='ellipsis'>@item1.Title</a></li>
+                       }                                              
+                    </ul>
+                </div><!--end slideshow_bullets-->
+            </div><!--end home_slideshow-->
+            <div class='clear'></div>
+        </div><!--inner-->
+    </div><!--container-->
+</section>
+<!--home_part1-->
+
+<style>
+    .eye {
+        color: #32BFB6;
+        font-size: 1.2rem;
+        float: left;
+        margin-right: 3px;
+        position: relative;
+        bottom: -2px;
+        font-family: at1;
+    }
+</style>
+

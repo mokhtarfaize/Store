@@ -1,0 +1,42 @@
+﻿@using NoovinData.Models.Repository
+@{
+    Rep_Profile repsearch = new Rep_Profile();
+}
+
+<section>
+    <div class="container">
+        <div class="inner">
+            <div class="top_search_form">
+
+
+                @using (Html.BeginForm("Search", "Home", FormMethod.Get, new { @class = "search_form clearfix", @id = "frm_topsearch" }))
+    {
+                    <div id="search_box">
+                        <select name='Searchid' style="margin-left:1px;">
+                            <option value="0" selected>اتخاب گروه</option>
+                            @foreach (var item1 in repsearch.Get_Group())
+                            {
+
+                                <option value='@item1.Group_ID'>@item1.Group_Name</option>
+                            }
+
+                        </select>
+                        
+                        <input type="text" placeholder="فایل مورد نظر خود را جستجو کنید..." name='keywordSearch'>
+
+                        <input type="submit" class="fa fa-search" style="margin-right: 1px;width:38px !important;background-color: #CC456B !important;height: 34px !important;" name="name" value="برو" />
+
+
+                    </div>
+
+                    <div id="search_result_box">
+
+                    </div><!-- end search_result_box -->
+    }
+
+
+            </div>
+            </div>
+
+        </div>
+    </section>

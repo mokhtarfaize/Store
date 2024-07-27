@@ -1,0 +1,92 @@
+﻿@model NoovinData.Models.Domin.Slider
+
+@{
+    ViewBag.Title = "ویرایش اسلایدر";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">ویرایش اسلایدر : @Model.Title </h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+
+
+        <div class="form_style1 form_wrapper clearfix ">
+            <div class="overlay"></div>
+
+
+            @using (Html.BeginForm("EditSlider", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm_add_product" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(model => model.ID)
+
+                <ul class="list">
+                    <li class="item ">
+                       
+                        @Html.Label("عنوان تصویر", new { @style = "margin-top: -27px;margin-right: 20px;padding:10px;font-size:15px;" })
+
+
+                        @Html.EditorFor(model => model.Title, new { @required = "" })
+
+
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+
+                    </li>
+                    <li class="item full">
+                       
+                        @Html.Label("تصویر ", new { @style = "margin-top: -27px;margin-right: 20px;padding:10px;font-size:15px" })
+
+                        <img src="~/Content/_images/file/@Model.Image" style="background-color:#0094ff" alt="@Model.Image" width="120" height="100" />
+
+                        <br />
+                        <input type="file" name="Pic" value="" />
+                        <input type="text" value="~/Content/_images/file/@Model.Image" hidden />
+                    </li>
+                    <li class="item ">
+
+                        @Html.Label("URL", new { @style = "margin-top: -27px;margin-right: 20px;padding:10px;font-size:15px" })
+
+
+                        @Html.EditorFor(model => model.Url, new { @required = "" })
+
+
+                        @Html.ValidationMessageFor(model => model.Url, "", new { @class = "text-danger" })
+
+                    </li>
+                    <li class="item ">
+
+                        @Html.Label("ترتیب نمایش", new { @style = "margin-top: -27px;margin-right: 20px;padding:10px;font-size:15px" })
+
+
+                        @Html.EditorFor(model => model.Sort, new { @required = "" })
+
+
+                        @Html.ValidationMessageFor(model => model.Sort, "", new { @class = "text-danger" })
+
+                    </li>
+                    <li class="item full">
+                        <input type="submit" value="ویرایش کردن" />
+                    </li>
+                </ul>
+            }
+
+
+
+            <script src="~/Scripts/jquery.validate.min.js"></script>
+            <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+        </div>
+
+    </div>
+</div>
+

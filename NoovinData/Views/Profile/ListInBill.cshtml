@@ -1,0 +1,142 @@
+﻿@model IEnumerable<NoovinData.Models.Domin.InterimBill>
+@using NoovinData.Models.Repository
+@{
+    ViewBag.Title = "لیست سبد خریدها";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+    Rep_Home rep = new Rep_Home();
+}
+
+@using NoovinData.Models.Plugin
+
+
+
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">لیست پیش فاکتورها  </h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+
+
+
+        @if (Model.Count()>0)
+        {
+
+            <table class="table_style1">
+                <thead>
+                    <tr>
+                        <th>
+                            نام محصول
+                        </th>
+                        <th>
+                            تاریخ سفارش
+                        </th>
+
+                        <th>
+                            هزینه قابل پرداخت
+                        </th>
+                        <th>
+                            هزینه ارسال
+                        </th>
+                        <th>
+                            شماره سفارش
+                        </th>
+                        <th>تعداد محصول</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Product.Product_Name)
+                            </td>
+                            <td>
+                                @PersianDateExtensionMethods.ToPeString(item.InterimBill_Date, "yyyy/MM/dd")
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.InterimBill_PayPrice) تومان
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.InterimBill_Postage) تومان
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.InvoiceNumber)
+                            </td>
+                           
+                            <td>@Html.DisplayFor(modelItem=>item.InterimBill_Count)</td>
+
+                            <td>
+                                @{
+                        using (Html.BeginForm("InterimBill", "Profile", FormMethod.Post))
+                        {
+
+                            <input type="hidden" name="idpro" value="@item.InterimBill_ProductID" />
+                                    <input type="submit" style="width:50px" value="جزئیات" />
+                        }
+                                }
+
+
+                            </td>
+                            <td>
+                                @{
+                        using (Html.BeginForm("DeleteInBill", "Profile", FormMethod.Post))
+                        {
+
+                            <input type="hidden" name="idinterimbill" value="@item.InterimBill_ID" />
+                                    <input type="submit" style="width:50px" value="حذف" />
+                        }
+                                }
+                            </td>
+                        </tr>
+                       
+                    }
+                </tbody>
+            </table>          
+            
+        }
+        else
+        {
+            <div class="table_style1">
+                <table>
+                    <thead>
+
+                        <tr>
+
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">پیش فاکتوری برای پرداخت وجود ندارد</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        $("[data-hide]").on("click", function () {
+            $("." + $(this).attr("data-hide")).hide();
+            // -or-, see below
+            // $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+</script>
+<link href="~/Content/_css/alert.css" rel="stylesheet" />

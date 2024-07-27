@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5e43d867edfc472cbe32377286a59976" Name="Diagram1">
+        <EntityTypeShape EntityType="NoovinDataModel.BankName" Width="1.5" PointX="6" PointY="29" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.Bill" Width="1.5" PointX="8.25" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.ConfirmEmail" Width="1.5" PointX="5.25" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.Download" Width="1.5" PointX="5.25" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.Group" Width="1.5" PointX="9" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.Identity" Width="1.5" PointX="5.25" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.InterimBill" Width="1.5" PointX="8.25" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.Massage" Width="1.5" PointX="5.25" PointY="32.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.NoBank" Width="1.5" PointX="8.25" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.Pic" Width="1.5" PointX="13.5" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.PostStatu" Width="1.5" PointX="6" PointY="23" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.Product" Width="1.5" PointX="11.25" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.Role" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.Setting" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.Slider" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.State" Width="1.5" PointX="0.75" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.Tag" Width="1.5" PointX="13.5" PointY="20.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.TempDL" Width="1.5" PointX="10.5" PointY="23.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.User" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.Visit" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.Weight" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NoovinDataModel.Withdrawal" Width="1.5" PointX="5.25" PointY="45.75" IsExpanded="true" />
+        <AssociationConnector Association="NoovinDataModel.FK_Banks_BankName" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_Bill_PostStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_Bill_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_Bill_User" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_TempDL_Bill" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_ConfirmEmail_User" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_Download_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_Download_User" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_Product_Group" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_Identity_User" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_InterimBill_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_InterimBill_User" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_Massage_User" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_NoBank_User" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_Pic_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_Product_User" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_Tags_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_User_State" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_Withdrawal_User" ManuallyRouted="false" />
+        <AssociationConnector Association="NoovinDataModel.FK_User_Role" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

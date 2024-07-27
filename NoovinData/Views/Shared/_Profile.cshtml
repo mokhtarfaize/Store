@@ -1,0 +1,391 @@
+﻿@using NoovinData.Models.Repository
+@{
+    Rep_Profile repprofile = new Rep_Profile();
+}
+<!DOCTYPE html>
+
+<html> 
+<head>
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!--<meta name="robots" content="noindex,nofollow">-->
+    <meta name="viewport" content="width=device-width" />
+    <title> پروفایل _ @ViewBag.Title</title>
+    @if (repprofile.Get_User() != null)
+    {
+        <title>"@repprofile.Get_Setting().FirstOrDefault().Title" :: @ViewBag.Title </title>
+
+        <meta name="description" content="@repprofile.Get_Setting().FirstOrDefault().Descrption" />
+
+        <meta name="keywords" content="@repprofile.Get_Setting().FirstOrDefault().Keyword" />
+    }
+
+  
+    <link href="~/fonts/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/_css/master.css" rel="stylesheet" />
+    <script src="~/Scripts/_js/jquery-1.11.3.min.js"></script>
+    <script src="~/Scripts/_plugins/ellipsis/jquery.dotdotdot.min.js"></script>
+
+    <script src="~/Scripts/_js/subnav.js"></script>
+    <script src="~/Scripts/jquery.ui.widget.js"></script>
+    <script src="~/Scripts/jquery.fileupload.js"></script>
+
+    @RenderSection("CkEditor", false)
+
+
+</head>
+<body>
+     <header>
+        <section id="top_section">
+            <div class="container">
+                <div class="inner">
+
+                   
+
+
+                    @{
+                        if (Session["User"] != null)
+                        {
+                            string username = Session["User"].ToString();
+
+                            Rep_Profile repuser = new Rep_Profile();
+
+                            var qname = repuser.Get_User().Where(a => a.User_UserName == username).SingleOrDefault();
+
+                            <div id="user_account">
+
+                                <a class="user_account_btn" href="/Profile/Profile">
+                                    <span class="i-user"></span>
+                                    @if (qname == null)
+                                    {
+                                        <span>نام کاربری</span>
+                                    }
+
+                                    @qname.User_NameFamily
+                                </a>
+                                <a class="user_account_btn" href="~/Register/Logout">
+                                    <span class="i-power-off"></span>
+                                    خروج
+                                </a>
+                            </div>
+                        }
+                    }
+
+
+                    <!--جستجو-->
+                    @Html.Partial("P_Search")
+
+
+                </div><!--end inner-->
+            </div><!--end container-->
+        </section>
+
+
+    @Html.Partial("P_Gr")
+    </header>
+
+
+    <script>
+        $(document).ready(function () {
+            /////////////////////////////////////////////////////
+            //toggle menu
+            $(".part_right .menu_step1 .toggle > a").click(function () {
+                var target = $(this).closest(".toggle").find(".step2");
+                target.slideToggle(500);
+            });
+        });
+
+
+    </script>
+    <section class="breadcrumb_bg">
+        <div class="container">
+            <div class="inner">
+                <div id="breadcrumb">
+                    <ul>
+                        <li><a href='/' title='صفحه اصلی'>صفحه اصلی</a></li>
+                        <li><a title='@ViewBag.Title'>@ViewBag.Title</a></li>
+                    </ul>
+                </div><!-- end breadcrumb -->
+            </div>
+        </div>
+    </section>
+    <div class='clear'></div>
+
+
+
+
+    <section id="user_panel" class='dashboard'>
+
+        <div class="container">
+            <div class="inner">
+                <div class='user_part'>
+                    <div class='part_right'>
+                        <ul class='menu_step1'>
+
+
+                            @{
+
+                                string user = Session["User"].ToString();
+
+                                var quser = repprofile.Get_User().Where(a => a.User_UserName == user).SingleOrDefault();
+                            }
+
+                            <li class='header'>
+                                <a href='/Home/ProductUser?id=@quser.User_ID'><i class='i-cloud-upload user_icon'></i> @quser.User_NameFamily </a>
+
+                            </li>
+                            <li><a href='~/Profile/Profile'>خلاصه وضعیت</a></li>
+                            <li class="toggle">
+                                <a href='#'>لیست فاکتورها <i class='fa fa-chevron-down'></i></a>
+                                <ul class="step2">
+                                    <li><a href='~/Profile/ListInBill'>پیش فاکتورها </a></li>
+                                    <li><a href='~/Pay/HistoryBuy'>تاریخچه خرید  </a></li>
+                                    <li><a href='~/Pay/HistorySale'>تاریخچه فروش  </a></li>
+                                </ul>
+                            </li>
+                            <li class='toggle'>
+                                <a href='#'>حساب کاربری <i class='fa fa-chevron-down'></i></a>
+                                <ul class='step2'>
+
+                                    <li>
+                                        <a href="~/Profile/ChangePassword">تغیر رمز</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Profile/Identity?id=@quser.User_ID">تایید هویت</a>
+                                    </li>
+
+                                    <li>
+                                        <a href='~/Profile/LsitMesage'>
+                                            پیام های من
+                                            @Html.Partial("P_CountMsg")
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="~/Profile/AddMsg">ارسال پیام جدید</a>
+                                    </li>
+
+                                </ul><!--step2-->
+                            </li>
+
+
+
+                            <li class='toggle'>
+
+                                <a href='#'>مدیریت محصولات <i class='fa fa-chevron-down'></i></a>
+                                <ul class='step2'>
+
+
+
+                                    @{
+                                        var qconf = repprofile.Get_Confirm().Where(a => a.Identity_UserID == quser.User_ID).SingleOrDefault();
+                                        
+                                        if (quser != null)
+                                        {
+                                            if (qconf != null)
+                                            {
+                                                if (quser.User_RoleID!=1)
+                                                { 
+                                                if (qconf.Identity_Confirm == true)
+                                                {
+                                                    <li>
+                                                        <a href="~/Profile/AddProduct">ثبت محصول جدید</a>
+                                                    </li>
+                                                }
+                                                }
+                                                
+                                            }
+                                        }
+                                    }
+                                    <li>
+                                        <a href='~/Profile/ListProduct'>
+
+
+                                            لیست محصولات
+
+                                            @Html.Partial("P_Count")
+
+                                        </a>
+                                    </li>
+                                    <li><a href='~/Profile/ListLink'>لیست لینک دانلود</a></li>
+                                </ul><!--step2-->
+                            </li>
+
+
+
+                            <li class='toggle'>
+                                <a href='#'>امور مالی <i class='fa fa-chevron-down'></i></a>
+                                <ul class='step2'>
+
+
+                                    <li><a href='~/Profile/BankAccount'>مدیریت حساب بانکی</a></li>
+                                    <li><a href='~/Pay/Withdrawal'>درخواست تسویه حساب</a></li>
+                                </ul><!--step2-->
+                            </li>
+
+
+
+                            @{
+                                var qrole = repprofile.Get_User().Where(a => a.User_UserName == user).SingleOrDefault();
+
+                                if (qrole != null)
+                                {
+                                    var roename=repprofile.Get_Role().Where(a=>a.Role_ID ==qrole.User_RoleID).SingleOrDefault();
+                                    if (roename.Role_Name == "Admin")
+                                    {
+                                        <li class='toggle'>
+                                            <a href='#'>مدیریت فروشگاه <i class='fa fa-chevron-down'></i></a>
+                                            <ul class='step2'>
+                                                <li><a href='~/Admin/MgSetting'>تنظیمات فروشگاه</a></li>
+
+                                                <li><a href="~/Admin/UserIdentity">تایید کاربران</a></li>
+                                                <li><a href="~/Admin/ListRequest">تسویه حساب</a></li>
+                                                <li><a href="~/Admin/MgProduct"> مدیریت محصولات سایت</a></li>
+                                                <li><a href="~/Admin/MgUser">مدیریت کاربران </a></li>
+                                                <li><a href="~/Admin/MgGroup">مدیریت گروه ها </a></li>
+                                                <li><a href="~/Admin/ReportingDate">گزارشگیری بر اساس تاریخ </a></li>
+                                                <li><a href="~/Admin/MgPostStatus">مدیریت  وضعیت ارسال </a></li>
+                                                <li><a href="~/Admin/ListVisit">مدیریت بازید سایت </a></li>
+                                                <li><a href="~/Admin/MgSlider">مدیریت اسلایدر</a></li>
+                                            </ul><!--step2-->
+                                        </li>
+                                    }
+                                }
+
+
+
+                            }
+
+
+                            <li><a href='~/Register/Logout' title="خروج">خروج <i class='fa fa-power-off'></i></a></li>
+
+                        </ul>
+                    </div>
+
+
+
+
+
+
+
+                    <style>
+                        i.fa-power-off {
+                            display: block;
+                            text-align: center;
+                            bottom: 10px;
+                            color: #FBD309;
+                            text-shadow: 0px 0px 2px #FBD309;
+                            position: relative;
+                            right: 2px;
+                            top: -1px;
+                            font-size: 1.9rem;
+                        }
+
+                            i.fa-power-off:hover {
+                                text-shadow: none;
+                            }
+
+                        div.part_right ul.menu_step1 .fa-chevron-down {
+                            position: absolute;
+                            left: 10px;
+                            top: 0px;
+                            bottom: 0px;
+                            line-height: 37px;
+                            color: #64A802;
+                            font-size: 1.5rem;
+                        }
+                    </style>
+
+
+
+                    @RenderBody()
+
+
+                </div> <!--close div.user_part-->
+            </div><!-- end inner -->
+        </div><!-- end container -->
+
+
+
+    </section>
+
+
+
+    <!--فوتر-->
+    <div class='clear'></div>
+    <footer>
+        <section class='footer_part1'>
+            <div class="container">
+                <div class="inner">
+                    <ul class='step1 list'>
+                        <li class='item link'>
+                            <div class='title_style4'>لینک های اصلی سایت</div>
+                            <ul class='step2'>
+                                <li class='item2'><a href='/' title='صفحه اصلی'>صفحه اصلی</a></li>
+                                
+                                <li class='item2'><a href='/Home/Contact' title='تماس با ما'>تماس با ما</a></li>
+                                
+                            </ul>
+
+                            <ul class='step2'>
+
+                                <li class='item2'><a href='/Register/Register' title='ثبت نام'>ثبت نام</a></li>
+                                <li class='item2'><a href='/Register/Login' title='ورود به حساب کاربری'>ورود به حساب کاربری</a></li>
+                                
+                            </ul>
+                        </li><!--لینک های سایت-->
+                      @Html.Partial("P_NewPr")<!--پربازید ترین محصولات-->
+
+                        @Html.Partial("P_ProductNew")
+
+                        
+                    </ul>
+                </div><!--inner-->
+            </div><!--container-->
+        </section><!--footer_part1-->
+
+        <section class='footer_part2'>
+            <div class="container">
+                <div class="inner">
+                    <ul class='list clearfix'>
+                        <li class='item'>
+                            <i class='icon' style='background-image:url(/Content/_images/default/phone.png);'></i>
+                            <strong class='name'>09100324468</strong>
+                        </li>
+                        <li class='item'>
+                            <i class='icon' style='background-image:url(/Content/_images/default/email.png);'></i>
+                            <strong class='name'>mokhtarfaize1@gmail.com</strong>
+                        </li>
+                        <li class='item social'>
+                            <a href='http://facebook.com' title='facebook' target='_blank' class='item2'><i class='fa fa-facebook'></i></a>
+                            <a href='https://plus.google.com' title='google+' target='_blank' class='item2'><i class='fa fa-google-plus'></i></a>
+                            <a href='http://linkedin.com' title='linkedin' target='_blank' class='item2'><i class="fa fa-linkedin"></i></a>
+                            <a href='http://instagram.com' title='instagram' target='_blank' class='item2'><i class='fa fa-instagram'></i></a>
+                            <a href='http://twitter.com' title='twitter' target='_blank' class='item2'><i class="fa fa-twitter"></i></a>
+                        </li>
+                    </ul>
+                </div><!--inner-->
+            </div><!--container-->
+        </section><!--footer_part2-->
+
+        <section class='footer_part3'>
+            <div class="container">
+                <div class="inner">
+                    <div class='designer'>
+                        <a title='برنامه نویسی سایت' target='_blank'>برنامه نویسی سایت</a> &nbsp; مختار فیضی
+                    </div>
+                </div><!--inner-->
+            </div><!--container-->
+        </section><!--footer_part3-->
+    </footer>
+
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+    <script src="~/Scripts/toastr.min.js"></script>
+    <script src="~/Scripts/_js/css_browser_selector.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/_js/home_slideshow.js"></script>
+    <script src="~/Scripts/_js/user_account.js"></script>
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+</body>
+</html>

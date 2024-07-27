@@ -1,0 +1,143 @@
+﻿@using NoovinData.Models.Domin
+@using NoovinData.Models.Plugin
+@using NoovinData.Models.Repository
+@{
+    DB db = new DB();
+    Rep_Profile rep = new Rep_Profile();
+
+    var q = (from product in db.Products where(product.Product_IsDownload==true)
+             join bill in db.Bills on product.Product_ID equals bill.Bill_ProductID where(bill.Bill_Status==true)
+             select product).Take(3).ToList();
+
+    //این جوین از روش لامبدا استفاده میکند     
+    //var q2 = db.Products.Where(p=>p.Product_IsDownload==true).Join(db.Bills, p => p.Product_ID, b => b.Bill_ProductID, (p,b) => new {p,b})
+    //    .Take(2).ToList();
+
+    var q1 = (from product in db.Products
+              where (product.Product_IsDownload == false)
+              join bill in db.Bills  on product.Product_ID equals bill.Bill_ProductID where(bill.Bill_Status==true)
+              select product).Take(2).ToList();
+    //این جوین از روش لامبدا استفاده میکند          
+    //var q3 = db.Products.Where(p => p.Product_IsDownload == true).Join(db.Bills, p => p.Product_ID, b => b.Bill_ProductID,(p, b) => new { p, b })
+    //    .Take(2).ToList();
+    
+} 
+
+<!--بخش پرفروش ترین ها-->
+<section class='home_part5'>
+    <div class='container'>
+        <div class='inner clearfix'>
+            <div class='store_style1'>
+                <div class='title_style2'>پرفروش ترین فایل هاو محصولات </div>
+                <ul class='list'>
+
+                @if (q.Count()> 0 || q1.Count()> 0)
+                {                    
+               
+                    if (q.Count() > 0)
+                    {
+                        foreach (var a in q)
+                        {             
+                            <li class='item right'>
+                                <div class='content'>
+                                    <div class="pic">
+                                        <img src="/Content/_images/product/@a.Product_PicIndex" alt="@a.Product_Name" class="pic" />
+                                    </div>
+                                    @*<div class='pic' style='background-image:url(/Content/_images/product/@a.Product_PicIndex);'></div>*@
+                                    <div class="info half item" >
+                                        <i class='fa fa-download' style="display:block !important ;color:#00A9E0; font-size:16px;"></i>
+                                        <span class='val' style="color:red">خرید دانلودی</span>
+                                    </div>
+                                   
+                                    @*<div class='content'>*@
+                                        <div class='info'>
+                                            <div class='name'>فروشنده فایل: <span class='val'>@a.User.User_NameFamily</span></div>
+                                            <i class='slash'></i>
+                                            <div class='name'>زمان ثبت : @PersianDateExtensionMethods.ToPeString(a.Product_Date, "yyyy/MM/dd")</div>
+                                        </div>
+                                        <h1 class='title ellipsis'>@a.Product_Name</h1>
+                                        <h2 class='sub_title ellipsis'></h2>
+                                        <div class='tcenter'>
+                                            <a href='/Home/ShowProduct?id=@a.Product_ID' title='@a.Product_Name' class='btn_style2'>
+                                                مشاهده
+                                            </a>
+
+                                        </div>
+                                    </div>
+                            </li>
+                        }
+                    }
+                    @*else
+                    {
+                        <li class='item right'>
+                            <span>
+                                محصولی برای نمایش وجود ندارد
+                            </span>
+                        </li>
+                    }*@
+
+
+
+                    if (q1.Count() > 0)
+                    {
+                        foreach (var b in q1)
+                        {
+                            
+
+                            <li class='item left'>
+                                <div class='content'>
+                                    <div class="pic">
+                                        <img src="/Content/_images/product/@b.Product_PicIndex" alt="@b.Product_Name" class='pic' />
+                                        @*<div class='pic' style='background-image:url(/Content/_images/product/@b.Product_PicIndex);'>*@
+                                    </div>
+                                    <div class="info half item">
+                                        <i class='fa fa-truck' style="display:block !important ;color:#00A9E0; font-size:16px;"></i>
+                                        <span class='val' style="color:green">خرید پستی</span>
+                                    </div>
+                                    @*<div class='content'>*@
+                                        <div class='info'>
+                                            <div class='name'>فروشنده فایل: <span class='val'>@b.User.User_NameFamily</span></div>
+                                            <i class='slash'></i>
+                                            <div class='name'>زمان ثبت : @PersianDateExtensionMethods.ToPeString(b.Product_Date, "yyyy/MM/dd")</div>
+                                        </div>
+                                        <h1 class='title ellipsis'>@b.Product_Name</h1>
+                                        <h2 class='sub_title ellipsis'></h2>
+                                        <div class='tcenter'>
+                                            <a href='/Home/ShowProduct?id=@b.Product_ID' title='@b.Product_Name' class='btn_style2'>
+                                                مشاهده
+                                            </a>
+
+                                        </div>
+                                    </div>
+                            </li>
+                        }
+
+                    }
+                    @*else
+                    {
+                        <li class='item left'>
+                            <span>
+                                محصولی برای نمایش وجود ندارد
+                            </span>
+                        </li>
+                    }*@
+                }
+                else
+                {
+                   <li>> 
+                    <span>
+                        محصولی برای نمایش وجود ندارد
+                    </span>
+                    </li>
+                }
+
+
+
+
+
+
+                </ul><!--list-->
+            </div><!--store_style-->
+        </div><!--inner-->
+    </div><!--container-->
+</section><!--home_part5-->

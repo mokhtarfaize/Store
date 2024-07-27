@@ -1,0 +1,119 @@
+﻿@using NoovinData.Models.Repository
+
+@{
+    ViewBag.Title = "داشبورد";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+
+    Rep_Profile repidentity = new Rep_Profile();
+}
+
+<div class='part_left'>
+    <h1 class='separator'>خلاصه وضعیت</h1>
+
+
+    @Html.Partial("P_Sale")
+
+    <div class='clear'></div>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-info">
+            <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+            @ViewBag.Error
+        </div>
+    }
+
+
+    <div class='clear'></div>
+        
+
+        @{
+            string user = Session["User"].ToString();
+            var quserid = repidentity.Get_User().Where(a => a.User_UserName == user).FirstOrDefault().User_ID;
+
+            var id = repidentity.Get_Confirm().Where(a => a.Identity_UserID == quserid).FirstOrDefault();
+
+            if (id == null)
+            {
+                <div class='result nok sign'>
+                    <p class='title icon'>وضعیت کاربری:</p>
+                    <p>
+                        تائید هویت حساب کاربری شما، تنها با ارسال تصویر کارت ملی امکان پذیر است.
+                        لطفا نسبت به تکمیل اطلاعات کاربری و ارسال تصویر کارت ملی خود از صفحه <a href="/Profile/Identity?id=@quserid" class='link'> " حساب کاربری /تائید هویت" </a> اقدام نمائید. تا امکان فروش برای شما فعال گردد.
+                    </p>
+                </div>
+            }
+            else
+            {
+                var confirm = repidentity.Get_Confirm().Where(a => a.Identity_Confirm == false).FirstOrDefault();
+
+
+                <div class="result warn sign">
+                    <p class="title icon">وضعیت کاربری:</p>
+                    @if (confirm != id)
+                    {
+                        <p>
+                            مشخصات ارسالی توسط شما ، مورد تائیید مدیریت می باشد و امکان ثبت محصول  برای شما فراهم گردیده.
+                        </p>
+
+                    }
+                    else
+                    {
+                        <p>
+                            مشخصات ارسالی توسط شما در انتظار تایید مدیریت  می باشد و پس از تایید، امکان ثبت محصول  برای شما فراهم می گردد.
+                        </p>
+
+                    }
+                </div>
+
+
+            }
+        }
+
+
+
+        <div id="guides">
+            <div>
+                <h2><i class='fa fa-check'></i>موجودی شما : </h2>
+                <p>
+                    سهم شما از فروش محصول همان موجودی شما می باشد که برابر است با 80% کل مبلغ فروش. لازم به ذکر است که 20% باقی مانده سهم از فروش محصول شما می باشد.
+                </p>
+            </div>
+            <div>
+                <h2><i class='fa fa-check'></i>درخواست شده جهت واریز : </h2>
+                <p>
+                    مبلغ درخواست شده جهت واریز مبلغی است که شما در هر زمان تمایل داشته باشید می توانید آنرا از موجودی قابل برداشت خود درخواست نمائید.
+                    <br>
+                    پس از گذشت 3 روز از فروش محصولتان این مبلغ به موجودی قابل برداشت شما اضافه می گردد.
+                    (علت این 3 روز تاخیر قانون حمایت از مشتری می باشد).
+                </p>
+            </div>
+        </div>
+
+
+        <style>
+            i.fa-check {
+                color: #FF822D;
+                padding: 0px 0px 0px 10px;
+            }
+
+            input, textarea, a, i {
+                transition: all 0.4s ease 0s;
+            }
+        </style>
+
+
+
+    </div>
+
+<script>
+
+    $(function () {
+        $("[data-hide]").on("click", function () {
+            $("." + $(this).attr("data-hide")).hide();
+            // -or-, see below
+            // $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+</script>
+<link href="~/Content/_css/alert.css" rel="stylesheet" />

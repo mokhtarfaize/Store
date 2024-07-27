@@ -1,0 +1,136 @@
+﻿@model NoovinData.Models.Domin.Withdrawal
+@using NoovinData.Models.Repository
+@using NoovinData.Models.Plugin
+@{
+    ViewBag.Title = "جزئیات درخواست";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+
+    Rep_Profile reppay = new Rep_Profile();
+
+    var qir = reppay.Get_NBank().Where(a => a.Banks_UserID == Model.Withdrawal_UserID).FirstOrDefault();
+
+}
+
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">جزئیات تسویه</h1>
+
+
+        @if (Model == null)
+        {
+            if (ViewBag.Error != null)
+            {
+                <div class="alert alert-info">
+                    <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                    @ViewBag.Error
+                </div>
+            }
+        }
+
+
+
+        @if (true)
+        {
+            <div style="direction:rtl;">
+                @using (Html.BeginForm("PayPrice", "Admin", FormMethod.Post))
+                {
+                    <input type="hidden" name="id" value="@Model.Withdrawal_ID" />
+                    <input type="submit" value=" تشویه شد" style="width:150px;" />
+                }
+            </div>
+
+        }
+        <br />
+        <div>
+            <table class="table_style1">
+                <thead >
+                    <tr align="center" style="background-color:#e98585;">
+                        <td>کل دریافتی</td>
+                        <td>مبلغ درخواستی</td>
+                        <td>اخرین مبلغ دریافتی</td>
+                        <td>زمان اخرین دریافتی</td>
+                        <td>شبا بانکی</td>
+                        <td>شماره حساب</td>
+                        <td>شماره کارت</td>
+                        <td>به نام</td>
+                        <td>شماره تماس</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Html.DisplayFor(model => model.Withdrawal_Stock)</td>
+                        <td>@Html.DisplayFor(model => model.Withdrawal_AmountRequested)</td>
+                        <td>@Html.DisplayFor(model => model.Withdrawal_LastReceivd)</td>
+                        <td>
+                            @if (Model.Withdrawal_LastReceivd == 0)
+                            {
+                                <span> تا کنون پرداختی انجام نشده </span>
+                            }
+                            else
+                            {
+                                @PersianDateExtensionMethods.ToPeString(Model.Withdrawal_TimeLastReceived, "dddd, dd MMMM,yyyy");
+                            }
+                        </td>
+                        <td>
+                            @if (qir == null)
+                            {
+                                <span> شبا ثبت نشده</span>
+                            }
+                            else
+                            { @qir.Banks_NoIR }
+                        </td>
+
+                        <td>
+                            @if (qir == null)
+                            {
+                                <span> شماره حساب ثبت نشده</span>
+                            }
+                            else
+                            { @qir.Banks_NoBank }
+                        </td>
+
+                        <td>
+                            @if (qir == null)
+                            {
+                                <span> شماره کارت ثبت نشده</span>
+                            }
+                            else
+                            { @qir.Banks_NoCart }
+                        </td>
+
+                        <td>
+                            @if (qir == null)
+                            {
+                                <span> نام حساب ثبت نشده</span>
+                            }
+                            else
+                            { @qir.User.User_NameFamily }
+                        </td>
+                        <td>
+                            @if (qir == null)
+                            {
+                                <span> شماره تماس ثبت نشده</span>
+                            }
+                            else
+                            { @qir.User.User_Mobile }
+                        </td>
+
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+        <br />
+        <p>
+
+            @Html.ActionLink("بازگشت", "Profile", "Profile", "", new { @style = "background-color: #71E0A9;width:200px;padding: 10px;border: 2px solid #80E481;border-radius: 15px;color: white;" })
+        </p>
+    </div>
+</div>
+
+

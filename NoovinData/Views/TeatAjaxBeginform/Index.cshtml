@@ -1,0 +1,32 @@
+﻿@model NoovinData.Models.Domin.Product
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "SearchForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(model => model.Product_Name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            Name: @Html.TextBox("Product_Name")  @*@Html.TextBoxFor(model => model.Product_Name, htmlAttributes: new { @class = "form-control" })*@
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-4">
+            <input type="submit" value="Saerch" />
+        </div>
+    </div>
+}
+<script src="~/Scripts/jquery-1.8.0.min.js"></script>
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+@*<script src="~/Scripts/jQuery-2.1.4.min.js"></script>*@
+<script src="~/Scripts/jquery-ui.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#Product_Name").autocomplete({
+            source: "/TeatAjaxBeginform/Getpro",
+            select: function (event, ui) {
+                $("#Product_Name").val(ui.item.value);
+                $("#SearchForm").submit();
+            }
+        });
+    });
+</script>

@@ -1,0 +1,165 @@
+﻿@model NoovinData.Models.Domin.Setting
+@using NoovinData.Models.Plugin
+@{
+    ViewBag.Title = "تنظمیات سایت";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">تنظیمات </h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+        <div class="bs-example" data-example-id="list-group-disabled">
+            <div class="list-group">
+                <a href="#" class="list-group-item active">
+                    <h4 class="list-group-item-heading"> اس ام تی پی ایمیل :</h4>
+                    <p class="list-group-item-text" >@Html.DisplayFor(model => model.Smtp)</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">  رمز عبور  :</h4>
+                    <p class="list-group-item-text"> @Html.DisplayFor(model => model.Password)</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">    پست الکترونیک  :</h4>
+                    <p class="list-group-item-text"> @Html.DisplayFor(model => model.Email)</p>
+                </a>
+
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">   تخفیف مناسبتی :</h4>
+                    <p class="list-group-item-text"> @Html.DisplayFor(model => model.Discount)</p>
+                </a>
+
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">   کلمات کلیدی :</h4>
+                    <p class="list-group-item-text"> @Html.DisplayFor(model => model.Keyword)</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">   توضیح مختصر :</h4>
+                    <p class="list-group-item-text">
+
+                        @Html.DisplayFor(model => model.Descrption)
+                    </p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading"> توضیح صفحه :</h4>
+                    <p class="list-group-item-text">
+                        @Html.DisplayFor(model => model.DescSite)
+                    </p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">   عنوان صفحه :</h4>
+                    <p class="list-group-item-text">@Html.DisplayFor(model => model.TitleSite)</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">  تعداد محصول در صفحه :</h4>
+                    <p class="list-group-item-text"> @Html.DisplayFor(model => model.PageCount)</p>
+                </a>
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">    اخرین زمان پاکسازی :</h4>
+                    <p class="list-group-item-text"> @PersianDateExtensionMethods.ToPeString(Model.DateDeleteBill, "yyyy/MM/dd")</p>
+                </a>
+
+            </div>
+        </div>
+
+        <p>
+            @Html.ActionLink("ویرایش", "EditSetting", new { id = Model.Setting_ID }, new { @style = "background-color: #71E0A9;width:200px;padding: 10px;border: 2px solid #80E481;border-radius: 15px;color: white;margin-right: 220px;" })
+
+        </p>
+    </div>
+</div>
+
+<style>
+    .bs-example {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+
+    .bs-example {
+        position: relative;
+        padding: 2px 15px 15px;
+        margin: 0px 15px 15px;
+    }
+
+        .bs-example > .alert:last-child, .bs-example > .form-control:last-child, .bs-example > .jumbotron:last-child, .bs-example > .list-group:last-child, .bs-example > .navbar:last-child, .bs-example > .panel:last-child, .bs-example > .progress:last-child, .bs-example > .table-responsive:last-child > .table, .bs-example > .table:last-child, .bs-example > .well:last-child, .bs-example > blockquote:last-child, .bs-example > ol:last-child, .bs-example > p:last-child, .bs-example > ul:last-child {
+            margin-bottom: 0px;
+        }
+
+        .bs-example > .list-group {
+            max-width: 60%;
+        }
+
+    .list-group {
+        padding-left: 0px;
+        margin-bottom: 20px;
+        margin-right: 195px;
+    }
+
+    .list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+        z-index: 2;
+        color: #FFF;
+        background-color: #337AB7;
+        border-color: #337AB7;
+    }
+
+    .list-group-item:first-child {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+
+    a.list-group-item, button.list-group-item {
+        color: #555;
+    }
+
+    .list-group-item {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: -1px;
+        background-color: #FFF;
+        border: 1px solid #DDD;
+    }
+
+        .list-group-item.active .list-group-item-heading, .list-group-item.active .list-group-item-heading > .small, .list-group-item.active .list-group-item-heading > small, .list-group-item.active:focus .list-group-item-heading, .list-group-item.active:focus .list-group-item-heading > .small, .list-group-item.active:focus .list-group-item-heading > small, .list-group-item.active:hover .list-group-item-heading, .list-group-item.active:hover .list-group-item-heading > .small, .list-group-item.active:hover .list-group-item-heading > small {
+            color: inherit;
+        }
+
+    a.list-group-item .list-group-item-heading, button.list-group-item .list-group-item-heading {
+        color: #333;
+    }
+
+    .list-group-item-heading {
+        margin-top: 0px;
+        margin-bottom: 5px;
+    }
+
+    .h4, h4 {
+        font-size: 18px;
+    }
+
+    .list-group-item.active .list-group-item-text, .list-group-item.active:focus .list-group-item-text, .list-group-item.active:hover .list-group-item-text {
+        color: #C7DDEF;
+    }
+
+    .list-group-item-text {
+        margin-bottom: -1px;
+        line-height: 1.3;
+        text-align: right;
+        margin-top: -30px;
+        margin-right: 200px;
+    }
+
+    p {
+        margin: 0px 0px 10px;
+    }
+</style>

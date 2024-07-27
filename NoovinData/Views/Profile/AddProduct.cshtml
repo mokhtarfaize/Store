@@ -1,0 +1,271 @@
+﻿@model NoovinData.Models.Domin.Product
+@using NoovinData.Models.Repository
+@{
+    ViewBag.Title = "ثبت محصول جدید";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+
+    Rep_Profile reppro = new Rep_Profile();
+}
+
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+
+
+
+@section CkEditor{
+
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+
+}
+
+
+<div class="part_left">
+
+    <div class="userpanel_bright_section">
+        <h1 class="separator">ایجاد محصول جدید</h1>
+
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+        
+
+
+        <div class="form_style1 form_wrapper clearfix ">
+            <div class="overlay"></div>
+
+
+            <form novalidate="novalidate" id="frm_add_product" method="post" enctype="multipart/form-data" action="/Profile/AddProduct">
+
+
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <ul class="list">
+                    <li class="item">
+                        <label> دسته بندی ها : <i class="i-asterisk"></i></label>
+                        <select name="cat1_id">
+
+                            @{
+
+                                foreach (var group in reppro.Get_Group())
+                                {
+                                    <option value="@group.Group_ID">@group.Group_Name</option>
+                                }
+                            }
+
+
+                        </select>
+                    </li>
+
+                    <li class="item full">
+                        <label>عنوان : <i class="fa fa-star" style=" top:0 !important ; right:20px !important;"></i></label>
+
+                        @Html.TextBoxFor(model => model.Product_Name, new { @class = "widthinput", @placeholder = "عنوان محصول ", name = "Product_Name" })
+                        @Html.ValidationMessageFor(model => model.Product_Name, "", new { @class = "text-danger" })
+                    </li>
+
+
+                    <li class="item full">
+                        <label>توضیحات محصول<i class="fa fa-star" style=" top:0 !important ; right:20px !important;"></i></label>
+
+                        @Html.TextAreaFor(model => model.Product_Text, new { @class = "ckeditor", name = "Product_Text" })
+                        @Html.ValidationMessageFor(model => model.Product_Text, "", new { @class = "text-danger" })
+
+                    </li>
+                    <li class="item full">
+                        <label>موجودی محصول<i class="fa fa-star" style=" top:0 !important ; right:20px !important;"></i></label>
+
+
+                        @Html.TextBoxFor(model => model.Product_ExitCount, new { @class = "widthinput", @placeholder = "موجودی محصول ", value = "1", name = "Product_ExitCount" })
+                        @Html.ValidationMessageFor(model => model.Product_ExitCount, "", new { @class = "text-danger" })
+
+                    </li>
+
+                    <li class="item full">
+                        <label>وزن محصول<i class="fa fa-star" style=" top:0 !important ; right:20px !important;"></i></label>
+
+
+                        @Html.TextBoxFor(model => model.Product_Weight, new { @class = "widthinput", @placeholder = "وزن محصول ", min = "10", name = "Product_Weight" })
+                        @Html.ValidationMessageFor(model => model.Product_Weight, "", new { @class = "text-danger" })
+
+                    </li>
+
+
+                    <li class="item full add_pic_product">
+                        <label>تصویر مرتبط با محصول : </label>
+
+                        <div class="file_style1 half">
+                            <input name="imageindex" type="file">
+                            <input placeholder="تصویر مورد نظر . . ." type="text">
+                            <span class="file_btn">انتخاب تصویر</span>
+                            <span class="guide">سایز مناسب برای تصویر : <i class="ltr en_words">450px * 375px</i></span>
+                        </div>
+                    </li>
+                    <li class="item full">
+                        <label>در صد تخفیف :<i class="fa fa-star" style=" top:0 !important ; right:20px !important;"></i></label>
+
+                        @Html.TextBoxFor(model => model.Product_Off, new { @class = "widthinput", @placeholder = "درصد تخفیف محصول ", name = "Product_Off", type = "number", value = "0", min = "0", max = "100" })
+                        @Html.ValidationMessageFor(model => model.Product_Off, "", new { @class = "text-danger" })
+                        <br />
+                        <span class="comment full"><i class="fa fa-check"></i>در صورتی که نمی خواهید تخفیف داشته باشد مقدار صفر (0) وارد نمایید </span>
+                    </li>
+
+                    <li class="item full">
+                        <label>قیمت - تومان :<i class="fa fa-star" style=" top:0 !important ; right:20px !important;"></i></label>
+
+                        @Html.TextBoxFor(model => model.Product_Price, new { @class = "widthinput", @placeholder = "قیمت محصول ", name = "Product_Price" })
+                        @Html.ValidationMessageFor(model => model.Product_Price, "", new { @class = "text-danger" })
+
+                    </li>
+
+
+                    <li class="item full">
+                        <label>کلمات کلیدی :<i class="fa fa-star" style=" top:0 !important ; right:20px !important;"></i></label>
+
+                        <input type="text" name="TagProduct" value="" required="required" title="مقدار کلمات کلیدی وارد شود" class="widthinput" />
+                        <br />
+                        <span class="comment full"><i class="fa fa-check"></i>برای محصول خود بین 3 تا 7 کلمه کلیدی بنویسید و مابین هر کلمه را با علامت (-) جداسازی کنید </span>
+
+
+
+                    </li>
+
+
+                    <li class="item full">
+
+                        <label>گالری تصاویر مرتبط با محصول : </label>
+                        <div class="file_style1 half" id="GaleryProduct">
+
+                            <input name="picgallery" id="fileupload" multiple type="file">
+
+
+                            <span class="file_btn" style=" width:45% !important; margin-right:5px;">انتخاب تصویر</span>
+
+
+                            <div class="alert alert-danger" id="validation" style="display:none;margin-right: 50% !important;height: 35px !important;padding: 5px !important;"> حداکثر انتخاب تعداد تصویر 3 می باشد </div>
+                        </div>
+                        <script>
+                            $('#fileupload').change(function () {
+                                //get the input and the file list
+                                var input = document.getElementById('fileupload');
+                                if (input.files.length > 3) {
+                                    $('#validation').css('display', 'block');
+                                } else {
+                                    $('#validation').css('display', 'none');
+                                }
+                            });
+                        </script>
+                        <br />
+                        <br />
+
+                        @*<button onclick="AddPic()" style="margin-top: 10px;" type="button" class="btn btn-inof">افزودن</button>*@
+                    </li>
+
+
+
+                    <li class="item">
+                        <label class="choice">آیا محصول شامل تخفیفات مناسبتی سایت باشد ؟ </label>
+                        @Html.CheckBoxFor(model => model.Product_AllOff, new { id = "fixed_post", name = "selected" })
+
+                        <br />
+                        <span class="comment full"><i class="fa fa-check"></i> این محصول اگر میخواهید در تخفیفاتی که سایت ارائه میدهد باشد این گزینه انتخاب شود. </span>
+                    </li>
+
+
+                    <li class="item">
+                        <label class="choice">آیا محصول دانلودی است ؟ :</label>
+                        @Html.CheckBoxFor(model => model.Product_IsDownload, new { name = "selected", id = "fixed_post" })
+
+                        <br />
+                        <span class="comment full"><i class="fa fa-check"></i> این محصول اگر به صورت فروش دانلودی است این مورد انتخاب شود و اگر پستی است نیازی نیست. </span>
+                    </li>
+
+
+
+                    <li class="item full margin_top60">
+                        @*<div class="progress_style1" style="display:none;">
+                            <div class="bar"></div>
+                            <div class="percent">0%</div>
+                        </div>progress_style1*@
+                        <input name="go_add_product" value="ارسال" class="threed_button" data-enable="" type="submit">
+                    </li>
+                </ul><!--list-->
+            </form>
+
+
+        </div><!--form_style1-->
+    </div><!-- end cat_management -->
+
+</div>
+
+<style>
+    .widthinput {
+        width: 70% !important;
+    }
+</style>
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<style>
+    .alert-success {
+        color: #3C763D;
+        background-color: #DFF0D8;
+        border-color: #D6E9C6;
+    }
+
+    .alert-dismissable, .alert-dismissible {
+        padding-right: 35px;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        text-align: center;
+        width: 70%;
+        margin-right: 150px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .alert-info {
+        color: #31708F;
+        background-color: #D9EDF7;
+        border-color: #BCE8F1;
+    }
+
+    .alert-warning {
+        color: #8A6D3B;
+        background-color: #FCF8E3;
+        border-color: #FAEBCC;
+    }
+
+    .alert-danger {
+        color: #A94442;
+        background-color: #F2DEDE;
+        border-color: #EBCCD1;
+    }
+</style>
+
+
+@*<script>
+
+    var counter = 0;
+    function AddPic() {
+        if (counter < 2)
+
+            $('#GaleryProduct').append(" <input name='picgallery' type='file'> <span class='file_btn'  style='margin-right:5px;'>انتخاب تصویر</span>")
+
+        counter++
+    }
+
+</script>*@

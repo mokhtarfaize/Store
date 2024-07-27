@@ -1,0 +1,299 @@
+﻿@model NoovinData.Models.Domin.Product
+@using NoovinData.Models.Repository
+@using NoovinData.Models.Plugin
+@{
+    ViewBag.Title = @Model.Product_Name;
+    Layout = "~/Views/Shared/_MainHome.cshtml";
+    Rep_Home reppro = new Rep_Home();
+    Rep_Profile reps = new Rep_Profile();
+}
+
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+<script src="~/Scripts/imagelightbox.min.js"></script>
+
+<div class="clear"></div>
+
+<div id="store" class="clearfix style1">
+    <section>
+
+        <div class="bg_pic">
+            <div class="head">
+                <div class="container clearfix">
+                    <div class="inner">
+                        <div class="head_img"></div>
+                        <div class="head_text">
+                            @Model.Product_Name
+                            <div class="head_caption"> نام فروشنده : @Model.User.User_NameFamily </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--close div.head-->
+        </div><!--close div.bg_pic-->
+        <div class="container">
+            <div class="inner">
+
+                <aside>
+
+                    <div class="store_aside_section">
+                        <h3 class="store_aside_title">مشخصات فروشنده</h3>
+                        <div class="store_aside_content">
+                            <p><i class="i-arrow-left-2"></i>تعداد محصولات: @reppro.Get_Product().Where(a => a.Product_UserID == @Model.Product_UserID).Count()</p>
+                            <p><i class="i-arrow-left-2"></i>محل سکونت: @Model.User.User_City</p>
+                            <p><i class="i-arrow-left-2"></i>نام کاربری : <a href="/Home/ProductUser?id=@Model.User.User_ID"> @Model.User.User_UserName </a> </p>
+                            <p><i class="i-arrow-left-2"></i> امتیاز کاربری : @Model.User.User_Rating</p>
+                            <a href="" class="pic">
+                                <img src="~/Content/_images/checked-user-xxl.png" width="70" height="60" class="store_pic">
+                            </a>
+                        </div>
+                    </div>
+
+                    @Html.Partial("P_Visit")
+
+                    @*<div class="store_aside_section banner">
+                        <img src="_images/banner120.jpg"><img src="_images/banner120.jpg">
+                    </div>*@
+                </aside>
+
+
+                <section id="category_part1">
+                    <main class="store_main">
+                        <h1 class="separator page_title store_title">@Model.Product_Name </h1>
+                        <div class="stored-box">
+                            <!--<div class='date'><p><a href='store'>مشاهده آرشیو <i class='i-caret-left'></i></a></div>-->
+                            <div class="stored_pic">
+                                <img src="/Content/_images/product/@Model.Product_PicIndex" alt="@Model.Product_Name " width="250" height="250" title="@Model.Product_Name ">
+                            </div>
+                            <div class="stored_info">
+                                <h1 class="info_title store_main_title">مشخصات محصول </h1>
+                                <ul>
+                                    <li>گروه اصلی :  @Model.Group.Group_Name</li>
+
+                                    @if (@Model.Product_IsDownload == true)
+                                    {
+                                        <li>
+
+
+                                            @{
+
+                                        int p = Model.Downloads.Where(a => a.Download_ProductID == Model.Product_ID).FirstOrDefault().Download_Lenght/1024;
+
+                                            }
+                                           
+                                            حجم فایل : @p مگابایت
+
+
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            وزن محصول : @Model.Product_Weight  گرم
+                                        </li>
+                                    }
+
+                                    <li>مبلغ اصلی پرداخت :  @Model.Product_Price  تومان</li>
+
+                                    @{
+                                        Rep_Home rep_off = new Rep_Home();
+
+                                        double discount = Convert.ToDouble(rep_off.Get_Off().FirstOrDefault().Discount);
+                                        double price = Convert.ToDouble(Model.Product_Price);
+                                        double dic_pro = Convert.ToDouble(Model.Product_Off);
+
+                                        if (Model.Product_Off > 0 && Model.Product_AllOff == true)
+                                        {
+
+                                            double percent = Math.Ceiling(price - (((discount + dic_pro) / 100) * price));
+                                            double p = (Math.Ceiling(percent / 100) * 100);
+                                            <li>مبلغ قابل پرداخت :  @p  تومان</li>
+                                        }
+                                        else if (Model.Product_AllOff == true && Model.Product_Off == 0)
+                                        {
+                                            double percent1 = Math.Ceiling(price - ((discount / 100) * price));
+                                            double p = (Math.Ceiling(percent1 / 100) * 100);
+                                            <li>مبلغ قابل پرداخت :  @p  تومان</li>
+                                        }
+                                        else if (Model.Product_AllOff == false && Model.Product_Off > 0)
+                                        {
+                                            double percent2 = Math.Ceiling(price - ((dic_pro / 100) * price));
+                                            double p = (Math.Ceiling(percent2 / 100) * 100);
+                                            <li>مبلغ قابل پرداخت :  @p  تومان</li>
+                                        }
+                                        else if (Model.Product_Off == 0 && Model.Product_AllOff == false)
+                                        {
+                                            <li>مبلغ قابل پرداخت :  @Model.Product_Price تومان </li>
+                                        }
+
+                                    }
+
+
+                                    <li>تعداد بازدید  : @Model.Product_Visit</li>
+                                    @{
+                                        var qsum = reps.Get_Bill().Where(a => a.Bill_ProductID == Model.Product_ID && a.Bill_Status == true).Sum(a => a.Bill_Count);
+                                        if (qsum == null)
+                                        { 
+                                            <li>تعداد فروش : 0 </li>
+                                        }      
+                                        else
+                                        {
+                                            <li>تعداد فروش : @qsum </li>
+                                        }
+                                    }
+
+                                    <li>تاریخ درج : @PersianDateExtensionMethods.ToPeString(Model.Product_Date, "dddd, dd MMMM,yyyy")</li>
+                                    <li>تعداد محصول :@Model.Product_ExitCount</li>
+                                </ul>
+                            </div>
+
+
+                            <div class="clear"></div> <br><br>
+                            <h1 class="separator page_title store_title">خرید محصول</h1>
+
+                            @if (ViewBag.Error != null)
+                            {
+                                <div class="alert alert-info">
+                                    <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                                    @ViewBag.Error
+                                </div>
+                            }
+
+                            @{
+
+                                if (Model.Product_ExitCount >= 1)
+                                {
+                                    if (Session["User"] == null)
+                                    {
+                                        <span class="spancss">
+                                            
+                                              <a href="/Register/Login">برای خرید ابتدا وارد سایت شوید</a>
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        using (Html.BeginForm("InterimBill","Profile", FormMethod.Post))
+                                        {
+                                            <input type="hidden" name="idpro" value="@Model.Product_ID" />
+
+                                            <div><label>ایمیل :</label><input value="@Model.User.User_Email" disabled type="text"></div>
+                                            <div><label>شماره تماس :</label><input value="@Model.User.User_Mobile" disabled type="text"></div>
+                                            <div><input type="text" placeholder="تعداد محصول را انتخاب کنید" name="nopro"/></div>
+                                            <input type="submit" value="خرید محصول" style="width: 145px;text-align: center;margin-right: 42%;margin-top: 20px;margin-bottom: 18px;" />
+                                        }
+
+
+                                    }
+                                }
+                                else
+                                {
+                                    <input type="submit" value=" محصول موجود نیست" style="width: 145px;text-align: center;margin-right: 42%;margin-top: 20px;margin-bottom: 18px; background-color:red;" />
+                                }
+
+
+
+                            }
+
+
+                            <div class="clear"></div> <br><br>
+                            <div class="stored_text">
+
+                                @Html.Raw(Model.Product_Text)
+
+                            </div>
+
+
+
+                        </div>
+                        <div class="clear"></div>
+                        <br><br>
+
+                        @{
+                            Rep_Home reppic = new Rep_Home();
+                            var qpic = reppic.Get_Pic().Where(a => a.Pic_ProductID == Model.Product_ID).ToList();
+
+                            if (qpic != null)
+                            {
+                                <div id="lightbox">
+                                    <h1>گالری تصاویر</h1>
+                                    <ul>
+                                        @foreach (var item in qpic)
+                                        {
+
+                                            <li>
+                                                <img src="~/Content/_images/product/Gallery/@item.Pic_Name" alt="@item.Product.Product_Name" style="width:227px; height:155px;" />
+                                                <div class="image_title">
+                                                    <h5 class="title">@item.Product.Product_Name</h5>
+                                                </div>
+                                            </li>
+                                        }
+
+
+                                    </ul>
+                                </div>
+
+
+                            }
+
+                        }
+
+                        @*<script src="http://thecodeplayer.com/uploads/js/prefixfree.js" type="text/javascript"></script>*@
+
+
+                        <link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+                        <script src="~/Content/JavaScript1.js"></script>
+
+
+
+                        <br><br>
+                        @{
+                            Rep_Home reptag = new Rep_Home();
+                            var qtag = reptag.Get_Tag().Where(a => a.Tag_ProductID == Model.Product_ID).ToList();
+
+                            if (qtag != null)
+                            {
+
+
+                                <div class="tag">
+                                    برچسب ها :
+
+
+                                    @{
+                                var t = reptag.Get_Tag().Where(a => a.Tag_ProductID == Model.Product_ID).Select(a => a.Tag_Name);
+
+                                string c = string.Join("-", t.ToArray());
+
+                                    }
+                                    @c
+
+                                </div>
+                            }
+                        }
+
+
+
+                        <br><br>
+
+
+
+
+                    </main>
+
+                </section>
+            </div><!-- end inner -->
+        </div><!-- end container -->
+    </section><!-- end section -->
+</div>
+
+<style>
+    .spancss {
+        margin-right: 34%;
+        box-sizing: border-box;
+        border: 1px solid #CCC6C6;
+        padding: 20px;
+        background-color: #119BB4;
+        color: #FFF;
+        font-size: 18px;
+        border-radius: 50px;
+        left: 0px;
+        text-align: center;
+    }
+</style>

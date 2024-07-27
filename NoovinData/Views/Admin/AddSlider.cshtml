@@ -1,0 +1,70 @@
+﻿@model NoovinData.Models.Domin.Slider
+@using NoovinData.Models.Repository;
+
+@{
+    ViewBag.Title = "اسلایدر جدید";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+   
+}
+
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+
+<div class="part_left">
+    <div id="product_list" class="userpanel_bright_section">
+
+        <h1 class="separator">اسلایدر جدید </h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+
+      <div class="form_style1 form_wrapper clearfix ">
+        <div class="overlay"></div>
+
+          @using(Html.BeginForm("AddSlider","Admin",FormMethod.Post,new{enctype="multipart/form-data",id="frm_add_product"}))
+          {
+              <ul class="list">
+
+                    <li class="item">
+                        <label>  عنوان   : </label>
+                        <input type="text" required name="title" value="" />
+                    </li>
+
+                    <li class="item ">
+                        <label>  نصویر    : </label>
+                        <input type="file" name="Pic" value=" " />
+                        <input type="text" value="انتخاب تصویر ....." />
+                    </li>
+
+                  <li class="item">
+                      <label>   URL   : </label>
+                      <input type="text" required name="URL" value="" />
+                  </li>
+                  @{
+                       Rep_Home rep = new Rep_Home();
+                      var last= rep.Get_slid().ToList().Last().Sort.ToString();
+                  
+                  }
+                  <li class="item">                                              
+                      <label><i class="">آخرین عدد ترتیب نمایش :@last </i> </label>
+                      
+                      <input type="text" required name="sort" value="" />
+                  </li>
+
+                    <li class="item full">
+                        <input type="submit" value="اضافه کردن " />
+                    </li>
+
+                </ul>
+          }
+
+
+      </div>
+    </div>
+</div>
+

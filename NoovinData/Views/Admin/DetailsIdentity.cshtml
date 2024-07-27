@@ -1,0 +1,210 @@
+﻿@model NoovinData.Models.Domin.Identity
+
+@{
+    ViewBag.Title = "جزئیات اطلاعات";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">جزئیات کارت ملی</h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+        <div>
+            <style>
+                dl {
+                    margin-bottom: 50px;
+                }
+
+                    dl dt {
+                        background: #5F9BE3 none repeat scroll 0% 0%;
+                        color: #FFF;
+                        float: right;
+                        font-weight: bold;
+                        margin-right: 25px;
+                        padding: 5px;
+                        width: 160px;
+                        text-align: center;
+                    }
+
+                    dl dd {
+                        margin: 2px 0;
+                        padding: 5px 0;
+                    }
+
+                .box {
+                    position: relative;
+                    top: 10px;
+                    margin: 0px 0px 20px;
+                    width: 100%;
+                    border-radius: 4px;
+                }
+
+                    .box .box-header {
+                        position: relative;
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+                        color: #444;
+                        padding-bottom: 0px;
+                        background: #FFF none repeat scroll 0% 0%;
+                    }
+
+                .rwd-table {
+                    margin: 1em 0px;
+                    min-width: 250px;
+                }
+
+                .row .row {
+                    margin: 0px -0.9375rem;
+                    max-width: none;
+                    width: auto;
+                }
+
+                .row {
+                    display: block;
+                    direction: rtl;
+                }
+
+                .row {
+                    margin: 0px auto;
+                    max-width: 62.5rem;
+                    width: 100%;
+                }
+
+                    .row .row::before, .row .row::after {
+                        content: " ";
+                        display: table;
+                    }
+
+                .column, .columns {
+                    position: relative;
+                    padding-left: 0.9375rem;
+                    padding-right: 0.9375rem;
+                    float: right;
+                }
+
+                .inbox-nest {
+                    padding: 0px;
+                }
+
+                    .inbox-nest ul {
+                        margin: 0px;
+                        background: #FFF none repeat scroll 0% 0%;
+                        padding: 10px 0px;
+                        border-radius: 0px;
+                    }
+
+                        .inbox-nest ul li {
+                            list-style: outside none none;
+                            font-size: 13px;
+                            border-bottom: 1px solid #D5DAE6;
+                            margin: 0px 0px 15px;
+                            padding: 0px 20px;
+                        }
+
+                            .inbox-nest ul li b {
+                                padding: 0px 10px;
+                                font-size: 14px;
+                                color: #454545;
+                                font-family: "Montserrat",sans-serif;
+                            }
+
+                            .inbox-nest ul li small {
+                                font-size: 11px;
+                                float: left;
+                                background: rgba(98, 113, 155, 0.63) none repeat scroll 0% 0%;
+                                color: #FFF;
+                                padding: 0px 5px;
+                                border-radius: 2px;
+                            }
+
+                            .inbox-nest ul li p {
+                                display: inline-block;
+                                padding: 0px 45px 0px 0px;
+                                width: 100%;
+                                font-size: 13px !important;
+                                margin: 0px 0px 15px;
+                                color: #8C92A3;
+                            }
+            </style>
+
+            <dl class="dl-horizontal">
+                <dt>
+                    <label>تصویر کارت ملی :</label>
+                </dt>
+
+                <dd>
+                    <img src="~/Content/_images/cart/@Model.Identity_Pic" style="margin-right:35px;" alt="" width="200" height="200" />
+                </dd>
+
+                <dt>
+                    <label>نام پدر :</label>
+                </dt>
+
+                <dd style="background: #C2DCF0 none repeat scroll 0% 0%;width: 50%;margin-right: 30px;">
+                    <label style="margin-right:35px;">
+                        @Html.DisplayFor(model => model.Identity_FathersName)
+                    </label>
+                </dd>
+
+                <dt>
+                    <label>تاریخ تولد :</label>
+                </dt>
+
+                <dd style="background: #C2DCF0 none repeat scroll 0% 0%;width: 50%;margin-right: 30px;">
+                    <label style="margin-right:35px;">
+                        @Html.DisplayFor(model => model.Identity_Birth)
+                    </label>
+                </dd>
+
+                <dt>
+                    <label>تایید اطلاعات  :</label>
+                </dt>
+
+                <dd style="background: #C2DCF0 none repeat scroll 0% 0%;width: 50%;margin-right: 30px;">
+                    <label style="margin-right:35px;">
+                        @Html.DisplayFor(model => model.Identity_Confirm)
+                    </label>
+                </dd>
+
+                <dt>
+                    <label>نام و نام خانوادگی :</label>
+                </dt>
+
+                <dd style="background: #C2DCF0 none repeat scroll 0% 0%;width: 50%;margin-right: 30px;">
+                    <label style="margin-right:35px;">
+                        @Html.DisplayFor(model => model.User.User_NameFamily)
+                    </label>
+                </dd>
+
+            </dl>
+
+            @using (Html.BeginForm("ConfirmIdentityUser", "Admin", FormMethod.Post))
+            {
+                <input type="hidden" name="Identity" value="@Model.Identity_ID" />
+                <input type="hidden" name="IdentityUser" value="@Model.Identity_UserID" />
+                <input type="submit" name="submit" value="تایید هویت کاربر" />
+            }
+
+
+
+
+        </div>
+
+    </div>
+</div>
+
+
+
+    
+
+
+    

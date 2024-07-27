@@ -1,0 +1,26 @@
+﻿
+@{
+    
+    ViewBag.Title = "Page404";
+    Layout = "~/Views/Shared/_MainHome.cshtml";
+}
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+
+<div class="store_disable">
+    <div class="container">
+        <div class="inner"> 
+            <div class="disable_pic">
+                <span class="text">
+                    <span class="tred">خطای 404</span>
+                    <br />
+                    @ViewBag.Error
+                    <br />
+                    <span class="tred">
+                     <a href="/Home/Index">صفحه اصلی</a> 
+                  </span>
+                </span>
+            </div><!--disable_pic-->
+        </div><!--inner-->
+    </div><!--container-->
+</div>
+

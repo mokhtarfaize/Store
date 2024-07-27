@@ -1,0 +1,162 @@
+﻿@model NoovinData.Models.Domin.Product
+
+@{
+    ViewBag.Title = "سبد خرید";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+
+@using NoovinData.Models.Plugin
+@using NoovinData.Models.Repository
+
+
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator"> صورتحساب</h1>
+
+        <div class="table_style1" id="UpIBill">
+            <table>
+                <thead>
+
+                    <tr>
+                        <th colspan="5">
+                            نام محصول
+                        </th>
+
+                        <th colspan="1">
+                            تعداد
+                        </th>
+                        <th colspan="3">
+                            قیمت
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td colspan="5" style="color:#0D897D;">
+                            @Model.Product_Name
+                        </td>
+                        <td colspan="1" style="color:orange">
+
+                            @ViewBag.Count
+
+                        </td>
+
+                        <td colspan="3" style="color:orange">
+                            @{
+                                Rep_Home rep_off = new Rep_Home();
+
+                                double discount = Convert.ToDouble(rep_off.Get_Off().FirstOrDefault().Discount);
+                                double price = Convert.ToDouble(Model.Product_Price);
+                                double dic_pro = Convert.ToDouble(Model.Product_Off);
+
+                                if (Model.Product_Off > 0 && Model.Product_AllOff == true)
+                                {
+
+                                    double percent = Math.Ceiling(price - (((discount + dic_pro) / 100) * price));
+
+                                    double p = (Math.Ceiling(percent / 100) * 100);
+                                    <span>   @p  تومان</span>
+                                }
+                                else if (Model.Product_AllOff == true && Model.Product_Off == 0)
+                                {
+                                    double percent1 = Math.Ceiling(price - ((discount / 100) * price));
+                                    double p = (Math.Ceiling(percent1 / 100) * 100);
+                                    <span>   @p  تومان</span>
+                                }
+                                else if (Model.Product_AllOff == false && Model.Product_Off > 0)
+                                {
+                                    double percent2 = Math.Ceiling(price - ((dic_pro / 100) * price));
+                                    double p = (Math.Ceiling(percent2 / 100) * 100);
+                                    <span>   @p  تومان</span>
+                                }
+                                else if (Model.Product_Off == 0 && Model.Product_AllOff == false)
+                                {
+                                    <span>   @Model.Product_Price تومان </span>
+                                }
+
+                            }
+
+                        </td>
+                    </tr>
+
+
+
+                    <tr>
+                        <td colspan="5" style="color:#0D897D;">
+                            فروشنده : @Model.User.User_NameFamily
+                        </td>
+                        <td colspan="1" style="color:#0D897D;">
+
+                            مبلغ با مالیات : @ViewBag.Price
+                        </td>
+                        <td colspan="3" style="color:#0D897D;">
+                            تاریخ : @PersianDateExtensionMethods.ToPeString(DateTime.Now, "yyyy/MM/dd")
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td colspan="5" style="color:brown;">
+
+                            هزینه ارسال : @ViewBag.Postage تومان
+                        </td>
+                        <td colspan="1" style="color:blue;">
+                            مبلغ قابل پرداخت : @ViewBag.Pay تومان
+                        </td>
+
+
+                        <td colspan="3" style="color:red;">
+
+                            <form action="/Profile/DeleteInBill" method="post">
+
+                                <input type="hidden" name="idinterimbill" value="@ViewBag.IdInBill" />
+
+                                <input type="submit" value="حذف" style="width:70px" />
+
+                            </form>
+
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="clear"></div>
+
+
+
+            <br />
+
+            @using (Html.BeginForm("PayPrice", "Pay", FormMethod.Post))
+            {
+                <input type="hidden" name="idinterimbill" value="@ViewBag.IdInBill" />
+                <input type="hidden" name="idpro" value="@Model.Product_ID" />
+
+                <input type="submit" name="name" value="پرداخت نهایی" />
+            }
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+</div>
+<style>
+    input[type="submit"]:hover {
+        background-color: #40D537;
+        cursor: pointer;
+    }
+</style>

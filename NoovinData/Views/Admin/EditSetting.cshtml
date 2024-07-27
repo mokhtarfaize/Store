@@ -1,0 +1,130 @@
+﻿@model NoovinData.Models.Domin.Setting
+
+@{
+    ViewBag.Title = "ویرایش تنظیمات";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator"> ویرایش تنظیمات</h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+        <div class="form_style1 form_wrapper clearfix ">
+            <div class="overlay"></div>
+
+            @using (Html.BeginForm("EditSetting", "Admin", FormMethod.Post, new { id = "frm_add_product" }))
+            {
+                <ul class="list">
+
+                    @Html.AntiForgeryToken()
+
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Setting_ID)
+
+                    <li class="item full">
+                        @Html.LabelFor(model => model.Smtp, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @Html.EditorFor(model => model.Smtp, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Smtp, "", new { @class = "text-danger" })
+
+                    </li>
+
+                    <li class="item full">
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                    </li>
+
+                    <li class="item full">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                    </li>
+
+                    <li class="item full">
+                        @Html.LabelFor(model => model.Discount, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @Html.TextBoxFor(model => model.Discount, new { htmlAttributes = new { @class = ""} })
+                        @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+
+                    </li>
+
+                    <li class="item full">
+                        @Html.LabelFor(model => model.Keyword, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @Html.EditorFor(model => model.Keyword, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Keyword, "", new { @class = "text-danger" })
+
+                    </li>
+
+                    <li class="item full">
+                        @Html.LabelFor(model => model.Descrption, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @Html.EditorFor(model => model.Descrption, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Descrption, "", new { @class = "text-danger" })
+
+                    </li>
+
+                    <li class="item full">
+                        @Html.LabelFor(model => model.DescSite, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @Html.EditorFor(model => model.DescSite, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DescSite, "", new { @class = "text-danger" })
+
+                    </li>
+
+                    <li class="item full">
+                        @Html.LabelFor(model => model.TitleSite, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @Html.EditorFor(model => model.TitleSite, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.TitleSite, "", new { @class = "text-danger" })
+
+                    </li>
+
+                    <li class="item full">
+                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+
+                    </li>
+
+                    <li class="item full">
+                        @Html.LabelFor(model => model.PageCount, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        @Html.TextBoxFor(model => model.PageCount, new { htmlAttributes = new { @class = "" } })
+                        @Html.ValidationMessageFor(model => model.PageCount, "", new { @class = "text-danger" })
+
+                    </li>
+
+
+
+                    <li class="item full">
+
+                        <input type="submit" value="ویرایش" />
+
+                    </li>
+
+                </ul>
+            }
+        </div>
+
+    </div>
+
+</div>
+

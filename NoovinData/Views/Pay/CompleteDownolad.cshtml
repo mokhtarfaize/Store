@@ -1,0 +1,125 @@
+﻿@model NoovinData.Models.Domin.Bill
+
+@{
+    ViewBag.Title = "فاکتور صورتحاسب پرداختی";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+@using NoovinData.Models.Plugin
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator"> صورتحساب پرداختی</h1>
+
+        @if (Model!=null)
+        {
+            <div class="table_style1" id="UpIBill">
+                <table>
+                    <thead>
+
+                        <tr>
+                            <th colspan="5">
+                                نام محصول
+                            </th>
+
+                            <th colspan="1">
+                                تعداد
+                            </th>
+                            <th colspan="3">
+                                وضعیت خرید
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td colspan="5" style="color:#0D897D;">
+                                @Model.Product.Product_Name
+                            </td>
+                            <td colspan="1" style="color:orange">
+                                @Model.Bill_Count
+                            </td>
+                            <td>
+                                <span style="color:green">آماده دانلود می باشد</span>
+                            </td>
+                        </tr>
+
+
+
+                        <tr>
+                            <td colspan="5" style="color:#0D897D;">
+                                شماره تراکنش : @Model.Bill_TransNo
+                            </td>
+                            <td colspan="1" style="color:#0D897D;">
+
+                                شماره مرجع : @Model.Bill_RefNo
+                            </td>
+                            <td colspan="3" style="color:#0D897D;">
+                                تاریح پرداخت  : @PersianDateExtensionMethods.ToPeString(DateTime.Now, "yyyy/MM/dd")
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td colspan="5" style="color:brown;">
+
+                                هزینه ارسال :0 تومان
+                            </td>
+                            <td colspan="1" style="color:blue;">
+                                مبلغ  پرداخت  شده:@Model.Bill_PayPrice تومان
+                            </td>
+
+
+                            <td colspan="3" style="color:red;">
+
+
+                                لینک دانلود : <a href="@ViewBag.link" style="color:green;">لینک دانلود محصول</a>
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="clear"></div>
+
+
+
+                <br />
+
+
+            </div>
+        }
+        else
+        {
+
+            @* بخش مربوط به خطای پرداخت *@
+            <div class="table_style1">
+                <table>
+                    <thead>
+
+                        <tr>
+
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">@ViewBag.Error</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+
+
+    </div>
+
+
+
+
+</div>
+

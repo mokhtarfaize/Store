@@ -1,0 +1,158 @@
+﻿@model NoovinData.Models.Domin.Bill
+
+@{
+    ViewBag.Title = "صورتحساب پرداختی";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+@using NoovinData.Models.Plugin
+
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator"> صورتحساب پرداختی</h1>
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+        @if (Model != null)
+        {
+            <div class="table_style1" id="UpIBill">
+                <table>
+                    <thead>
+
+                        <tr>
+                            <th colspan="5">
+                                نام محصول
+                            </th>
+
+                            <th colspan="1">
+                                تعداد
+                            </th>
+                            <th colspan="3">
+                                وضعیت ارسال
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td colspan="5" style="color:#0D897D;">
+                                @Model.Product.Product_Name
+                            </td>
+                            <td colspan="1" style="color:orange">
+                                @Model.Bill_Count
+                            </td>
+                            <td>
+                                @Model.PostStatu.St_Name
+                            </td>
+                        </tr>
+
+
+
+                        <tr>
+                            <td colspan="5" style="color:#0D897D;">
+                                شماره تراکنش : @Model.Bill_TransNo
+                            </td>
+                            <td colspan="1" style="color:#0D897D;">
+
+                                شماره مرجع : @Model.Bill_RefNo
+                            </td>
+                            <td colspan="3" style="color:#0D897D;">
+                                پرداخت تاریخ : @PersianDateExtensionMethods.ToPeString(Model.Bill_Date, "yyyy/MM/dd")
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td colspan="5" style="color:brown;">
+
+                                هزینه ارسال :@Model.Bill_Postage تومان
+                            </td>
+                            <td colspan="1" style="color:blue;">
+                                مبلغ  پرداخت شده :@Model.Bill_PayPrice تومان
+                            </td>
+
+
+                            <td colspan="3" style="color:red;">
+                                @if (Model.Bill_TracingCode == "")
+                                {
+                                    <span>کد رهیگری : ثبت نشده</span>
+                                }
+                                else
+                                {
+                                    <span> کد رهگیری پستی : @Model.Bill_TracingCode</span>
+                                }
+
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="clear"></div>
+
+
+
+                <br />
+
+
+            </div>
+        }
+        else
+        {
+
+            @* بخش مربوط به خطای پرداخت *@
+            <div class="table_style1">
+                <table>
+                    <thead>
+
+                        <tr>
+
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">فاکتوری موجود نمی باشد</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+
+
+
+
+    </div>
+
+
+
+
+</div>
+<style>
+    input[type="submit"]:hover {
+        background-color: #40D537;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+
+    $(function () {
+        $("[data-hide]").on("click", function () {
+            $("." + $(this).attr("data-hide")).hide();
+            // -or-, see below
+            // $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+</script>
+<link href="~/Content/_css/alert.css" rel="stylesheet" />

@@ -1,0 +1,78 @@
+﻿@model NoovinData.Models.Domin.Massage
+
+@using CaptchaMvc
+@using CaptchaMvc.HtmlHelpers
+
+@{
+    ViewBag.Title = "ارتباط با ما";
+    Layout = "~/Views/Shared/_MainHome.cshtml";
+}
+
+
+
+<section id="contact">
+    <div class="container">
+        <div class="inner">
+            <br>
+            <h1 class='separator page_title'>تماس با ما</h1>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger">
+                    <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                    @ViewBag.Error
+                </div>
+            }
+
+
+            <form id="contact_form" class='contact_form' action="/Home/Contact" method='post'>
+                <div id="inner_contact_form">
+
+                    <div>
+                        <label>نام و نام خانوادگی</label>
+                        <br>
+                        <input type="text" id="user_name" required name="username" placeholder="نام و نام خانوادگی">
+                    </div>
+                    <div>
+                        <label>ایمیل</label>
+                        <br>
+                        <input type="text" id="email" required name="email" placeholder="ایمیل شما">
+                    </div>
+                    
+                     <div>
+                         <label>عنوان متن</label>
+                         <br />
+                         <input type="text" id="title" required name="title" placeholder="عنوان متن" />
+                     </div>
+                    <div>
+                        <label>متن پیغام شما</label>
+                        <br>
+                        <textarea name='text' placeholder='متن پیغام شما ...'></textarea>
+                    </div>
+                    <div id="captcha">
+
+                        @Html.Captcha("بازنگری کد امنیت","",4,"")
+
+                    </div>
+                </div><!-- end inner_contact_form -->
+
+                <div>
+                    <input type="submit" value="ارسال پیغام" style="width:300px;" name='go_contact'>
+                </div>
+            </form>
+
+        </div><!-- end inner -->
+    </div><!-- end container -->
+</section>
+
+<script>
+
+    $(function () {
+        $("[data-hide]").on("click", function () {
+            $("." + $(this).attr("data-hide")).hide();
+            // -or-, see below
+            // $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+</script>
+<link href="~/Content/_css/alert.css" rel="stylesheet" />

@@ -1,0 +1,133 @@
+﻿@model NoovinData.Models.Domin.User
+
+@using NoovinData.Models.Repository
+
+@{
+    Rep_Register repstate = new Rep_Register();
+    ViewBag.Title = "ثبت نام";
+    Layout = "~/Views/Shared/_MainHome.cshtml";
+}
+
+
+<script src="~/Scripts/_plugins/toast/jquery.toast.min.js"></script>
+<link href="~/Content/_plugins/toast/jquery.toast.css" rel="stylesheet" />
+<section id="register">
+    <div class="container">
+        <div class="inner">
+            <div class='services_part'>
+                <h1 class='separator page_title'>فرم ثبت نام </h1>
+
+
+                @using (Html.BeginForm("Register", "Register", FormMethod.Post, new { @class = "frm_register", @id = "frm_register" }))
+                {
+
+
+                    @*<form method='post' action='Register' id='frm_register' class='frm_register'>*@
+
+                    @Html.AntiForgeryToken()
+             
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div>
+                        <div>
+
+                            @Html.LabelFor(model => model.User_NameFamily, htmlAttributes: new { })
+                            <i class="fa fa-star"> </i>
+                            @Html.TextBoxFor(model => model.User_NameFamily, new { @class = "txtbox", @placeholder = "نام و نام خانوادگی ", name = "namefamily" })
+                            @Html.ValidationMessageFor(model => model.User_NameFamily, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div>
+                            @Html.LabelFor(model => model.User_UserName, htmlAttributes: new { @class = "" })
+                            <i class="fa fa-star"> </i>
+                            @Html.TextBoxFor(model => model.User_UserName, new { @class = "txtbox", @placeholder = "نام کاربری  ", name = "username" })
+                            @Html.ValidationMessageFor(model => model.User_UserName, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div>
+                            @Html.LabelFor(model => model.User_Email, htmlAttributes: new { @class = "" })
+                            <i class="fa fa-star"> </i>
+                            @Html.TextBoxFor(model => model.User_Email, new { @class = "txtbox", @placeholder = "ایمیل  ", name = "email" })
+                            @Html.ValidationMessageFor(model => model.User_Email, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div>
+                            @Html.LabelFor(model => model.User_Password, htmlAttributes: new { @class = "" })
+                            <i class="fa fa-star"> </i>
+                            @Html.TextBoxFor(model => model.User_Password, new { @class = "txtbox", @placeholder = "رمز عبور  ", name = "password" })
+                            @Html.ValidationMessageFor(model => model.User_Password, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div>
+                            @Html.LabelFor(model => model.User_Mobile, htmlAttributes: new { @class = "" })
+                            <i class="fa fa-star"> </i>
+                            @Html.TextBoxFor(model => model.User_Mobile, new { @class = "txtbox", @placeholder = "تلفن همراه  ", name = "mobile" })
+                            @Html.ValidationMessageFor(model => model.User_Mobile, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div>
+                            @Html.LabelFor(model => model.User_Address, htmlAttributes: new { @class = "" })
+                            <i class="fa fa-star"> </i>
+                            @Html.TextBoxFor(model => model.User_Address, new { @class = "txtbox", @placeholder = "ادرس منزل  ", name = "address" })
+                            @Html.ValidationMessageFor(model => model.User_Address, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div>
+                            @Html.LabelFor(model => model.User_NationalCode, htmlAttributes: new { @class = "" })
+                            <i class="fa fa-star"> </i>
+                            @Html.TextBoxFor(model => model.User_NationalCode, new { @class = "txtbox", @placeholder = "کد ملی   ", name = "natcode" })
+                            @Html.ValidationMessageFor(model => model.User_NationalCode, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div>
+                            @Html.LabelFor(model => model.User_City, htmlAttributes: new { @class = "" })
+                            <i class="fa fa-star"> </i>
+                            @Html.TextBoxFor(model => model.User_City, new { @class = "txtbox", @placeholder = " شهر سکونت", name = "city" })
+                            @Html.ValidationMessageFor(model => model.User_City, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div>
+                            @Html.LabelFor(model => model.User_Tel, htmlAttributes: new { @class = "" })
+
+                            @Html.TextBoxFor(model => model.User_Tel, new { @style = "", @placeholder = "تلفن منزل  ", name = "phone" })
+                            @Html.ValidationMessageFor(model => model.User_Tel, "", new { @class = "text-danger" })
+                        </div>
+
+
+
+                        <div>
+                            @Html.LabelFor(model => model.User_PostelCode, htmlAttributes: new { @class = "" })
+
+                            @Html.TextBoxFor(model => model.User_PostelCode, new { @style = "", @placeholder = "  کد پستی ", name = "postalcode" })
+                            @Html.ValidationMessageFor(model => model.User_PostelCode, "", new { @class = "text-danger" })
+                        </div>
+                        <div>
+                            <label>استان :</label>
+                            <select name="State" class="select">
+
+                                @{
+                                    foreach (var item in repstate.Get_State())
+                                     {
+                                       <option value="@item.State_ID">@item.State_Name</option>
+                                     }
+                                }
+                            </select>
+                        </div>
+
+                        <div class='full'>
+                            <input type="submit" name='go_register' value="ثبت نام" class="threed_button">
+                        </div>
+
+                    </div>
+
+                    @*</form>*@
+
+                }
+
+            </div><!--close div.services_part-->
+        </div>
+    </div>
+</section>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

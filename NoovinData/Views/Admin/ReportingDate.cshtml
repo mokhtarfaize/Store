@@ -1,0 +1,236 @@
+﻿@model IEnumerable<NoovinData.Models.Domin.Bill>
+@using NoovinData.Models.Repository
+@using NoovinData.Models.Plugin
+
+
+@{
+    ViewBag.Title = "گزارشگیری بر اساس تاریخ فروش";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+
+    Rep_Profile repuserid = new Rep_Profile();
+}
+
+<script src="~/Scripts/_plugins/persian/js-persian-cal.min.js"></script>
+<link href="~/Scripts/_plugins/persian/js-persian-cal.css" rel="stylesheet" />
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+
+
+        @using (Html.BeginForm("ReportingDate", "Admin", FormMethod.Post, new { id = "frm_add_product" }))
+        {
+
+            <div class="form_style1 form_wrapper clearfix ">
+                <div class="overlay"></div>
+                <ul class="list">
+                    <li class="item full">
+                        <label> <i class="fa fa-arrow-left"></i> &nbsp; &nbsp; از    : </label>
+                        <input type="text" id="pcal1" required style="width:50%;" class="pdate" value=" " />
+                        <input type="hidden" name="dt1" value=" " id="extra1" />
+                    </li>
+                    <li class="item full">
+                        <label> <i class="fa fa-arrow-left"></i> &nbsp; &nbsp; تا    : </label>
+                        <input type="text" id="pcal2" required style="width:50%;" class="pdate" value=" " />
+                        <input type="hidden" name="dt2" value="" id="extra2" />
+                    </li>
+
+                    <li class="item full">
+                        <input type="submit" value="جستجو کردن " />
+                    </li>
+
+                </ul>
+            </div>
+
+        }
+
+        @*<script>
+                var objCal1 = new AMIB.persianCalendar('pcal1');
+                var objCal2 = new AMIB.persianCalendar('pcal2');
+            </script>*@
+        <script>//برای گرفتن تاریخ شمسی و تبدیل آن به میلادی
+            var objCal1 = new AMIB.persianCalendar('pcal1',
+                { extraInputID: "extra1", extraInputFormat: "YYYY-MM-DD" }
+            );
+            var objCal2 = new AMIB.persianCalendar('pcal2',
+              { extraInputID: "extra2", extraInputFormat: "YYYY-MM-DD" }
+          );
+        </script>
+
+
+        <h1 class="separator">لیست فروش ها</h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+
+
+        @if (Model != null)
+        {
+            <div class="table_style1">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>
+                                نام خریدار
+                            </th>
+
+                            <th>
+                                نام فروشنده
+                            </th>
+
+                            <th>
+                                تاریخ خرید
+                            </th>
+
+                            <th>
+                                نام محصول
+                            </th>
+
+                            <th>
+                                هزینه پرداختی
+                            </th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var qiduser = repuserid.Get_User().Where(a => a.User_ID == item.Bill_Buyer).FirstOrDefault();//خریدار
+                            var qidusersellr = repuserid.Get_User().Where(a => a.User_ID == item.Bill_Seller).FirstOrDefault();//فروشنده
+                            <tr>
+                                <td>
+                                    @if (qidusersellr == null)
+                                    {
+                                        <span>موجود نیست</span>
+                                    }
+                                    else
+                                    {
+                                        <span> @qiduser.User_NameFamily</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (qidusersellr == null)
+                                    {
+                                        <span>موجود نیست</span>
+                                    }
+                                    else
+                                    {
+                                        <span> @qidusersellr.User_NameFamily</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @PersianDateExtensionMethods.ToPeString(item.Bill_Date, " yyyy/MM/dd")
+                                </td>
+
+                                <td>
+                                    @item.Product.Product_Name
+                                </td>
+                                <td>
+                                    @item.Bill_PayPrice تومان
+                                </td>
+                                @*<td>
+                                        @Html.ActionLink(" ", "ConfirmUser", new { id = "" }, new { @class = "fa fa-filter", style = "color:blue; font-size:19px;" })
+
+                                    </td>*@
+
+                            </tr>
+
+
+
+                        }
+                    @*</tbody>*@
+
+                    @*<tbody>*@
+                        <tr>
+                            <td colspan="9">
+                                <span> تعداد روز : @ViewBag.Day</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">
+                                <span>جمع فروش : @ViewBag.sumprice  تومان</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="9">
+                                <span>جمع هزینه پستی : @ViewBag.SumPostage  تومان</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+            </div>
+
+
+
+
+
+        }
+        else
+        {
+            <div class="table_style1">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                نام خریدار
+                            </th>
+
+                            <th>
+                                نام فروشنده
+                            </th>
+
+                            <th>
+                                تاریخ خرید
+                            </th>
+
+                            <th>
+                                نام محصول
+                            </th>
+
+                            <th>
+                                هزینه پرداختی
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">   فروشی برای نمایش موجود نیست.</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+
+    </div>
+
+
+    <script>
+
+        $(function () {
+            $("[data-hide]").on("click", function () {
+                $("." + $(this).attr("data-hide")).hide();
+                // -or-, see below
+                // $(this).closest("." + $(this).attr("data-hide")).hide();
+            });
+        });
+    </script>
+    <link href="~/Content/_css/alert.css" rel="stylesheet" />
+</div>

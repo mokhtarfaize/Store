@@ -1,0 +1,152 @@
+﻿@model IEnumerable<NoovinData.Models.Domin.Massage>
+
+@using NoovinData.Models.Plugin
+@using NoovinData.Models.Repository
+@{
+    ViewBag.Title = "لیست پیام ها";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+    Rep_Profile rep =new Rep_Profile();
+}
+
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">لیست پیام های خصوصی شما</h1>
+
+        @if (ViewBag.Error != null)
+        {
+    <div class="alert alert-danger">
+        <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+        @ViewBag.Error
+    </div>
+        }
+
+
+
+
+        @if (Model.Count() > 0)
+        {
+            <div class="table_style1">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>
+                                عنوان پیام
+                            </th>
+
+                            <th>
+                                زمان ارسال
+                            </th>
+
+                            <th>
+                                فرستنده
+                            </th>
+
+
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            string Style = "";
+                           if (item.Massage_Read == true )
+                           {
+                               Style = "color:gray;";
+                                }
+                               
+                            
+                            <tr >                             
+                                <td colspan="1" style="@Style">
+                                    <a href="/Profile/ShowMsg?id=@item.Massage_ID">
+                                        @Html.DisplayFor(modelItem => item.Massage_Title)
+                                    </a>
+                                </td>                                                              
+
+                                <td style="@Style">
+                                    @PersianDateExtensionMethods.ToPeString(item.Massage_Date, "dddd, dd MMMM,yyyy")
+                                </td>
+
+                                <td style="@Style">
+                                    @if (item.Massage_UserSend == null)
+                                    {
+                                        <span style="color:red;">پیام سیستمی</span>
+                                    }
+                                    else
+                                    {
+                                        var name = rep.Get_User().Where(a=>a.User_ID==item.Massage_UserSend).FirstOrDefault();
+                                        @Html.DisplayFor(modelItem => name.User_UserName);
+                                    }
+
+                                </td>
+                                @if(item.Massage_Read==false)
+                                {
+                                   <td style="@Style">
+                                    @Html.ActionLink(" ", "DeleteMsg", new { id = item.Massage_ID }, new { @class = "fa fa-trash-o", style = "color:red; font-size:19px;", onclick = "return confirm('این پیام خوانده نشده آیا از حذف آن مطمئا هستید؟');" })
+                                </td> 
+                                }
+                                else
+                                {
+                                    <td style="@Style">
+                                    @Html.ActionLink(" ", "DeleteMsg", new { id = item.Massage_ID }, new { @class = "fa fa-trash-o", style = "color:red; font-size:19px;", onclick = "return confirm('آیا از حذف این پیام مطمئا هستید؟');" })
+                                </td>
+                                }
+                                
+                                <td style="@Style">
+                                    @Html.ActionLink(" ", "ShowMsg", new { id = item.Massage_ID }, new { @class = "fa fa-eye", style = "color:green; font-size:19px;" })
+                                </td>
+                            </tr>
+
+
+                        }
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+        }
+        else
+        {
+            <div class="table_style1">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                عنوان پیام
+                            </th>
+
+                            <th>
+                                زمان ارسال
+                            </th>
+
+                            <th>
+                                فرستنده
+                            </th>
+
+
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">پیام  برای نمایش موجود نیست.</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+
+
+    </div>
+
+
+</div>

@@ -1,0 +1,177 @@
+﻿@model IEnumerable<NoovinData.Models.Domin.Visit>
+@using NoovinData.Models.Plugin
+@{
+    ViewBag.Title = "بازید کاربران";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+
+@*<script>
+    function paging(pageno)
+    {
+        document.getElementById("Pageid").value = pageno;
+    }
+</script>*@
+
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">لیست بازید کاربران </h1>
+
+        @*<form action="/Admin/ListVisit" method="get">
+            <input type="hidden" id="Pageid" name="page"/>
+            
+        </form>*@
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+
+        @if (Model.Count() > 0)
+        {
+            <div class="table_style1">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>
+                                نام کاربر
+                            </th>
+                            <th>
+                                تاریخ بازید
+                            </th>
+                            <th>
+                                IP
+                            </th>
+                            <th>
+                                مرورگر
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+
+                                <td>
+                                    @item.Visit_UserName
+
+                                </td>
+
+                                <td>
+                                    @PersianDateExtensionMethods.ToPeString(item.Visit_Date, "yyyy/MM/dd")
+
+                                </td>
+                                <td>
+
+                                    @item.Visit_IP
+
+                                </td>
+
+                                <td>
+                                    @if (item.Visit_Browser.Contains("Chrome"))
+                                    {
+                                           <i @*class="fa fa-internet-explorer" style="font-size:30px;"*@> @item.Visit_Browser</i>
+                                    }
+                                    else if (item.Visit_Browser.Contains("Firefox"))
+                                    {
+
+                                        <i @*class="fa fa-firefox" style="font-size:30px;"*@>@item.Visit_Browser</i>
+                                    }
+
+
+                                </td>
+                            </tr>
+
+
+                        }
+                      
+                    </tbody>
+
+
+                </table>
+                @{
+            if (ViewBag.CountVisit != 0)
+            {
+                decimal Take = ViewBag.Take;
+                decimal Count = ViewBag.CountVisit;
+                decimal Div = Math.Ceiling(Count / Take);
+                <div class='pagination'>
+                    <div>
+
+                        @for (int i = 1; i <= Div; i++)
+                        {
+                            string activee = "";
+                            string cu = "pointer";
+
+                            if (ViewBag.page == i)
+                            {
+                                activee = "active";
+                                cu = "not-allowed";
+
+                            }
+
+                            <a href="~/Admin/ListVisit?page=@i.ToString()" class="@activee" style="cursor:@cu">@i.ToString()</a>
+
+                        }
+                    </div>
+                </div>
+            }
+                }
+
+            </div>
+        }
+        else
+        {
+            <div class="table_style1">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                نام کاربر
+                            </th>
+                            <th>
+                                تاریخ بازید
+                            </th>
+                            <th>
+                                IP
+                            </th>
+                            <th>
+                                مرورگر
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">اطلاعاتی برای نمایش موجود نیست.</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+
+
+    </div>
+
+    <script>
+
+        $(function () {
+            $("[data-hide]").on("click", function () {
+                $("." + $(this).attr("data-hide")).hide();
+                // -or-, see below
+                // $(this).closest("." + $(this).attr("data-hide")).hide();
+            });
+        });
+    </script>
+    <link href="~/Content/_css/alert.css" rel="stylesheet" />
+</div>
+

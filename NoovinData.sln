@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoovinData", "NoovinData\NoovinData.csproj", "{ACA3A3E2-A851-4E4F-A9BC-79B73DB5C220}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACA3A3E2-A851-4E4F-A9BC-79B73DB5C220}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACA3A3E2-A851-4E4F-A9BC-79B73DB5C220}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACA3A3E2-A851-4E4F-A9BC-79B73DB5C220}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACA3A3E2-A851-4E4F-A9BC-79B73DB5C220}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72DE178E-F9CB-470F-B653-17A8226DD16E}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://dev.azure.com/mokhtarfeyzi
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = NoovinData\\NoovinData.csproj
+		SccProjectName1 = NoovinData
+		SccLocalPath1 = NoovinData
+	EndGlobalSection
+EndGlobal

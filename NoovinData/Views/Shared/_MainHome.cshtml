@@ -1,0 +1,193 @@
+﻿@using NoovinData.Models.Repository
+@{
+    Rep_Profile repus = new Rep_Profile();
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/fonts/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/_css/master.css" rel="stylesheet" />
+    <script src="~/Scripts/_plugins/ellipsis/jquery.dotdotdot.min.js"></script>
+    <script src="~/Scripts/_plugins/Ion/js/vendor/jquery-1.12.3.min.js"></script>
+    <script src="~/Scripts/_js/subnav.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width" />
+    <title>نوین داده</title>
+    @if (repus.Get_Setting() != null)
+    {
+        <title>"@repus.Get_Setting().FirstOrDefault().Title" :: @ViewBag.Title </title>
+
+        <meta name="description" content="@repus.Get_Setting().FirstOrDefault().Descrption" />
+
+        <meta name="keywords" content="@repus.Get_Setting().FirstOrDefault().Keyword" />
+    }
+
+
+</head>
+<body>
+
+    <header>
+        <section id="top_section">
+            <div class="container">
+                <div class="inner">
+
+                    <div id="logo">
+                    </div>
+
+
+                    @{
+                        if (Session["User"] != null)
+                        {
+                            string username = Session["User"].ToString();
+
+
+
+                            var qname = repus.Get_User().Where(a => a.User_UserName == username).SingleOrDefault();
+
+                            <div id="user_account">
+
+                                <a class="user_account_btn" href="/Profile/Profile">
+                                    <span class="i-user"></span>
+                                    @qname.User_NameFamily
+                                </a>
+                                <a class="user_account_btn" href="/Register/Logout">
+                                    <span class="i-power-off"></span>
+                                    خروج
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="user_account">
+                                <a class='user_account_btn' href="#" id="user_account_btn">
+                                    <span class="fa fa-user" style="padding-left: 4px;"></span>
+
+                                    حساب کاربری
+                                </a>
+
+                                <div class="user_account_box" id='user_account_box'>
+                                    <div>
+                                        @using (Html.BeginForm("Login", "Register", FormMethod.Post, new { @id = "frm_login" }))
+                                        {
+
+                                            <div class='result sign nok' style='display: none;'></div><!--result-->
+                                            <p class='item'>
+                                                <span class="fa fa-user"></span>
+                                                <input type="text" id="username" name="emailusername" class="ltr" placeholder="آدرس ایمیل">
+                                            </p>
+                                            <p class='item'>
+                                                <span class="fa fa-lock"></span>
+                                                <input type="password" id="password" class="ltr" name="passwordlogin" placeholder="کلمه عبور">
+                                            </p>
+
+                                            <p class='item'>
+                                                <input type="submit" value="ورود به سیستم">
+
+                                            </p>
+                                            <p class='item'>
+                                                <a href='/Register/Register' title='ثبت نام' class="button">ثبت نام</a>
+                                            </p>
+
+                                            <p><a href="/Register/ForgotPassword" class='forgot'>رمز عبور خود را فراموش کرده ام</a></p>
+                                        }
+                                    </div>
+                                </div><!--end user_account_box-->
+                            </div>
+                        }
+                    }
+
+
+                    @Html.Partial("P_Search")
+
+
+                </div><!--end inner-->
+            </div><!--end container-->
+        </section>
+
+        @Html.Partial("P_GrHome")
+
+    </header>
+
+                    @RenderBody()
+
+
+                    <!--فوتر-->
+                    <div class='clear'></div>
+                    <footer>
+                        <section class='footer_part1'>
+                            <div class="container">
+                                <div class="inner">
+                                    <ul class='step1 list'>
+                                        <li class='item link'>
+                                            <div class='title_style4'>لینک های اصلی سایت</div>
+                                            <ul class='step2'>
+                                                <li class='item2'><a href='/' title='صفحه اصلی'>صفحه اصلی</a></li>
+                                               
+                                                <li class='item2'><a href='Home/Banner' title='بنر تبلیغاتی'>بنر تبلیغاتی</a></li>
+                                                <li class='item2'><a href='/Home/Contact' title='تماس با ما'>تماس با ما</a></li>
+                                               
+                                                </ul>
+                                            <ul class='step2'>
+
+                                                <li class='item2'><a href='~/Register/Register' title='ثبت نام'>ثبت نام</a></li>
+                                                <li class='item2'><a href='~/Register/Login' title='ورود به حساب کاربری'>ورود به حساب کاربری</a></li>
+                                                
+                                            </ul>
+                                        </li><!--link-->
+                                        @Html.Partial("P_NewPr")<!--پربازید ترین محصولات-->
+
+                                        @Html.Partial("P_ProductNew")<!--جدید ترین محصولات-->
+                                        
+                                    </ul>
+                                </div><!--inner-->
+                            </div><!--container-->
+                        </section><!--footer_part1-->
+
+                        <section class='footer_part2'>
+                            <div class="container">
+                                <div class="inner">
+                                    <ul class='list clearfix'>
+                                        <li class='item'>
+                                            <i class='icon' style='background-image:url(/Content/_images/default/phone.png);'></i>
+                                            <strong class='name'>09100324468</strong>
+                                        </li>
+                                        <li class='item'>
+                                            <i class='icon' style='background-image:url(/Content/_images/default/email.png);'></i>
+                                            <strong class='name'>mokhtarfaize1@gmail.com</strong>
+                                        </li>
+                                        <li class='item social'>
+                                            <a href='http://facebook.com' title='facebook' target='_blank' class='item2'><i class='fa fa-facebook'></i></a>
+                                            <a href='https://plus.google.com' title='google+' target='_blank' class='item2'><i class='fa fa-google-plus'></i></a>
+                                            <a href='http://linkedin.com' title='linkedin' target='_blank' class='item2'><i class="fa fa-linkedin"></i></a>
+                                            <a href='http://instagram.com' title='instagram' target='_blank' class='item2'><i class='fa fa-instagram'></i></a>
+                                            <a href='http://twitter.com' title='twitter' target='_blank' class='item2'><i class="fa fa-twitter"></i></a>
+                                        </li>
+                                    </ul>
+                                </div><!--inner-->
+                            </div><!--container-->
+                        </section><!--footer_part2-->
+
+                        <section class='footer_part3'>
+                            <div class="container">
+                                <div class="inner">
+                                    <div class='designer'>
+                                        <a  title='برنامه نویسی سایت' target='_blank'>برنامه نویسی سایت</a> &nbsp; مختار فیضی
+                                    </div>
+                                </div><!--inner-->
+                            </div><!--container-->
+                        </section><!--footer_part3-->
+                    </footer>
+
+
+
+                    <script src="~/Scripts/_js/css_browser_selector.js"></script>
+
+                    <script src="~/Scripts/_js/home_slideshow.js"></script>
+                    <script src="~/Scripts/_js/user_account.js"></script>
+    
+</body>
+</html>

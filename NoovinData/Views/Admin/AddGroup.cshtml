@@ -1,0 +1,50 @@
+﻿@model NoovinData.Models.Domin.Group
+
+@{
+    ViewBag.Title = "اضافه کردن گروه";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">دسته جدید </h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-info">
+                <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                @ViewBag.Error
+            </div>
+        }
+
+
+
+        <div class="form_style1 form_wrapper clearfix ">
+            <div class="overlay"></div>
+
+            @using (Html.BeginForm("AddGroup", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm_add_product" }))
+            {
+                <ul class="list">
+                    <li class="item full">
+
+                        <label> <i class="fa fa-arrow-left"></i> &nbsp; &nbsp; نام گروه   : </label>
+                        <input type="text" required name="txtname" value="" />
+                    </li>
+                    <li class="item full">
+
+                        <label><i class="fa fa-arrow-left"></i> &nbsp; &nbsp; نصویر گروه   : </label>
+                        <input type="file" name="PicGroup" value=" " />
+                    </li>
+                    <li class="item full">
+                        <input type="submit" value="اضافه کردن " />
+                    </li>
+                </ul>
+
+            }
+
+
+        </div>
+
+    </div>
+</div>

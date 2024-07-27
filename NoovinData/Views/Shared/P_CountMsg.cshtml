@@ -1,0 +1,14 @@
+﻿
+@using NoovinData.Models.Repository
+@{
+    Rep_Profile repcount = new Rep_Profile();
+
+    string user = Session["User"].ToString();
+
+    var qid = repcount.Get_User().Where(a => a.User_UserName == user).SingleOrDefault();
+
+
+    var qcount = repcount.Get_Message().Where(a => a.Massage_UserGet == qid.User_ID && a.Massage_Read == false).Count();
+
+    <span class='no'>@qcount</span>
+}

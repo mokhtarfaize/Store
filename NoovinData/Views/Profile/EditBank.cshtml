@@ -1,0 +1,110 @@
+﻿@model NoovinData.Models.Domin.NoBank
+
+
+@{
+    ViewBag.Title = "ویرایش شماره حساب";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+@using NoovinData.Models.Repository
+
+<div class="part_left">
+    <div id="bank_account_management" class="userpanel_bright_section">
+        <h1 class="separator">مدیریت حساب بانکی </h1>
+        <div id="user_account_page" class="userpanel_bright_section">
+            <div class="form_style1 form_wrapper clearfix">
+
+
+                @using (Html.BeginForm("EditBankAccount", "Profile", FormMethod.Post, new { @id = "frm_bank_account" }))
+                {
+                    Html.AntiForgeryToken();
+                    Html.ValidationSummary(true, "", new { @class = "text-danger" });
+                    <input type="hidden" name="IDBank" value="@Model.Banks_ID" />
+
+                    <ul class="list">
+
+                        <li class="item">
+                            @Html.LabelFor(model => model.Banks_NameID, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <select class="full" name="bank_id">
+
+                                @{
+                    Rep_Profile repbank = new Rep_Profile();
+
+                    foreach (var item in repbank.Get_NameBank())
+                    {
+                        string select = "";
+                        if (item.Bank_ID == Model.Banks_NameID)
+                        {
+                            select = "selected";
+                        }
+
+                        <option value="@item.Bank_ID" @select>@item.Bank_Name</option>
+                    }
+
+                                }
+
+                            </select>
+                        </li>
+
+
+                       
+                        <li class="item ">
+                            @Html.LabelFor(model => model.Banks_NameUser, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.TextBoxFor(model => model.Banks_NameUser, new { @class = "widthinput", name = "NameUser" })
+                            @Html.ValidationMessageFor(model => model.Banks_NameUser, "", new { @class = "text-danger" })
+
+                        </li>
+
+                        <li class="item">
+                            @Html.LabelFor(model => model.Banks_NoBank, htmlAttributes: new { @class = "control-label col-md-2"})
+                            @Html.TextBoxFor(model => model.Banks_NoBank, new { @class = "widthinput", name = "AccountCode" })
+                            @Html.ValidationMessageFor(model => model.Banks_NoBank, "", new { @class = "text-danger" })
+                        </li>
+
+                        <li class="item">
+                            @Html.LabelFor(model => model.Banks_NoCart, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.TextBoxFor(model => model.Banks_NoCart, new { @class = "widthinput", name = "CartCode" })
+                            @Html.ValidationMessageFor(model => model.Banks_NoCart,"", new { @class = "text-danger" })
+                        </li>
+
+                        <li class="item">
+                            @Html.LabelFor(model => model.Banks_NoIR, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.TextBoxFor(model => model.Banks_NoIR, new { @class = "widthinput", name = "ShebaCode" })
+                            @Html.ValidationMessageFor(model => model.Banks_NoIR, "", new { @class = "text-danger" })
+                        </li>
+
+                        @*<li class="item">
+                            <label>نام صاحب حساب : <i class="fa fa-star"></i></label>
+                            <input name="NameUser" value="@Model.Banks_NameUser" type="text">
+
+                        </li>
+                        <li class="item">
+                            <label>شماره حساب : <i class="fa fa-star"></i></label>
+                            <input name="AccountCode" value="@Model.Banks_NoBank" type="text">
+                        </li>
+
+                        <li class="item">
+                            <label>شماره کارت : <i class="fa fa-star"></i></label>
+                            <input name="CartCode" value="@Model.Banks_NoCart" type="text">
+                        </li>
+
+                        <li class="item full">
+                            <label>شماره شبا : <i class="fa fa-star"></i></label>
+                            <input name="ShebaCode" value="@Model.Banks_NoIR" type="text">
+                        </li>*@
+                                                
+                        <li class="submit_btn item full">
+                            <input value="ثبت مشخصات حساب بانکی" name="go_bank_account" class="threed_button" type="submit">
+                        </li>
+                    </ul>
+                }
+
+
+
+            </div><!--form_style1-->
+        </div><!--user_account_page-->
+
+
+    </div><!-- end bank_account_management -->
+</div>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

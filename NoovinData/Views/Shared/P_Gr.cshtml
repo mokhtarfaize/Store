@@ -1,0 +1,89 @@
+﻿
+@using NoovinData.Models.Repository
+
+@{
+    Rep_Home repgr = new Rep_Home();
+<nav>
+    <div class="container">
+        <div class="inner">
+            <ul>
+                <li>
+                    <a href='/' title='صفحه اصلی'>
+                        <span class="fa fa-home" style="padding-left: 4px;"></span>
+                        صفحه اصلی
+                    </a>
+                </li>
+                <li class="has_subnav">
+                    <a href="#">
+                        <span class="fa fa-tags" style="padding-left: 4px;"></span>
+                        دسته بندی فایل ها
+                    </a>
+
+                    <ul class="subnav">
+
+                        @foreach (var item in repgr.Get_Group())
+                        {
+                            <li><a href='/Home/ShowGroup?id=@item.Group_ID' title='@item.Group_Name'> @item.Group_Name </a></li>
+                        }
+
+
+
+                    </ul>
+
+                </li>
+
+
+                <li>
+                    <a href='/Home/Contact' title='تماس با ما'>
+                        <span class="fa fa-phone" style="padding-left: 4px;"></span>
+                        تماس با ما
+                    </a>
+                </li>
+               
+                @{
+
+                                  if (Session["User"] != null)
+                                  {
+                                    var username = Session["User"].ToString();
+                                    var userid=  repgr.Get_User().Where(a => a.User_UserName == username).FirstOrDefault().User_ID;
+                                    var inter = repgr.Get_InteerimBill().Where(a => a.InterimBill_Buyer == userid).ToList();
+                                    if (inter==null)
+                                    {
+                    <li>
+                        <a href='/Profile/ListInBill' title='سبد خرید'>
+                            <span class="fa fa-shopping-cart" id="shopcart" style="padding-left: 4px;"></span>
+                            سبد خرید : @inter.Count()
+                        </a>
+                    </li>
+                                    }
+                                    else
+                                    {
+                    <li>
+                        <a href='/Profile/ListInBill' title='سبد خرید'>
+                            <span class="fa fa-shopping-cart" id="shopcart" style="padding-left: 4px;"></span>
+                            سبد خرید : @inter.Count()
+                        </a>
+                    </li>
+                                    }
+
+                                  }
+                                  else
+                                  {
+                    <li>
+                        <a href='/Profile/ListInBill' title='سبد خرید'>
+                            <span class="fa fa-shopping-cart" id="shopcart" style="padding-left: 4px;"></span>
+                            سبد خرید
+                        </a>
+                    </li>
+
+                                  }
+
+                }
+            </ul>
+
+
+        </div><!--end inner-->
+    </div><!--end container-->
+</nav>
+    
+}

@@ -1,0 +1,212 @@
+﻿@model IEnumerable<NoovinData.Models.Domin.Product>
+
+@{
+    
+    ViewBag.Title = "محصولات کاربر " + ViewBag.UserName + "";
+    Layout = "~/Views/Shared/_MainHome.cshtml";
+}
+
+
+<script>
+    function Paging(PageNo) {
+        document.getElementById("Pageid").value = PageNo;
+    }
+</script>
+
+<div id="store" class="clearfix style1">
+    <section>
+
+        <div class='bg_pic'>
+            <div class='head'>
+                <div class="container clearfix">
+                    <div class="inner">
+                        <div class='head_img'></div>
+                        <div class='head_text'>
+                            @ViewBag.User
+                            <div class='head_caption'>نام فروشنده : @ViewBag.UserName</div>
+                            <div class='head_caption'>امتیاز کاربر :@ViewBag.Rating</div>
+                            <div class='head_caption'>استان محل سکونت : @ViewBag.Stateid</div>
+                        </div>
+                    </div>
+                </div>
+            </div><!--close div.head-->
+        </div><!--close div.bg_pic-->
+        <div class="container">
+            <div class="inner">
+
+                <aside>
+                    <div class="store_aside_section">
+                        <h3 class="store_aside_title">مشخصات فروشنده</h3>
+                        <div class="store_aside_content">
+                            @{
+                                if (Model != null)
+                                {
+                                    <p><i class='fa fa-arrow-left'></i>تعداد فایل: @ViewBag.CountProduct</p>
+                                }
+                                else
+                                {
+                                    <p><i class='fa fa-arrow-left'></i> تعداد فایل: 0</p>
+                                }
+                            }
+
+                            <p><i class="fa fa-arrow-left"></i>فروشنده : @ViewBag.User </p>
+                            @*<p>
+                                <i class="fa fa-arrow-left"></i>
+                                <a href=''></a>
+
+                            </p>
+                            <a href='store/13' class='pic'>
+                                <img src='~/Content/_images/checked-user-xxl.png' width="70" height="60" class='store_pic'>
+                            </a>*@
+                        </div>
+                    </div>
+
+                    @*<div class="store_aside_section banner">
+                        <img src='_images/banner120.jpg'><img src='~/Content/_images/banner120.jpg'>
+                    </div>*@
+                </aside>
+
+
+
+                <section id='category_part1'>
+                    <main class='store_main'>
+                        <h1 class='separator page_title store_title'> تمامی محصولات این کاربر </h1>
+                        
+                        @{
+                            if (@ViewBag.error != null)
+                            {
+                                <div class="alert alert-danger">
+                                    @ViewBag.error
+                                </div>
+                            }
+                        }
+                            @{
+                                if (Model != null)
+                                {
+                                  <div class="store_aside_section">
+                                      <h3 class="store_aside_title">تازه ترین محصول فروشنده</h3>
+                                    <div class='store_constant'>
+
+                                        <ul class='list clearfix'>
+
+                                            @foreach (var item in ViewBag.namepro)
+                                            {
+                                                <li class='item'>
+                                                    <a href='/Home/ShowProduct?id=@item.Product_ID' title='@item.Product_Name' class='pic' style='background-image:url(/Content/_images/product/@item.Product_PicIndex)'></a>
+
+                                                    <div class='content'>
+                                                        <h1 class='store_main_title ellipsis'>
+                                                            <a href='/Home/ShowProduct?id=@item.Product_ID' title='@item.Product_Name'>@item.Product_Name</a>
+                                                        </h1>
+                                                        <p class='store_caption ellipsis'>
+                                                            @Html.Raw(item.Product_Text)
+                                                        </p>
+                                                    </div>
+                                                </li>
+                                            }
+
+
+                                        </ul>
+                                    </div><!--store_constant-->
+
+                                </div>
+                                    <script>
+                                        $(document).ready(function (e) {
+                                            //title display
+                                            var cons_count = $(".store_constant .item").length;
+                                            if (cons_count == 0) {
+                                                $(".store_constant").fadeOut(0);
+                                            }
+                                        });
+
+
+                                    </script>
+
+
+                                    <h3 class="store_aside_title">کل محصولات فروشنده</h3>
+                                    <ul class='cat_files'>
+                                        @foreach (var item1 in Model.OrderByDescending(a=>a.Product_Date))
+                                        {
+                                            <li>
+                                                <div class='store_main_section'>
+                                                    <div class='store_main_section_pic' style='background-image:url(/Content/_images/product/@item1.Product_PicIndex)'>
+                                                        <div class='pic_hover'></div>
+                                                        <div class='pic_hover_box dv-box'>
+                                                            <div class='dv'>0<i class='fa fa-shopping-bag'></i></div>
+                                                            <div class='dv'>@item1.Product_Visit<i class='fa fa-eye'></i></div>
+                                                        </div>
+                                                        <div class='pic_hover_box'><a href="/Home/ShowProduct?id=@item1.Product_ID" title='@item1.Product_Name' class='read_more'>بیشتر بخوانید<i class='i-caret-left'></i></a></div>
+                                                    </div>
+                                                    <h1 class='store_main_title ellipsis'><a href='/Home/ShowProduct?id=@item1.Product_ID' title='@item1.Product_Name'>@item1.Product_Name</a></h1>
+                                                    <p class='store_caption ellipsis'>@Html.Raw(item1.Product_Text)</p>
+                                                </div>
+
+                                            </li>
+                                        }
+                                    </ul>
+
+                                        if (ViewBag.CountProduct != 0)
+                                        {
+                                        decimal Take = ViewBag.Take;
+                                        decimal Count = ViewBag.CountProduct;
+                                        decimal Div = Math.Ceiling(Count / Take);
+                                        <div class='pagination'>
+                                            <div>
+
+                                                @for (int i = 1; i <= Div; i++)
+                                                {
+                                                    string activee = "";
+                                                    string cu = "pointer";
+
+                                                    if (ViewBag.page == i)
+                                                    {
+                                                        activee = "active";
+                                                        cu = "not-allowed";
+
+                                                    }
+
+                                                    <a href="~/Home/ProductUser?page=@i.ToString()&id=@ViewBag.Iduser" class="@activee" style="cursor:@cu">@i.ToString()</a>
+
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    <div class="alert alert-info">
+                                        <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                                        این کاربر محصولی برای فروش ندارد!!!
+                                    </div>
+
+
+
+                                }
+
+
+                            }
+
+
+
+</main>
+                </section>
+            </div><!-- end inner -->
+        </div><!-- end container -->
+    </section><!-- end section -->
+
+</div><!-- end store -->
+
+<script>
+
+    $(function () {
+        $("[data-hide]").on("click", function () {
+            $("." + $(this).attr("data-hide")).hide();
+            // -or-, see below
+            // $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+</script>
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+
